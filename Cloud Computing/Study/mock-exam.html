@@ -1,123 +1,347 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cloud Computing — Mock Exam</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☁️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0a0a0a;--bg2:#111;--bg3:#0a0a0a;--border:#1a1a1a;--border2:#2a2a2a;--text:#e0e0e0;--text2:#ddd;--text3:#888;--text4:#666;--accent:#fff;--green:#4ade80;--green-bg:#052e16;--red:#f87171;--red-bg:#2a0a0a;--btn-bg:#fff;--btn-text:#000;--check-bg:rgba(255,255,255,.08)}
-[data-theme="light"]{--bg:#f5f5f5;--bg2:#fff;--bg3:#f0f0f0;--border:#e0e0e0;--border2:#d0d0d0;--text:#1a1a1a;--text2:#333;--text3:#666;--text4:#999;--accent:#000;--green:#16a34a;--green-bg:#dcfce7;--red:#dc2626;--red-bg:#fee2e2;--btn-bg:#000;--btn-text:#fff;--check-bg:rgba(0,0,0,.04)}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:2rem 1rem;transition:background .3s,color .3s}
-.container{max-width:800px;margin:0 auto}
-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;gap:1rem}
-header div:first-child{flex:1;min-width:0}
-h1{font-size:1.7rem;font-weight:700;color:var(--accent);word-break:break-word}
-.subtitle{color:var(--text3);font-size:.82rem;margin-top:.2rem}
-.tbtn{background:var(--bg2);border:1px solid var(--border2);color:var(--text);width:42px;height:42px;border-radius:50%;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
-.tbtn:hover{border-color:var(--accent);transform:scale(1.05)}
-.bar-row{display:flex;gap:1rem;align-items:center;margin-bottom:1.2rem;flex-wrap:wrap}
-.pbar{flex:1;background:var(--bg2);border-radius:4px;height:6px;overflow:hidden;min-width:100px}
-.pfill{background:var(--green);height:100%;width:0;transition:width .3s}
-.stxt{font-size:.78rem;color:var(--text3);white-space:nowrap}
-.stxt b{color:var(--accent)}
-.modes{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap}
-.mbtn{background:var(--bg2);border:1px solid var(--border);color:var(--text3);padding:.35rem .85rem;border-radius:4px;cursor:pointer;font-size:.78rem;transition:all .15s}
-.mbtn:hover,.mbtn.active{background:var(--accent);color:var(--btn-text);border-color:var(--accent)}
-.nav{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.8rem}
-.nav button{background:var(--bg2);border:1px solid var(--border);color:var(--text3);padding:.3rem .65rem;border-radius:4px;cursor:pointer;font-size:.72rem;transition:all .15s}
-.nav button:hover{background:var(--accent);color:var(--btn-text);border-color:var(--accent)}
-.ws{margin-bottom:2.2rem}
-.wt{font-size:.95rem;font-weight:600;color:var(--accent);margin-bottom:.8rem;padding-bottom:.4rem;border-bottom:1px solid var(--border)}
-.wt small{font-weight:400;color:var(--text3);font-size:.78rem;margin-left:.3rem}
-.q{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:1.15rem;margin-bottom:.65rem;transition:border-color .2s}
-.q.ok{border-color:var(--green)}.q.nok{border-color:var(--red)}
-.qn{font-size:.68rem;color:var(--text4);margin-bottom:.35rem;font-weight:600;letter-spacing:.5px}
-.qt{font-size:.88rem;margin-bottom:.8rem;color:var(--text2)}
-.opts{display:flex;flex-direction:column;gap:.35rem}
-.opt{display:flex;align-items:flex-start;gap:.55rem;padding:.5rem .65rem;background:var(--bg3);border:1px solid var(--border);border-radius:4px;cursor:pointer;transition:all .12s;font-size:.83rem}
-.opt:hover{border-color:var(--border2)}
-.opt.sel{border-color:var(--accent);background:var(--check-bg)}
-.opt.corr{border-color:var(--green);background:var(--green-bg);color:var(--green)}
-.opt.wro{border-color:var(--red);background:var(--red-bg);color:var(--red)}
-.opt .lt{font-weight:700;min-width:1.1rem;color:var(--text3)}
-.opt.corr .lt{color:var(--green)}.opt.wro .lt{color:var(--red)}
-.cbtn{margin-top:.55rem;background:var(--btn-bg);color:var(--btn-text);border:none;padding:.4rem 1rem;border-radius:4px;cursor:pointer;font-size:.78rem;font-weight:600;transition:opacity .15s}
-.cbtn:hover{opacity:.82}.cbtn:disabled{opacity:.2;cursor:not-allowed}
-.fb{margin-top:.4rem;font-size:.78rem;display:none;font-weight:600}
-.fb.sh{display:block}.fb.c{color:var(--green)}.fb.w{color:var(--red)}
-.ex{color:var(--text3);font-size:.78rem;margin-top:.3rem;display:none}
-.ex.sh{display:block}
-.sc{text-align:center;padding:2rem;background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:1.5rem;display:none}
-.sc h2{font-size:1.3rem;margin-bottom:.4rem}
-.sc .big{font-size:2.8rem;font-weight:700}
-.sc .bg{color:var(--green)}.sc .bo{color:#facc15}.sc .bl{color:var(--red)}
-.rbtn{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--bg2);color:var(--text);border:1px solid var(--border2);padding:.5rem 1rem;border-radius:6px;cursor:pointer;font-size:.78rem;transition:all .15s;z-index:10}
-.rbtn:hover{background:var(--accent);color:var(--btn-text);border-color:var(--accent)}
-@media(max-width:600px){body{padding:.8rem .4rem}.opt{padding:.4rem}h1{font-size:1.3rem}header{flex-direction:column;gap:.5rem}}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ── Tokens ── */
+:root{
+  --font-sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --radius:8px;
+  --space:8px;
+  --ease:cubic-bezier(.4,0,.2,1);
+}
+[data-theme="dark"]{
+  --bg:#08090a;--surface:#0f1011;--surface2:#161718;--surface3:#1c1d1f;
+  --border:rgba(255,255,255,.06);--border-hover:rgba(255,255,255,.1);
+  --text:#e4e4e7;--text2:#a1a1aa;--text3:#71717a;--text4:#52525b;
+  --accent:#10b981;--accent-bg:rgba(16,185,129,.08);--accent-border:rgba(16,185,129,.2);
+  --error:#ef4444;--error-bg:rgba(239,68,68,.08);--error-border:rgba(239,68,68,.2);
+  --focus-ring:rgba(16,185,129,.5);
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow-md:0 4px 12px rgba(0,0,0,.5);
+}
+[data-theme="light"]{
+  --bg:#fafafa;--surface:#fff;--surface2:#f4f4f5;--surface3:#e4e4e7;
+  --border:rgba(0,0,0,.06);--border-hover:rgba(0,0,0,.1);
+  --text:#18181b;--text2:#52525b;--text3:#71717a;--text4:#a1a1aa;
+  --accent:#059669;--accent-bg:rgba(5,150,105,.06);--accent-border:rgba(5,150,105,.2);
+  --error:#dc2626;--error-bg:rgba(220,38,38,.06);--error-border:rgba(220,38,38,.15);
+  --focus-ring:rgba(5,150,105,.5);
+  --shadow-sm:0 1px 2px rgba(0,0,0,.05);
+  --shadow-md:0 4px 12px rgba(0,0,0,.08);
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-sans);background:var(--bg);color:var(--text);
+  line-height:1.6;font-size:15px;font-weight:400;
+  letter-spacing:.01em;-webkit-font-smoothing:antialiased;
+  padding:calc(var(--space)*3) calc(var(--space)*2);
+  transition:background .3s var(--ease),color .3s var(--ease);
+}
+@media(prefers-reduced-motion:reduce){*{transition-duration:0s!important;animation-duration:0s!important}}
+
+/* ── Layout ── */
+.shell{max-width:720px;margin:0 auto}
+
+/* ── Header ── */
+.hdr{display:flex;justify-content:space-between;align-items:flex-start;gap:calc(var(--space)*2);margin-bottom:calc(var(--space)*3)}
+.hdr-left{flex:1;min-width:0}
+.hdr h1{font-size:1.5rem;font-weight:600;letter-spacing:-.02em;line-height:1.2;color:var(--text)}
+.hdr .sub{font-size:.8rem;color:var(--text3);margin-top:calc(var(--space)*.5);font-weight:400}
+.theme-btn{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--surface);border:1px solid var(--border);
+  color:var(--text2);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;flex-shrink:0;
+  transition:border-color .2s var(--ease),color .2s var(--ease),transform .15s var(--ease);
+}
+.theme-btn:hover{border-color:var(--border-hover);color:var(--text)}
+.theme-btn:active{transform:scale(.95)}
+.theme-btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+
+/* ── Progress ── */
+.prog-row{display:flex;align-items:center;gap:calc(var(--space)*1.5);margin-bottom:calc(var(--space)*2)}
+.prog-bar{flex:1;height:3px;background:var(--surface2);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;background:var(--accent);border-radius:2px;width:0;transition:width .4s var(--ease)}
+.prog-label{font-size:.72rem;font-family:var(--font-mono);color:var(--text3);white-space:nowrap;font-weight:500;letter-spacing:.02em}
+
+/* ── Filter tabs ── */
+.filters{display:flex;gap:calc(var(--space)*.5);margin-bottom:calc(var(--space)*2);flex-wrap:wrap}
+.fbtn{
+  font-family:var(--font-sans);font-size:.75rem;font-weight:500;
+  padding:calc(var(--space)*.5) calc(var(--space)*1.25);
+  border-radius:calc(var(--space)*.5);
+  background:transparent;border:1px solid var(--border);
+  color:var(--text3);cursor:pointer;
+  transition:all .15s var(--ease);letter-spacing:.01em;
+}
+.fbtn:hover{border-color:var(--border-hover);color:var(--text2)}
+.fbtn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.fbtn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+
+/* ── Week nav ── */
+.week-nav{display:flex;flex-wrap:wrap;gap:calc(var(--space)*.375);margin-bottom:calc(var(--space)*3);padding-bottom:calc(var(--space)*2);border-bottom:1px solid var(--border)}
+.wnav{
+  font-family:var(--font-mono);font-size:.65rem;font-weight:500;
+  padding:calc(var(--space)*.375) calc(var(--space)*.75);
+  border-radius:calc(var(--space)*.375);
+  background:var(--surface);border:1px solid var(--border);
+  color:var(--text3);cursor:pointer;letter-spacing:.03em;
+  transition:all .15s var(--ease);
+}
+.wnav:hover{border-color:var(--border-hover);color:var(--text2)}
+.wnav:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+
+/* ── Sections ── */
+.sec{margin-bottom:calc(var(--space)*4)}
+.sec-hd{
+  font-size:.72rem;font-weight:600;color:var(--text2);
+  letter-spacing:.06em;text-transform:uppercase;
+  margin-bottom:calc(var(--space)*1.5);
+  padding-bottom:calc(var(--space));
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:baseline;gap:calc(var(--space));
+}
+.sec-hd span{font-weight:400;color:var(--text4);text-transform:none;letter-spacing:.01em;font-size:.7rem}
+
+/* ── Question card ── */
+.card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:calc(var(--space)*2);
+  margin-bottom:calc(var(--space)*1);
+  transition:border-color .25s var(--ease);
+}
+.card.solved.ok{border-color:var(--accent-border)}
+.card.solved.fail{border-color:var(--error-border)}
+.card-num{
+  font-family:var(--font-mono);font-size:.62rem;font-weight:500;
+  color:var(--text4);letter-spacing:.08em;text-transform:uppercase;
+  margin-bottom:calc(var(--space)*.75);
+}
+.card-q{font-size:.88rem;color:var(--text);line-height:1.55;margin-bottom:calc(var(--space)*1.5);font-weight:400}
+
+/* ── Options ── */
+.opts{display:flex;flex-direction:column;gap:calc(var(--space)*.5)}
+.opt{
+  display:flex;align-items:flex-start;gap:calc(var(--space)*.75);
+  padding:calc(var(--space)*.875) calc(var(--space)*1);
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:calc(var(--space)*.5);
+  cursor:pointer;font-size:.84rem;line-height:1.5;
+  color:var(--text2);
+  transition:all .12s var(--ease);user-select:none;
+}
+.opt:hover{border-color:var(--border-hover);background:var(--surface3)}
+.opt.picked{border-color:var(--accent-border);background:var(--accent-bg)}
+.opt.right{border-color:var(--accent-border);background:var(--accent-bg);color:var(--accent)}
+.opt.wrong{border-color:var(--error-border);background:var(--error-bg);color:var(--error)}
+.opt .lt{
+  font-family:var(--font-mono);font-size:.72rem;font-weight:600;
+  color:var(--text4);min-width:calc(var(--space)*1.5);
+  padding-top:1px;letter-spacing:.02em;
+  flex-shrink:0;
+}
+.opt.right .lt{color:var(--accent)}
+.opt.wrong .lt{color:var(--error)}
+
+/* ── Check button ── */
+.check-row{margin-top:calc(var(--space)*1.25);display:flex;align-items:center;gap:calc(var(--space))}
+.chk{
+  font-family:var(--font-sans);font-size:.78rem;font-weight:600;
+  padding:calc(var(--space)*.5) calc(var(--space)*1.5);
+  border-radius:calc(var(--space)*.5);
+  background:var(--text);color:var(--bg);border:none;cursor:pointer;
+  transition:opacity .15s var(--ease),transform .1s var(--ease);
+  letter-spacing:.01em;
+}
+.chk:hover{opacity:.85}
+.chk:active{transform:scale(.97)}
+.chk:disabled{opacity:.15;cursor:not-allowed}
+.chk:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+.result{font-size:.78rem;font-weight:500;letter-spacing:.01em}
+.result.pass{color:var(--accent)}
+.result.fail{color:var(--error)}
+.explain{font-size:.78rem;color:var(--text3);margin-top:calc(var(--space)*.625);line-height:1.5;display:none}
+.explain.show{display:block}
+
+/* ── Score banner ── */
+.banner{
+  text-align:center;padding:calc(var(--space)*4) calc(var(--space)*2);
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);margin-bottom:calc(var(--space)*3);display:none;
+}
+.banner h2{font-size:1.1rem;font-weight:600;margin-bottom:calc(var(--space));color:var(--text)}
+.banner .pct{font-size:3rem;font-weight:600;letter-spacing:-.03em;line-height:1}
+.banner .pct.g{color:var(--accent)}.banner .pct.m{color:#facc15}.banner .pct.b{color:var(--error)}
+.banner .sub{font-size:.8rem;color:var(--text3);margin-top:calc(var(--space)*.75)}
+
+/* ── Reset ── */
+.reset{
+  position:fixed;bottom:calc(var(--space)*2);right:calc(var(--space)*2);
+  font-family:var(--font-sans);font-size:.75rem;font-weight:500;
+  padding:calc(var(--space)*.625) calc(var(--space)*1.25);
+  border-radius:calc(var(--space)*.5);
+  background:var(--surface);border:1px solid var(--border);
+  color:var(--text3);cursor:pointer;z-index:10;
+  transition:all .15s var(--ease);letter-spacing:.01em;
+}
+.reset:hover{border-color:var(--border-hover);color:var(--text)}
+.reset:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+
+/* ── Mobile ── */
+@media(max-width:600px){
+  body{padding:calc(var(--space)*2) var(--space)}
+  .hdr h1{font-size:1.25rem}
+  .card{padding:calc(var(--space)*1.5)}
+  .opt{padding:calc(var(--space)*.75)}
+}
 </style>
 </head>
 <body>
-<div class="container">
-  <header>
-    <div>
-      <h1>☁️ Cloud Computing — Mock Exam</h1>
-      <p class="subtitle">MOD006125 · 164 questions · All 11 weeks</p>
+<div class="shell">
+  <header class="hdr">
+    <div class="hdr-left">
+      <h1>Cloud Computing — Mock Exam</h1>
+      <p class="sub">MOD006125 · 164 questions · 11 weeks</p>
     </div>
-    <button class="tbtn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+    <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme" id="themeIcon">◐</button>
   </header>
-  <div class="bar-row">
-    <div class="pbar"><div class="pfill" id="pf"></div></div>
-    <div class="stxt"><b id="sc">0</b> / <span id="tt">0</span> · <b id="pc">0%</b></div>
+
+  <div class="prog-row">
+    <div class="prog-bar"><div class="prog-fill" id="pf"></div></div>
+    <div class="prog-label"><span id="sc">0</span>/<span id="tt">0</span></div>
   </div>
-  <div class="modes">
-    <button class="mbtn active" onclick="setMode('all')" id="ma">All</button>
-    <button class="mbtn" onclick="setMode('unanswered')" id="mu">Unanswered</button>
-    <button class="mbtn" onclick="setMode('wrong')" id="mw">Wrong</button>
-    <button class="mbtn" onclick="shuffle()">🔀 Shuffle</button>
+
+  <div class="filters">
+    <button class="fbtn active" data-m="all" onclick="setM('all')">All</button>
+    <button class="fbtn" data-m="unanswered" onclick="setM('unanswered')">Unanswered</button>
+    <button class="fbtn" data-m="wrong" onclick="setM('wrong')">Incorrect</button>
+    <button class="fbtn" data-m="shuffle" onclick="shuffle()">Shuffle</button>
   </div>
-  <div class="nav" id="nav"></div>
-  <div id="scc" class="sc"></div>
+
+  <div class="week-nav" id="wnav"></div>
+  <div id="banner" class="banner"></div>
   <div id="qs"></div>
 </div>
-<button class="rbtn" onclick="resetAll()">↺ Reset</button>
+<button class="reset" onclick="resetAll()">Reset</button>
+
 <script>
 const D=[{"week": "Week 1", "title": "Introduction to Cloud Computing", "qs": [{"t": "What is cloud computing?", "o": ["Traditional on-premise computing", "A method of delivering computing services over the internet", "A type of hardware storage", "A type of software development tool"], "a": 1}, {"t": "Which of the following is NOT a characteristic of cloud computing?", "o": ["On-demand self-service", "Broad network access", "Limited scalability", "Resource pooling"], "a": 2}, {"t": "Which of the following is a benefit of cloud computing?", "o": ["Higher upfront costs", "Limited accessibility", "Increased scalability", "Limited data control"], "a": 2}, {"t": "Which cloud computing characteristic refers to the ability to access resources over the internet from anywhere?", "o": ["On-demand self-service", "Broad network access", "Resource pooling", "Rapid elasticity"], "a": 1}, {"t": "Which cloud computing characteristic refers to the ability to rapidly provision and release resources?", "o": ["On-demand self-service", "Broad network access", "Rapid elasticity", "Resource pooling"], "a": 2}, {"t": "What is the primary purpose of cloud computing cooling systems?", "o": ["To reduce energy consumption", "To prevent hardware failures", "To maintain optimal temperature and humidity levels", "To increase data transfer speeds"], "a": 2}, {"t": "Which characteristic of cloud computing allows users to access computing resources without human intervention from the service provider?", "o": ["Scalability", "On-demand self-service", "Broad network access", "Resource pooling"], "a": 1}, {"t": "Which characteristic of cloud computing refers to the ability to rapidly increase or decrease computing resources to meet demand?", "o": ["Scalability", "Accessibility", "Elasticity", "Control"], "a": 2}, {"t": "What cloud computing characteristic allows users to pay only for the resources they consume?", "o": ["On-demand self-service", "Broad network access", "Rapid elasticity", "Metered service"], "a": 3}, {"t": "Which characteristic of cloud computing allows multiple users to share and access the same pool of computing resources?", "o": ["On-demand self-service", "Broad network access", "Resource pooling", "Rapid elasticity"], "a": 2}, {"t": "What does NIST stand for in the context of cloud computing definitions?", "o": ["National Internet Service Technology", "National Institute of Standards and Technology", "Network Infrastructure Standards Toolkit", "National Information Security Team"], "a": 1}, {"t": "What is the difference between scalability and elasticity?", "o": ["They are the same thing", "Scalability is scaling up (vertical), elasticity is scaling out (horizontal)", "Elasticity is manual, scalability is automatic", "Scalability refers to cost, elasticity refers to performance"], "a": 1}, {"t": "What does PUE measure in a data centre?", "o": ["Power Usage Effectiveness — ratio of total facility power to IT equipment power", "Processing Unit Efficiency — CPU performance metric", "Public Utility Expenditure — cloud cost metric", "Performance Under Extreme load"], "a": 0}, {"t": "Which cost model does cloud computing primarily follow?", "o": ["CapEx (Capital Expenditure)", "OpEx (Operational Expenditure)", "Fixed pricing", "Free tier only"], "a": 1}]}, {"week": "Week 2", "title": "Cloud Computing Models", "qs": [{"t": "What type of cloud infrastructure is accessible to the general public and owned by a third-party provider?", "o": ["Public Cloud", "Private Cloud", "Hybrid Cloud", "Community Cloud"], "a": 0}, {"t": "Which cloud deployment model provides exclusive use to a single organization?", "o": ["Public Cloud", "Private Cloud", "Hybrid Cloud", "Community Cloud"], "a": 1}, {"t": "Which cloud model combines the advantages of public and private clouds?", "o": ["Public Cloud", "Private Cloud", "Hybrid Cloud", "Community Cloud"], "a": 2}, {"t": "Which cloud model is shared among several organizations with similar concerns?", "o": ["Public Cloud", "Private Cloud", "Hybrid Cloud", "Community Cloud"], "a": 3}, {"t": "Which of the following is a characteristic of a private cloud?", "o": ["Shared infrastructure", "Limited scalability", "Dedicated resources", "Low security"], "a": 2}, {"t": "Which cloud deployment model provides the highest level of control and security?", "o": ["Public Cloud", "Private Cloud", "Hybrid Cloud", "Community Cloud"], "a": 1}, {"t": "Which cloud model offers flexibility and cost efficiency but may raise concerns regarding data privacy?", "o": ["Public Cloud", "Private Cloud", "Hybrid Cloud", "Community Cloud"], "a": 0}, {"t": "Which of the following is a disadvantage of a public cloud?", "o": ["Limited scalability", "Higher costs", "Lower security", "Dedicated resources"], "a": 2}, {"t": "Which cloud deployment model is suitable for highly regulated industries like healthcare and finance?", "o": ["Public Cloud", "Private Cloud", "Hybrid Cloud", "Community Cloud"], "a": 1}, {"t": "Which cloud service model allows users to manage the operating system, middleware, and runtime but not the underlying infrastructure?", "o": ["IaaS", "PaaS", "SaaS", "FaaS"], "a": 1, "e": "PaaS"}, {"t": "Which cloud service model offers the highest level of scalability and flexibility but requires the most management effort from the user?", "o": ["IaaS", "PaaS", "SaaS", "FaaS"], "a": 0, "e": "IaaS"}, {"t": "Which cloud service model provides a virtualized environment where users can run applications without managing servers, storage, or networking?", "o": ["IaaS", "PaaS", "SaaS", "FaaS"], "a": 1, "e": "PaaS"}, {"t": "Which cloud service model offers the most customization for developers who want full control over their application stack?", "o": ["IaaS", "PaaS", "SaaS", "FaaS"], "a": 0, "e": "IaaS"}, {"t": "Which cloud service model is typically used for delivering software applications over the internet on a subscription basis?", "o": ["IaaS", "PaaS", "SaaS", "FaaS"], "a": 2, "e": "SaaS"}, {"t": "Which cloud service model abstracts away the underlying infrastructure, runtime, and middleware, letting developers focus solely on coding?", "o": ["IaaS", "PaaS", "SaaS", "FaaS"], "a": 1, "e": "PaaS"}, {"t": "Which cloud service model is suitable for organizations that want to outsource their entire IT infrastructure?", "o": ["IaaS", "PaaS", "SaaS", "FaaS"], "a": 0, "e": "IaaS"}, {"t": "Which cloud service model provides a comprehensive development and deployment environment for web and mobile apps?", "o": ["IaaS", "PaaS", "SaaS", "FaaS"], "a": 1, "e": "PaaS"}, {"t": "Which cloud service model is often employed for deploying databases and message queues without managing infrastructure?", "o": ["IaaS", "PaaS", "SaaS", "FaaS"], "a": 1, "e": "PaaS"}, {"t": "Which cloud service model is most suitable for organizations that want to focus solely on developing and deploying applications without infrastructure management?", "o": ["IaaS", "PaaS", "SaaS", "FaaS"], "a": 1, "e": "PaaS"}, {"t": "Which cloud service model is suitable for standardized business applications like email, CRM, and document collaboration?", "o": ["IaaS", "PaaS", "SaaS", "FaaS"], "a": 2, "e": "SaaS"}, {"t": "Which of the following is an example of SaaS?", "o": ["Amazon EC2", "Google App Engine", "Dropbox", "VirtualBox"], "a": 2}, {"t": "AWS Snowball is designed to solve which cloud challenge?", "o": ["Security compliance", "Large-scale data transfer", "Application scaling", "Real-time analytics"], "a": 1}]}, {"week": "Week 3", "title": "Cloud Computing and Virtualisation", "qs": [{"t": "What is cloud virtualization?", "o": ["Running multiple cloud services simultaneously", "Simulating hardware and software to appear as multiple instances", "Distributing data across multiple cloud servers", "Enabling cloud computing without virtualization"], "a": 1}, {"t": "Which of the following is NOT a benefit of cloud virtualization?", "o": ["Improved resource utilization", "Increased scalability", "Reduced security", "Enhanced flexibility"], "a": 2}, {"t": "What is a hypervisor in cloud virtualization?", "o": ["A hardware device for networking in the cloud", "A software layer that manages virtual machines", "A protocol for transferring data between cloud servers", "A security mechanism for cloud environments"], "a": 1}, {"t": "Which type of virtualization allows multiple operating systems to run on a single physical machine simultaneously?", "o": ["Network virtualization", "Storage virtualization", "Server virtualization", "Desktop virtualization"], "a": 2}, {"t": "What is the purpose of live migration in cloud virtualization?", "o": ["Moving virtual machines between physical servers without downtime", "Upgrading the hypervisor software", "Scaling up cloud resources automatically", "Encrypting data during transmission"], "a": 0}, {"t": "Which virtualization technique provides a single interface to manage multiple storage devices?", "o": ["Network virtualization", "Storage virtualization", "Server virtualization", "Application virtualization"], "a": 1}, {"t": "Which of the following is a type of cloud deployment model that benefits from virtualization?", "o": ["Public cloud", "Private cloud", "Hybrid cloud", "All of the above"], "a": 3}, {"t": "What is the primary goal of network virtualization in cloud computing?", "o": ["Reducing latency", "Consolidating physical network equipment", "Simplifying network management", "Ensuring data confidentiality"], "a": 2}, {"t": "Which virtualization technique allows multiple VMs to share the same physical network interface?", "o": ["Server virtualization", "Network virtualization", "Storage virtualization", "Desktop virtualization"], "a": 1}, {"t": "Which virtualization technique abstracts physical storage resources and presents them as logical units?", "o": ["Server virtualization", "Network virtualization", "Storage virtualization", "Application virtualization"], "a": 2}, {"t": "Which virtualization technology allows users to access a remote desktop environment from anywhere?", "o": ["Server virtualization", "Network virtualization", "Storage virtualization", "Desktop virtualization"], "a": 3}, {"t": "Which cloud computing characteristic is closely associated with cloud virtualization?", "o": ["On-demand self-service", "Broad network access", "Resource pooling", "Rapid elasticity"], "a": 2}, {"t": "What is a Type 1 hypervisor?", "o": ["A hypervisor installed on top of a host operating system", "A hypervisor that runs directly on the physical hardware", "A hypervisor used for testing and development purposes", "A hypervisor designed for mobile devices"], "a": 1}, {"t": "What is the primary difference between Type 1 and Type 2 hypervisors?", "o": ["Type 1 are for servers, Type 2 are for desktops", "Type 1 run directly on hardware, Type 2 run on top of an operating system", "Type 1 are free, Type 2 are paid", "Type 1 support fewer VMs than Type 2"], "a": 1}, {"t": "Which type of hypervisor typically provides better performance and scalability?", "o": ["Type 1 hypervisor", "Type 2 hypervisor", "Both offer similar performance", "Depends on use case and configuration"], "a": 0}, {"t": "Which statement about the speed of Type 1 and Type 2 hypervisors is correct?", "o": ["Type 1 are generally slower than Type 2", "Type 2 are generally slower than Type 1", "Both offer similar speed", "Speed depends solely on underlying hardware"], "a": 1}, {"t": "What is the primary difference between full virtualization and para-virtualization?", "o": ["Full virtualization emulates hardware completely, para-virtualization modifies the guest OS", "Full virtualization does not require modifications to the guest OS, para-virtualization does", "Full virtualization only supports certain guest OS", "Full virtualization is slower due to increased overhead"], "a": 1}, {"t": "When would full virtualization be more suitable than para-virtualization?", "o": ["When the guest operating system cannot be modified", "When the main goal is to achieve high performance", "When the host system requires complete isolation", "When the guest OS is Linux-based"], "a": 0}, {"t": "Which of the following is an example of a Type 1 (bare-metal) hypervisor?", "o": ["Oracle VirtualBox", "VMware Workstation", "VMware ESXi", "Parallels Desktop"], "a": 2}, {"t": "In full virtualization, are the guest operating systems aware they are running in a virtualized environment?", "o": ["Yes", "No", "Depends on the configuration", "Not applicable"], "a": 1, "e": "Guest OSes are unaware they are in a virtualised environment."}]}, {"week": "Week 4", "title": "Cloud Storage", "qs": [{"t": "Which storage type typically offers the fastest data access speeds?", "o": ["Block storage", "Object storage", "File storage", "Direct storage"], "a": 3}, {"t": "Which storage type is best suited for high-performance computing (HPC) applications requiring low-latency access?", "o": ["Direct storage", "Object storage", "File storage", "Cloud storage"], "a": 0}, {"t": "In which use case would block storage be most appropriate?", "o": ["Storing multimedia files", "Hosting a database with frequent read/write operations", "Storing backup archives", "Hosting a website with static content"], "a": 1}, {"t": "Which storage type is ideal for storing large volumes of unstructured data like videos and images in a scalable manner?", "o": ["Cloud storage", "Block storage", "Object storage", "File storage"], "a": 2}, {"t": "Which storage type is often utilized for storing virtual machine snapshots and disk images?", "o": ["Object storage", "Block storage", "File storage", "Direct storage"], "a": 1}, {"t": "Which storage type typically offers the lowest cost per gigabyte for long-term data retention?", "o": ["Block storage", "Object storage", "File storage", "Direct storage"], "a": 1}, {"t": "Which storage type often incurs additional charges based on the number of requests made to retrieve data?", "o": ["Object storage", "Block storage", "File storage", "Direct storage"], "a": 0}, {"t": "In which use case would file storage likely result in the highest storage costs?", "o": ["Storing large binary files for a software development project", "Hosting a content management system for a blog website", "Storing raw data collected from IoT devices for analysis", "Storing compressed archives of historical financial records"], "a": 3}, {"t": "What does the acronym \"IOPS\" stand for in the context of storage systems?", "o": ["Input/Output Processing System", "Input/Output Performance Standard", "Input/Output Operations Per Second", "Internal Output Process System"], "a": 2}, {"t": "Which factor primarily affects IOPS performance in storage systems?", "o": ["Network bandwidth", "Disk space availability", "Processor speed", "Disk latency and response time"], "a": 3}, {"t": "If a storage system with a 10 ms average latency can handle 200 IOPS, what is its average response time?", "o": ["0.5 ms", "5 ms", "50 ms", "500 ms"], "a": 1}, {"t": "Object storage uses what structure to organise data?", "o": ["Folder hierarchy", "Volumes", "Buckets with flat structure and metadata", "Tables and rows"], "a": 2}, {"t": "Which type of storage is ephemeral (temporary) and lost if the compute resource is terminated?", "o": ["File storage", "Block storage", "Object storage", "Direct-attached storage"], "a": 3}, {"t": "Block storage connects to servers via what type of connection?", "o": ["Ethernet", "Optical fibre (Fibre Channel)", "USB", "Wi-Fi"], "a": 1}, {"t": "Which AWS service provides object storage?", "o": ["Amazon EBS", "Amazon EFS", "Amazon S3", "Amazon RDS"], "a": 2}]}, {"week": "Week 5", "title": "Cloud Databases", "qs": [{"t": "Which database type is also known as SQL databases?", "o": ["Relational databases", "Non-relational databases", "Graph databases", "Key-value stores"], "a": 0}, {"t": "Which database type is best suited for highly structured data with predefined schemas?", "o": ["Relational databases", "Non-relational databases", "Graph databases", "Columnar databases"], "a": 0}, {"t": "Which database type allows for flexible schemas and is ideal for semi-structured or unstructured data?", "o": ["Relational databases", "Non-relational databases", "Graph databases", "Document databases"], "a": 1}, {"t": "Which database type is often used for social networks, recommendation engines, and network analysis?", "o": ["Relational databases", "Non-relational databases", "Graph databases", "Key-value stores"], "a": 2}, {"t": "Which database type typically uses tables, rows, and columns to organize data?", "o": ["Relational databases", "Non-relational databases", "Graph databases", "Document databases"], "a": 0}, {"t": "What does CRUD stand for?", "o": ["Create, Read, Update, Delete", "Copy, Retrieve, Upload, Download", "Configure, Run, Update, Deploy", "Compute, Replicate, Upload, Distribute"], "a": 0}, {"t": "Which of the following is a non-relational (NoSQL) database service offered by AWS?", "o": ["Amazon RDS", "Amazon Aurora", "Amazon DynamoDB", "Amazon Redshift"], "a": 2}, {"t": "Why is data replication important in cloud databases?", "o": ["It reduces storage costs", "It improves fault tolerance and reduces latency", "It eliminates the need for backups", "It simplifies the database schema"], "a": 1}, {"t": "What does ACID compliance ensure in relational databases?", "o": ["High availability and scalability", "Atomicity, Consistency, Isolation, and Durability of transactions", "Automatic indexing and compression", "Access control and identity management"], "a": 1}, {"t": "Which type of NoSQL database stores data as JSON-like nested documents?", "o": ["Key-value store", "Column-family store", "Document data store", "Graph database"], "a": 2}]}, {"week": "Week 6", "title": "Cloud Security, Identity & Governance", "qs": [{"t": "Under the Shared Responsibility Model, which of the following is the customer's responsibility?", "o": ["Securing the physical data centres", "Patching the guest operating system", "Maintaining network hardware", "Decommissioning storage devices"], "a": 1}, {"t": "Which IAM entity is best suited for an EC2 instance that needs to access an S3 bucket?", "o": ["IAM User", "IAM Group", "IAM Role", "Root User"], "a": 2}, {"t": "What is the primary function of AWS CloudTrail?", "o": ["To block DDoS attacks", "To log API calls and user activity for auditing", "To encrypt data at rest", "To cache content at the edge"], "a": 1}, {"t": "Which principle states that users should be granted only the minimum permissions needed?", "o": ["Principle of Maximum Authority", "Principle of Least Privilege", "Principle of Shared Responsibility", "Principle of Elasticity"], "a": 1}, {"t": "Which service is used to centrally manage multiple AWS accounts and apply Service Control Policies?", "o": ["AWS IAM", "AWS Config", "AWS Organizations", "AWS Artifact"], "a": 2}, {"t": "In the context of the CIA triad, what does \"Integrity\" ensure?", "o": ["Data is not disclosed to unauthorised users", "Data is available when needed", "Data has not been altered or tampered with", "Data is encrypted at rest"], "a": 2}, {"t": "What does the \"C\" in the CIA triad stand for?", "o": ["Compliance", "Cloud", "Confidentiality", "Configuration"], "a": 2}, {"t": "Under the Shared Responsibility Model, who is responsible for the security *of* the cloud?", "o": ["The customer", "The cloud provider (AWS)", "Both equally", "Third-party auditors"], "a": 1}, {"t": "What is the difference between Security Groups and NACLs in AWS?", "o": ["Security Groups are stateless, NACLs are stateful", "Security Groups operate at the instance level (stateful), NACLs operate at the subnet level (stateless)", "They are identical", "NACLs only apply to outbound traffic"], "a": 1}, {"t": "What does AWS KMS provide?", "o": ["Kubernetes management", "Key Management Service for creating and controlling encryption keys", "Kinesis monitoring statistics", "Knowledge management system"], "a": 1}, {"t": "What type of firewall is a Security Group?", "o": ["Stateless", "Stateful", "Network-layer only", "Application-layer only"], "a": 1}, {"t": "AWS Shield protects against which type of attack?", "o": ["SQL injection", "Cross-site scripting", "DDoS attacks", "Social engineering"], "a": 2}]}, {"week": "Week 7", "title": "Migrating to the Cloud", "qs": [{"t": "What are the two broad approaches to cloud migration?", "o": ["Build and Deploy", "Lift-and-shift vs Re-architect", "Manual vs Automated", "Public vs Private"], "a": 1}, {"t": "What is \"lift and shift\" migration?", "o": ["Building a new application from scratch", "Moving an existing application to the cloud with minimal changes", "Transferring data using physical devices", "Converting from SaaS to IaaS"], "a": 1}, {"t": "Why is re-architecting risky for large legacy codebases?", "o": ["It's always cheaper", "It can take nearly as long as the original development, creates dual maintenance, and risks functionality changes", "It's simpler than lift-and-shift", "Cloud providers don't support it"], "a": 1}, {"t": "What are the \"6 Rs\" of cloud migration?", "o": ["Rehost, Replatform, Refactor, Repurchase, Retire, Retain", "Run, Replicate, Restore, Reconfigure, Retry, Return", "Read, Revise, Rebuild, Redeploy, Retest, Release", "Reboot, Reinstall, Reclaim, Review, Redo, Resubmit"], "a": 0}, {"t": "What is the Retry Pattern used for in distributed systems?", "o": ["Ignoring errors permanently", "Automatically retrying failed requests to handle transient network failures", "Replacing failed servers", "Compressing network data"], "a": 1}, {"t": "What is the Circuit Breaker Pattern?", "o": ["A physical device to protect servers", "A pattern that stops calling a failing service to prevent cascading failures", "A load-balancing algorithm", "An encryption mechanism"], "a": 1}, {"t": "What does Infrastructure as Code (IaC) enable?", "o": ["Manual server configuration", "Automated, repeatable provisioning of infrastructure using code (e.g., Terraform)", "Writing code without servers", "Free cloud hosting"], "a": 1}, {"t": "What are the \"Fallacies of Distributed Computing\"?", "o": ["Design patterns for microservices", "False assumptions developers make (e.g., network is reliable, latency is zero, bandwidth is infinite)", "Security vulnerabilities", "Database normalisation rules"], "a": 1}]}, {"week": "Week 8", "title": "Cloud-Native Architecture", "qs": [{"t": "What is a primary advantage of microservices over monolithic architecture?", "o": ["Simpler deployment for small applications", "Independent scaling of individual components", "Reduced network latency between components", "Single technology stack requirement"], "a": 1}, {"t": "Which technology virtualises the operating system rather than the hardware?", "o": ["Hypervisor", "Virtual Machine", "Container", "VPC"], "a": 2}, {"t": "What does \"Serverless\" mean in the context of AWS Lambda?", "o": ["The application runs without any hardware", "The user manages the physical servers remotely", "The user does not provision or manage the underlying servers", "The application can only run offline"], "a": 2}, {"t": "Which AWS service is best suited for decoupling microservices using a message queue?", "o": ["Amazon EC2", "Amazon RDS", "Amazon SQS", "Amazon SNS"], "a": 2}, {"t": "Which design pattern is used to prevent cascading failures by stopping calls to a failing service?", "o": ["Singleton Pattern", "Circuit Breaker Pattern", "Repository Pattern", "Observer Pattern"], "a": 1}, {"t": "Amazon EKS is a managed service for which open-source platform?", "o": ["Docker Swarm", "Apache Hadoop", "Kubernetes", "Terraform"], "a": 2}, {"t": "What is the key difference between containers and virtual machines?", "o": ["Containers are heavier and slower", "Containers virtualise the OS and share the host kernel; VMs virtualise the hardware with separate guest OSes", "VMs are more portable than containers", "They are the same"], "a": 1}, {"t": "What is the \"Strangler Pattern\" in cloud migration?", "o": ["Shutting down a system abruptly", "Gradually replacing pieces of a legacy monolith with microservices", "Throttling network traffic", "Compressing old databases"], "a": 1}, {"t": "AWS Lambda functions are triggered by which of the following?", "o": ["Only API Gateway requests", "Only S3 events", "Events such as S3 uploads, API Gateway requests, SQS messages, and scheduled events", "Only manual invocation"], "a": 2}, {"t": "What does SNS stand for and what does it do?", "o": ["Simple Notification Service — pub/sub messaging that pushes messages to subscribers", "Secure Network Service — encrypts network traffic", "Server Node Scheduling — manages EC2 fleets", "Storage Naming System — manages S3 bucket names"], "a": 0}]}, {"week": "Week 9", "title": "Networking in Cloud Computing", "qs": [{"t": "Which of the following is NOT a characteristic of a private network?", "o": ["Secure access", "Limited accessibility", "Public availability", "Controlled environment"], "a": 2}, {"t": "Which type of IP address is typically used within a private network?", "o": ["Public IP address", "Dynamic IP address", "Static IP address", "Private IP address"], "a": 3}, {"t": "What is the purpose of a firewall in a private network?", "o": ["To prevent unauthorized access", "To increase network speed", "To allocate IP addresses", "To manage DNS queries"], "a": 0}, {"t": "What is the advantage of using a private network over a public network?", "o": ["Higher bandwidth", "Lower cost", "Improved security", "Global accessibility"], "a": 2}, {"t": "Which device is commonly used to connect a private network to the internet while providing security?", "o": ["Modem", "Router", "Switch", "Hub"], "a": 1}, {"t": "Which of the following is a common application of a private network?", "o": ["Social media platforms", "Online shopping websites", "Corporate intranets", "Video streaming services"], "a": 2}, {"t": "How many IP addresses are available in a CIDR block with a /27 prefix?", "o": ["8", "16", "32", "64"], "a": 2, "e": "** *(Note: 2^(32-27) = 2^5 = 32)"}, {"t": "Which IP address range is reserved for private networks according to RFC 1918?", "o": ["10.0.0.0 – 10.255.255.255", "172.16.0.0 – 172.31.255.255", "192.168.0.0 – 192.168.255.255", "All of the above"], "a": 3}, {"t": "Which CIDR notation represents the largest number of available IP addresses?", "o": ["/24", "/28", "/16", "/20"], "a": 2}, {"t": "What is the purpose of an IP address in computer networking?", "o": ["To identify the manufacturer of the device", "To locate the physical address of the device", "To uniquely identify a device on a network", "To determine the age of the device"], "a": 2}, {"t": "How many bits are used to represent an IPv4 address?", "o": ["16 bits", "32 bits", "64 bits", "128 bits"], "a": 1}, {"t": "Which of the following is a valid IPv4 address?", "o": ["2001:0db8:85a3:0000:0000:8a2e:0370:7334", "192.168.1.256", "FE80:CD00:0000:0CDE:1257:0000:211E:729C", "172.16.0.1"], "a": 3}, {"t": "What is a subnet?", "o": ["A network with a single IP address", "A division of a larger network into smaller networks", "A network connected via satellite", "A network without any routers"], "a": 1}, {"t": "What is the purpose of subnetting?", "o": ["To increase the speed of data transmission", "To decrease the number of available IP addresses", "To reduce network congestion", "To efficiently allocate IP addresses and manage network traffic"], "a": 3}, {"t": "What is the primary purpose of ingress and egress rules in network security?", "o": ["To monitor network bandwidth usage", "To filter incoming and outgoing traffic", "To optimize network performance", "To allocate IP addresses dynamically"], "a": 1}, {"t": "In a firewall configuration, what does an ingress rule typically specify?", "o": ["Allowed outgoing traffic", "Allowed incoming traffic", "Blocked outgoing traffic", "Blocked incoming traffic"], "a": 1}, {"t": "What is the primary function of DHCP in a network?", "o": ["To assign static IP addresses to devices", "To dynamically assign IP addresses to devices", "To encrypt data transmission over the network", "To establish secure connections between devices"], "a": 1}, {"t": "What is the purpose of a gateway in a network?", "o": ["To connect devices within the same subnet", "To connect devices from different networks", "To encrypt network traffic", "To manage network bandwidth"], "a": 1}, {"t": "What is the role of a route table in networking?", "o": ["To store information about IP addresses", "To encrypt data transmitted over the network", "To dynamically assign IP addresses", "To determine the best path for data forwarding"], "a": 3}, {"t": "What information is typically stored in a route table entry?", "o": ["Source IP address", "Destination IP address", "Subnet mask", "MAC address"], "a": 1}, {"t": "How many bits are used in an IPv6 address?", "o": ["32 bits", "64 bits", "128 bits", "256 bits"], "a": 2}, {"t": "What is the difference between a whitelist and a blacklist firewall approach?", "o": ["Whitelist allows everything by default, blacklist blocks everything by default", "Whitelist defines what is allowed (everything else blocked), blacklist defines what is blocked (everything else allowed)", "They are the same thing", "Whitelist is for ingress only, blacklist is for egress only"], "a": 1}, {"t": "Which firewall approach provides better security?", "o": ["Blacklist", "Whitelist", "Neither — they are equal", "It depends on network speed"], "a": 1}]}, {"week": "Week 10", "title": "Introduction to Cloud Architecting", "qs": [{"t": "Which of the following best describes cloud architecting as defined in the AWS module?", "o": ["The design of traditional on-premises IT infrastructure", "The process of applying cloud best practices to build scalable, highly available solutions using AWS services", "A method for manually configuring data centres", "An approach to exclusively managing physical servers"], "a": 1}, {"t": "What is the primary purpose of the AWS Well-Architected Tool?", "o": ["To provide access to AWS best practices", "To enforce security policies automatically", "To review and measure workload architectures against AWS best practices", "To optimise pricing for AWS services"], "a": 2}, {"t": "Which pillar of the AWS Well-Architected Framework focuses on running and monitoring systems to deliver business value?", "o": ["Security", "Operational Excellence", "Cost Optimization", "Sustainability"], "a": 1}, {"t": "Which pillar is primarily concerned with implementing a strong identity foundation and applying security at all layers?", "o": ["Reliability", "Performance Efficiency", "Security", "Cost Optimization"], "a": 2}, {"t": "Which of the following is a best practice for resource management when building solutions on AWS?", "o": ["Manually configuring each resource", "Keeping resources permanently provisioned", "Deploying updates directly to production without testing", "Treating resources as disposable and automating deployments"], "a": 3}, {"t": "Which AWS global infrastructure component is defined as a geographical area that usually comprises two or more Availability Zones?", "o": ["Availability Zone", "Local Zone", "Region", "Edge Location"], "a": 2}, {"t": "What is the primary purpose of using Availability Zones in AWS architectures?", "o": ["To provide a single point of failure", "To ensure fault isolation and resiliency by replicating data across physically separate locations", "To reduce latency by caching content closer to users", "To serve as a local extension for latency-sensitive applications"], "a": 1}, {"t": "Which of the following best describes a Local Zone in AWS?", "o": ["A geographical region with multiple Availability Zones", "A dedicated data centre for high-security operations", "A virtualised environment for running cloud applications", "An extension of an AWS Region that places compute, storage, and other services closer to end users"], "a": 3}, {"t": "Which design trade-off is commonly evaluated when architecting solutions on AWS?", "o": ["The trade-off between consistency and latency to achieve higher performance", "The trade-off between physical server count and virtualization complexity", "The trade-off between cloud and on-premise deployment exclusively", "The trade-off between manual and automated provisioning only"], "a": 0}, {"t": "Which AWS service practice is recommended to enhance security in cloud architectures?", "o": ["Using multi-factor authentication (MFA) for access control", "Relying solely on user passwords for authentication", "Disabling logging to improve performance", "Exposing administrative ports to the public internet"], "a": 0}, {"t": "How many pillars does the AWS Well-Architected Framework have?", "o": ["4", "5", "6", "7"], "a": 2, "e": "Operational Excellence, Security, Reliability, Performance Efficiency, Cost Optimization, and Sustainability"}, {"t": "What does \"mechanical sympathy\" mean in the context of the Performance Efficiency pillar?", "o": ["Being kind to servers", "Using a tool or system with an understanding of how it operates best", "Optimising for lowest cost only", "Automating all processes"], "a": 1}, {"t": "What is the anti-pattern for loosely coupled components?", "o": ["Using load balancers between layers", "Tightly coupling web servers directly to application servers", "Using message queues", "Using Amazon SQS"], "a": 1}, {"t": "What does \"treating resources as disposable\" mean?", "o": ["Never terminating instances", "Thinking of infrastructure as software — easily replaceable, stoppable, and recreatable", "Using only free-tier resources", "Ignoring cost optimisation"], "a": 1}, {"t": "What is caching used for in AWS architectures?", "o": ["Increasing storage capacity", "Minimising redundant data retrieval operations, improving performance and cost", "Encrypting data at rest", "Managing IAM roles"], "a": 1}]}, {"week": "Week 11", "title": "Module Revision", "qs": [{"t": "Match the correct service model to the description: \"You manage Data & App only, the provider manages everything else.\"", "o": ["IaaS", "PaaS", "SaaS", "FaaS"], "a": 1}, {"t": "Which NIST essential characteristic states that usage is monitored and billed?", "o": ["On-demand self-service", "Broad network access", "Resource pooling", "Measured service"], "a": 3}, {"t": "A Type 1 hypervisor runs directly on hardware. What is an example?", "o": ["VirtualBox", "VMware ESXi", "VMware Workstation", "Parallels Desktop"], "a": 1}, {"t": "Which storage type uses buckets, has a flat structure, and is accessed via API?", "o": ["Block storage", "File storage", "Object storage", "Direct-attached storage"], "a": 2}, {"t": "Amazon RDS is an example of which type of database service?", "o": ["Non-relational (NoSQL)", "Graph database", "Relational (SQL)", "Key-value store"], "a": 2}, {"t": "Under the Shared Responsibility Model, who is responsible for encrypting customer data?", "o": ["AWS", "The customer", "Both equally", "Neither"], "a": 1}, {"t": "Which migration strategy involves moving VMs to the cloud as-is?", "o": ["Refactor", "Rehost (lift and shift)", "Repurchase", "Retire"], "a": 1}, {"t": "What are containers best described as?", "o": ["Full virtual machines with their own OS", "Lightweight, portable packages that share the host OS kernel", "Physical servers", "Database instances"], "a": 1}, {"t": "In AWS networking, a VPC is best described as:", "o": ["A physical data centre", "An isolated virtual network in the cloud", "A type of storage", "A monitoring tool"], "a": 1}, {"t": "When justifying a design choice in an exam, you should reference at least how many pillars of the Well-Architected Framework?", "o": ["1", "2", "3", "All 6"], "a": 2, "e": "The revision slides state \"be able to justify design choices using at least three pillars\""}, {"t": "Which pillar focuses on minimising environmental impact?", "o": ["Cost Optimisation", "Sustainability", "Operational Excellence", "Performance Efficiency"], "a": 1}, {"t": "What does \"Refactor\" mean in the 6 Rs of migration?", "o": ["Lift and shift", "Re-architect for cloud-native (e.g., monolith to microservices)", "Buy a SaaS replacement", "Turn off unneeded services"], "a": 1}, {"t": "NACLs are ______ firewalls; Security Groups are ______ firewalls.", "o": ["Stateful; Stateless", "Stateless; Stateful", "Both stateless", "Both stateful"], "a": 1}, {"t": "A larger CIDR prefix number (e.g., /28 vs /16) means:", "o": ["More IP addresses", "Fewer IP addresses", "The same number of IPs", "Better security"], "a": 1}, {"t": "Which AWS service provides DDoS protection?", "o": ["AWS CloudTrail", "AWS Shield", "AWS KMS", "AWS Organizations"], "a": 1}]}];
 let ans=0,cor=0,tot=0;const S=[];let mode='all';
+
+function e(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
+
 function init(){
-  const n=document.getElementById('nav'),c=document.getElementById('qs');let qi=0;
+  const n=document.getElementById('wnav'),c=document.getElementById('qs');let qi=0;
   D.forEach((sec,si)=>{
-    const b=document.createElement('button');b.textContent='W'+(si+1);b.onclick=()=>document.getElementById('w'+si).scrollIntoView({behavior:'smooth'});n.appendChild(b);
-    const d=document.createElement('div');d.className='ws';d.id='w'+si;
-    const t=document.createElement('div');t.className='wt';t.innerHTML=sec.week+'<small>'+sec.title+'</small>';d.appendChild(t);
-    sec.qs.forEach((q,qj)=>{
-      const idx=qi++;tot++;S[idx]={s:null,d:false,el:null};
-      const e=document.createElement('div');e.className='q';e.id='q'+idx;
-      e.innerHTML='<div class="qn">Q'+(idx+1)+'</div><div class="qt">'+e2(q.t)+'</div><div class="opts">'+q.o.map((o,k)=>'<div class="opt" data-q="'+idx+'" data-o="'+k+'" onclick="sl('+idx+','+k+')"><span class="lt">'+'ABCD'[k]+'.</span><span>'+e2(o)+'</span></div>').join('')+'</div><button class="cbtn" id="cb'+idx+'" onclick="ck('+idx+')" disabled>Check</button><div class="fb" id="fb'+idx+'"></div><div class="ex" id="ex'+idx+'">'+e2(q.e||'')+'</div>';
-      S[idx].el=e;d.appendChild(e);
+    const b=document.createElement('button');b.className='wnav';b.textContent='W'+(si+1);
+    b.title=sec.week+' — '+sec.title;
+    b.onclick=()=>document.getElementById('s'+si).scrollIntoView({behavior:'smooth',block:'start'});
+    n.appendChild(b);
+    const d=document.createElement('div');d.className='sec';d.id='s'+si;
+    const h=document.createElement('div');h.className='sec-hd';
+    h.innerHTML=sec.week+'<span>'+sec.title+'</span>';d.appendChild(h);
+    sec.qs.forEach((q)=>{
+      const idx=qi++;tot++;S[idx]={p:null,d:false};
+      const el=document.createElement('div');el.className='card';el.id='q'+idx;
+      el.innerHTML='<div class="card-num">Question '+(idx+1)+'</div><div class="card-q">'+e(q.t)+'</div><div class="opts">'+q.o.map((o,k)=>'<div class="opt" data-q="'+idx+'" data-o="'+k+'" onclick="pick('+idx+','+k+')" role="button" tabindex="0"><span class="lt">'+'ABCD'[k]+'</span><span>'+e(o)+'</span></div>').join('')+'</div><div class="check-row"><button class="chk" id="c'+idx+'" onclick="check('+idx+')" disabled>Check</button><span class="result" id="r'+idx+'"></span></div><div class="explain" id="x'+idx+'">'+e(q.e||'')+'</div>';
+      d.appendChild(el);
     });c.appendChild(d);
-  });document.getElementById('tt').textContent=tot;am();
+  });document.getElementById('tt').textContent=tot;updTheme();apM();
 }
-function e2(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
+
 function gQ(i){let n=i;for(const s of D)for(const q of s.qs){if(!n--)return q}return null}
-function sl(qi,oi){if(S[qi].d)return;S[qi].s=oi;document.querySelectorAll('.opt[data-q="'+qi+'"]').forEach(e=>e.classList.remove('sel'));document.querySelector('.opt[data-q="'+qi+'"][data-o="'+oi+'"]').classList.add('sel');document.getElementById('cb'+qi).disabled=false}
-function ck(qi){
-  if(S[qi].d||S[qi].s===null)return;S[qi].d=true;const q=gQ(qi),ok=q.a===S[qi].s;ans++;if(ok)cor++;
-  document.querySelectorAll('.opt[data-q="'+qi+'"]').forEach(e=>{const o=+e.dataset.o;if(o===q.a)e.classList.add('corr');if(o===S[qi].s&&!ok)e.classList.add('wro');e.style.cursor='default'});
-  const f=document.getElementById('fb'+qi);f.textContent=ok?'✓ Correct':'✗ Incorrect';f.className='fb sh '+(ok?'c':'w');
-  if(q.e){const x=document.getElementById('ex'+qi);x.textContent=q.e;x.classList.add('sh')}
-  document.getElementById('cb'+qi).style.display='none';
-  document.getElementById('q'+qi).classList.add(ok?'ok':'nok');up();if(ans===tot)showSc();
+
+function pick(qi,oi){if(S[qi].d)return;S[qi].p=oi;
+  document.querySelectorAll('.opt[data-q="'+qi+'"]').forEach(e=>e.classList.remove('picked'));
+  document.querySelector('.opt[data-q="'+qi+'"][data-o="'+oi+'"]').classList.add('picked');
+  document.getElementById('c'+qi).disabled=false;
 }
-function up(){document.getElementById('sc').textContent=cor;document.getElementById('pc').textContent=ans?Math.round(cor/ans*100)+'%':'0%';document.getElementById('pf').style.width=(ans/tot*100)+'%'}
-function showSc(){const p=Math.round(cor/tot*100),c=p>=70?'bg':p>=50?'bo':'bl';document.getElementById('scc').innerHTML='<h2>Exam Complete!</h2><div class="big '+c+'">'+p+'%</div><p style="color:var(--text3);margin-top:.5rem">'+cor+' / '+tot+' correct</p>';document.getElementById('scc').style.display='block'}
-function setMode(m){mode=m;document.querySelectorAll('.mbtn').forEach(b=>b.classList.remove('active'));document.getElementById(m==='all'?'ma':m==='unanswered'?'mu':'mw').classList.add('active');am()}
-function am(){S.forEach((s,i)=>{const e=s.el;if(!e)return;e.style.display=mode==='all'?'':mode==='unanswered'?(s.d?'none':''):(s.d&&s.s!==gQ(i).a)?'':'none'})}
-function shuffle(){const c=document.getElementById('qs'),a=Array.from(c.querySelectorAll('.q'));for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));c.appendChild(a[j]);a.splice(j,1)}document.querySelectorAll('.ws').forEach(s=>{const vis=[...s.querySelectorAll('.q')].some(q=>q.style.display!=='none');s.style.display=vis?'':'none'})}
-function resetAll(){S.forEach(s=>{s.s=null;s.d=false;s.el.classList.remove('ok','nok')});ans=0;cor=0;document.querySelectorAll('.opt').forEach(e=>{e.className='opt';e.style.cursor='pointer'});document.querySelectorAll('.fb').forEach(e=>e.className='fb');document.querySelectorAll('.ex').forEach(e=>e.classList.remove('sh'));document.querySelectorAll('.cbtn').forEach(e=>{e.style.display='';e.disabled=true});document.getElementById('scc').style.display='none';mode='all';document.querySelectorAll('.mbtn').forEach(b=>b.classList.remove('active'));document.getElementById('ma').classList.add('active');const c=document.getElementById('qs'),secs=Array.from(c.querySelectorAll('.ws'));secs.sort((a,b)=>+a.id.replace('w','')-+b.id.replace('w',''));secs.forEach(s=>{s.style.display='';c.appendChild(s)});am();up()}
-function toggleTheme(){const l=document.documentElement.getAttribute('data-theme')==='light';document.documentElement.setAttribute('data-theme',l?'dark':'light');document.querySelector('.tbtn').textContent=l?'🌙':'☀️';localStorage.setItem('t',l?'dark':'light')}
-if(localStorage.getItem('t')==='light'){document.documentElement.setAttribute('data-theme','light');document.querySelector('.tbtn').textContent='☀️'}
+
+function check(qi){
+  if(S[qi].d||S[qi].p===null)return;S[qi].d=true;
+  const q=gQ(qi),ok=q.a===S[qi].p;ans++;if(ok)cor++;
+  document.querySelectorAll('.opt[data-q="'+qi+'"]').forEach(el=>{
+    const o=+el.dataset.o;
+    if(o===q.a)el.classList.add('right');
+    if(o===S[qi].p&&!ok)el.classList.add('wrong');
+    el.style.cursor='default';el.removeAttribute('tabindex');
+  });
+  const r=document.getElementById('r'+qi);
+  r.textContent=ok?'✓ Correct':'✗ Incorrect';r.className='result '+(ok?'pass':'fail');
+  if(q.e){const x=document.getElementById('x'+qi);x.textContent=q.e;x.classList.add('show')}
+  document.getElementById('c'+qi).style.display='none';
+  document.getElementById('q'+qi).classList.add('solved',ok?'ok':'fail');
+  upd();if(ans===tot)showBanner();
+}
+
+function upd(){document.getElementById('sc').textContent=cor;document.getElementById('pf').style.width=(ans/tot*100)+'%'}
+
+function showBanner(){
+  const p=Math.round(cor/tot*100),c=p>=70?'g':p>=50?'m':'b';
+  document.getElementById('banner').innerHTML='<h2>Exam Complete</h2><div class="pct '+c+'">'+p+'%</div><div class="sub">'+cor+' of '+tot+' correct</div>';
+  document.getElementById('banner').style.display='block';
+  document.getElementById('banner').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function setM(m){mode=m;
+  if(m!=='shuffle')document.querySelectorAll('.fbtn').forEach(b=>b.classList.toggle('active',b.dataset.m===m));
+  apM();
+}
+function apM(){
+  S.forEach((s,i)=>{
+    const el=document.getElementById('q'+i);if(!el)return;
+    if(mode==='all')el.style.display='';
+    else if(mode==='unanswered')el.style.display=s.d?'none':'';
+    else if(mode==='wrong')el.style.display=(s.d&&s.p!==gQ(i).a)?'':'none';
+  });
+  document.querySelectorAll('.sec').forEach(sec=>{
+    const vis=[...sec.querySelectorAll('.card')].some(c=>c.style.display!=='none');
+    sec.style.display=vis?'':'none';
+  });
+}
+function shuffle(){
+  const c=document.getElementById('qs'),a=Array.from(c.querySelectorAll('.card'));
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));c.appendChild(a[j]);a.splice(j,1)}
+  document.querySelectorAll('.sec').forEach(s=>{const v=[...s.querySelectorAll('.card')].some(c=>c.style.display!=='none');s.style.display=v?'':'none'});
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+  document.querySelector('[data-m="shuffle"]').classList.add('active');
+}
+
+function resetAll(){
+  S.forEach(s=>{s.p=null;s.d=false});ans=0;cor=0;
+  document.querySelectorAll('.opt').forEach(el=>{el.className='opt';el.style.cursor='pointer';el.setAttribute('tabindex','0')});
+  document.querySelectorAll('.result').forEach(el=>{el.textContent='';el.className='result'});
+  document.querySelectorAll('.explain').forEach(el=>el.classList.remove('show'));
+  document.querySelectorAll('.chk').forEach(el=>{el.style.display='';el.disabled=true});
+  document.querySelectorAll('.card').forEach(el=>el.className='card');
+  document.getElementById('banner').style.display='none';
+  mode='all';document.querySelectorAll('.fbtn').forEach(b=>b.classList.toggle('active',b.dataset.m==='all'));
+  const c=document.getElementById('qs'),secs=Array.from(c.querySelectorAll('.sec'));
+  secs.sort((a,b)=>+a.id.replace('s','')-+b.id.replace('s',''));
+  secs.forEach(s=>{s.style.display='';c.appendChild(s)});upd();apM();
+}
+
+function toggleTheme(){
+  const l=document.documentElement.getAttribute('data-theme')==='light';
+  document.documentElement.setAttribute('data-theme',l?'dark':'light');
+  localStorage.setItem('theme',l?'dark':'light');
+}
+function updTheme(){
+  const t=localStorage.getItem('theme');
+  if(t)document.documentElement.setAttribute('data-theme',t);
+}
 init();
 </script>
 </body>
