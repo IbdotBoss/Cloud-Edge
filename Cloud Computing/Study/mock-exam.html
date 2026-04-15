@@ -102,9 +102,14 @@ function init(){
   });document.getElementById('tt').textContent=tot;apM();
 }
 function gQ(i){let n=i;for(const s of D)for(const q of s.qs){if(!n--)return q}return null}
-function pk(qi,oi){if(S[qi].d)return;S[qi].p=oi;document.querySelectorAll('.op[data-q="'+qi+'"]').forEach(e=>e.classList.remove('pk'));document.querySelector('.op[data-q="'+qi+'"][data-o="'+oi+'"]').classList.add('pk');document.getElementById('c'+qi).disabled=false}
+function pk(qi,oi){if(S[qi].d)return;const q=gQ(qi);const isMulti=q.t.includes('Select all')||q.t.includes('select all')||q.t.includes('(Select');
+  if(isMulti){if(!Array.isArray(S[qi].p))S[qi].p=[];const i=S[qi].p.indexOf(oi);if(i>-1){S[qi].p.splice(i,1);document.querySelector('.op[data-q="'+qi+'"][data-o="'+oi+'"]').classList.remove('pk')}else{S[qi].p.push(oi);document.querySelector('.op[data-q="'+qi+'"][data-o="'+oi+'"]').classList.add('pk')}document.getElementById('c'+qi).disabled=S[qi].p.length===0}
+  else{S[qi].p=oi;document.querySelectorAll('.op[data-q="'+qi+'"]').forEach(e=>e.classList.remove('pk'));document.querySelector('.op[data-q="'+qi+'"][data-o="'+oi+'"]').classList.add('pk');document.getElementById('c'+qi).disabled=false}}
 function ck(qi){
-  if(S[qi].d||S[qi].p===null)return;S[qi].d=true;const q=gQ(qi),ok=q.a===S[qi].p;ans++;if(ok)cor++;
+  if(S[qi].d||(S[qi].p===null&&!Array.isArray(S[qi].p)))return;S[qi].d=true;const q=gQ(qi);
+  let ok=false;const isMulti=q.t.includes('Select all')||q.t.includes('select all')||q.t.includes('(Select');
+  if(isMulti){const correct=[q.a];ok=Array.isArray(S[qi].p)&&S[qi].p.length===correct.length&&S[qi].p.every(v=>correct.includes(v))}
+  else{ok=q.a===S[qi].p}ans++;if(ok)cor++;
   document.querySelectorAll('.op[data-q="'+qi+'"]').forEach(el=>{const o=+el.dataset.o;if(o===q.a)el.classList.add('rt');if(o===S[qi].p&&!ok)el.classList.add('wr');el.style.cursor='default';el.removeAttribute('tabindex')});
   document.getElementById('r'+qi).textContent=ok?'Correct':'Incorrect';
   document.getElementById('r'+qi).className='rs '+(ok?'pa':'fa');
