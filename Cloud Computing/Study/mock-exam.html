@@ -27,7 +27,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--t);line-heigh
 .pb{flex:1;height:3px;background:var(--sf2);border-radius:2px;overflow:hidden}
 .pf{height:100%;background:var(--ok);border-radius:2px;width:0;transition:width .4s}
 .pl{font-size:.72rem;font-family:var(--font-mono);color:var(--t3);white-space:nowrap;font-weight:500}
-.ft{display:flex;gap:calc(var(--sp)*.5);margin-bottom:calc(var(--sp)*2);flex-wrap:wrap}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:calc(var(--sp)*1.5) 0;transition:box-shadow .3s}.bar.stuck{box-shadow:0 2px 12px rgba(0,0,0,.15)}.ft{display:flex;gap:calc(var(--sp)*.5);margin-bottom:calc(var(--sp)*1.5);flex-wrap:wrap}
 .fb{font-family:var(--font-sans);font-size:.75rem;font-weight:500;padding:calc(var(--sp)*.5) calc(var(--sp)*1.25);border-radius:calc(var(--sp)*.5);background:transparent;border:1px solid var(--bd);color:var(--t3);cursor:pointer;transition:all .15s}
 .fb:hover{border-color:var(--bdh);color:var(--t2)}.fb.on{background:var(--ok);color:#fff;border-color:var(--ok)}.fb:focus-visible{outline:2px solid var(--fr);outline-offset:2px}
 .wn{display:flex;flex-wrap:wrap;gap:calc(var(--sp)*.375);margin-bottom:calc(var(--sp)*3);padding-bottom:calc(var(--sp)*2);border-bottom:1px solid var(--bd)}
@@ -70,13 +70,13 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--t);line-heigh
     <button class="tbtn" onclick="toggleTheme()" aria-label="Toggle theme">◐</button>
   </header>
   <div class="pr"><div class="pb"><div class="pf" id="pf"></div></div><div class="pl"><span id="sc">0</span>/<span id="tt">0</span></div></div>
-  <div class="ft">
+  <div class="bar" id="bar"><div class="ft">
     <button class="fb on" data-m="all" onclick="setM('all')">All</button>
     <button class="fb" data-m="unanswered" onclick="setM('unanswered')">Unanswered</button>
     <button class="fb" data-m="wrong" onclick="setM('wrong')">Incorrect</button>
     <button class="fb" data-m="shuffle" onclick="shuffle()">Shuffle</button>
   </div>
-  <div class="wn" id="wn"></div>
+  <div class="wn" id="wn"></div></div>
   <div id="bn" class="bn"></div>
   <div id="qs"></div>
 </div>
@@ -102,14 +102,9 @@ function init(){
   });document.getElementById('tt').textContent=tot;apM();
 }
 function gQ(i){let n=i;for(const s of D)for(const q of s.qs){if(!n--)return q}return null}
-function pk(qi,oi){if(S[qi].d)return;const q=gQ(qi);const isMulti=q.t.includes('Select all')||q.t.includes('select all')||q.t.includes('(Select');
-  if(isMulti){if(!Array.isArray(S[qi].p))S[qi].p=[];const i=S[qi].p.indexOf(oi);if(i>-1){S[qi].p.splice(i,1);document.querySelector('.op[data-q="'+qi+'"][data-o="'+oi+'"]').classList.remove('pk')}else{S[qi].p.push(oi);document.querySelector('.op[data-q="'+qi+'"][data-o="'+oi+'"]').classList.add('pk')}document.getElementById('c'+qi).disabled=S[qi].p.length===0}
-  else{S[qi].p=oi;document.querySelectorAll('.op[data-q="'+qi+'"]').forEach(e=>e.classList.remove('pk'));document.querySelector('.op[data-q="'+qi+'"][data-o="'+oi+'"]').classList.add('pk');document.getElementById('c'+qi).disabled=false}}
+function pk(qi,oi){if(S[qi].d)return;S[qi].p=oi;document.querySelectorAll('.op[data-q="'+qi+'"]').forEach(e=>e.classList.remove('pk'));document.querySelector('.op[data-q="'+qi+'"][data-o="'+oi+'"]').classList.add('pk');document.getElementById('c'+qi).disabled=false}
 function ck(qi){
-  if(S[qi].d||(S[qi].p===null&&!Array.isArray(S[qi].p)))return;S[qi].d=true;const q=gQ(qi);
-  let ok=false;const isMulti=q.t.includes('Select all')||q.t.includes('select all')||q.t.includes('(Select');
-  if(isMulti){const correct=[q.a];ok=Array.isArray(S[qi].p)&&S[qi].p.length===correct.length&&S[qi].p.every(v=>correct.includes(v))}
-  else{ok=q.a===S[qi].p}ans++;if(ok)cor++;
+  if(S[qi].d||S[qi].p===null)return;S[qi].d=true;const q=gQ(qi),ok=q.a===S[qi].p;ans++;if(ok)cor++;
   document.querySelectorAll('.op[data-q="'+qi+'"]').forEach(el=>{const o=+el.dataset.o;if(o===q.a)el.classList.add('rt');if(o===S[qi].p&&!ok)el.classList.add('wr');el.style.cursor='default';el.removeAttribute('tabindex')});
   document.getElementById('r'+qi).textContent=ok?'Correct':'Incorrect';
   document.getElementById('r'+qi).className='rs '+(ok?'pa':'fa');
@@ -132,6 +127,7 @@ function shuffle(){const c=document.getElementById('qs'),a=Array.from(c.querySel
 function resetAll(){S.forEach(s=>{s.p=null;s.d=false});ans=0;cor=0;document.querySelectorAll('.op').forEach(el=>{el.className='op';el.style.cursor='pointer';el.setAttribute('tabindex','0')});document.querySelectorAll('.rs').forEach(el=>{el.textContent='';el.className='rs'});document.querySelectorAll('.ex').forEach(el=>el.classList.remove('sh'));document.querySelectorAll('.ck').forEach(el=>{el.style.display='';el.disabled=true});document.querySelectorAll('.cd').forEach(el=>{el.classList.remove('ok','no')});document.getElementById('bn').style.display='none';document.getElementById('sc').textContent='0';document.getElementById('pf').style.width='0';mode='all';document.querySelectorAll('.fb').forEach(b=>b.classList.toggle('on',b.dataset.m==='all'));const c=document.getElementById('qs'),secs=Array.from(c.querySelectorAll('.sec'));secs.sort((a,b)=>+a.id.replace('s','')-+b.id.replace('s',''));secs.forEach(s=>{s.style.display='';c.appendChild(s)});apM()}
 function toggleTheme(){const l=document.documentElement.getAttribute('data-theme')==='light';document.documentElement.setAttribute('data-theme',l?'dark':'light');localStorage.setItem('theme',l?'dark':'light')}
 (function(){const t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t)})();
+window.addEventListener("scroll",()=>{document.getElementById("bar").classList.toggle("stuck",window.scrollY>200)});
 init();
 </script>
 </body>
