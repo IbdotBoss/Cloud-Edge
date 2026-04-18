@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MOD006125 — Practical Mock Exam</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#fafafa;--card:#fff;--text:#111;--muted:#666;--border:#e0e0e0;--accent:#0070f3;--correct:#059669;--wrong:#dc2626;--code-bg:#f5f5f5;--shadow:0 1px 3px rgba(0,0,0,.08)}
+[data-theme="dark"]{--bg:#0a0a0a;--card:#141414;--text:#eaeaea;--muted:#888;--border:#2a2a2a;--accent:#3b82f6;--correct:#34d399;--wrong:#f87171;--code-bg:#1a1a1a;--shadow:0 1px 3px rgba(0,0,0,.4)}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;transition:background .3s,color .3s}
+.container{max-width:780px;margin:0 auto;padding:2rem 1.5rem 4rem}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:.75rem 0;border-bottom:1px solid var(--border);margin-bottom:2rem}
+.topbar h1{font-size:1rem;font-weight:600;letter-spacing:-.02em}
+.topbar-actions{display:flex;gap:.5rem;align-items:center}
+.btn-sm{background:var(--card);border:1px solid var(--border);color:var(--text);padding:.35rem .7rem;border-radius:6px;font-size:.8rem;cursor:pointer;transition:all .15s}
+.btn-sm:hover{border-color:var(--accent);color:var(--accent)}
+.btn-sm.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.scenario-nav{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.scenario-tab{padding:.5rem 1rem;border-radius:8px;font-size:.85rem;font-weight:500;cursor:pointer;background:var(--card);border:1px solid var(--border);color:var(--text);transition:all .15s}
+.scenario-tab:hover{border-color:var(--accent)}
+.scenario-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.scenario-desc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.5rem;margin-bottom:1.5rem;box-shadow:var(--shadow)}
+.scenario-desc h2{font-size:1.1rem;margin-bottom:.5rem;font-weight:600}
+.scenario-desc p{font-size:.9rem;color:var(--muted);margin-bottom:1rem}
+pre{background:var(--code-bg);border:1px solid var(--border);border-radius:8px;padding:1rem;font-size:.82rem;overflow-x:auto;margin:.75rem 0;line-height:1.5}
+code{font-family:'SF Mono',Consolas,monospace;font-size:.82rem}
+table{width:100%;border-collapse:collapse;font-size:.85rem;margin:.75rem 0}
+th,td{padding:.5rem .75rem;border:1px solid var(--border);text-align:left}
+th{background:var(--code-bg);font-weight:600}
+.question{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.5rem;margin-bottom:1rem;box-shadow:var(--shadow)}
+.question-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.question-num{font-size:.75rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.05em}
+.question-type{font-size:.7rem;padding:.2rem .5rem;border-radius:4px;background:var(--code-bg);color:var(--muted);border:1px solid var(--border)}
+.question-text{font-size:.95rem;font-weight:500;margin-bottom:1rem}
+.options{display:flex;flex-direction:column;gap:.4rem}
+.option{display:flex;align-items:flex-start;gap:.6rem;padding:.6rem .8rem;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .15s;font-size:.88rem}
+.option:hover{border-color:var(--accent);background:var(--code-bg)}
+.option input{margin-top:.25rem;accent-color:var(--accent)}
+.option.selected{border-color:var(--accent);background:rgba(0,112,243,.05)}
+[data-theme="dark"] .option.selected{background:rgba(59,130,246,.1)}
+.option.correct{border-color:var(--correct);background:rgba(5,150,105,.08)}
+.option.wrong{border-color:var(--wrong);background:rgba(220,38,38,.08)}
+.option .check{margin-left:auto;font-size:.9rem;font-weight:700}
+.fill-blank{background:var(--code-bg);border:1px solid var(--border);border-radius:6px;padding:.4rem .6rem;font-family:'SF Mono',Consolas,monospace;font-size:.88rem;color:var(--text);width:200px;outline:none;transition:border-color .15s}
+.fill-blank:focus{border-color:var(--accent)}
+.match-col{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;font-size:.85rem}
+.match-item{padding:.5rem;border:1px solid var(--border);border-radius:6px;background:var(--code-bg)}
+.match-select{width:100%;padding:.4rem;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);font-size:.85rem}
+.order-container{display:flex;flex-direction:column;gap:.4rem}
+.order-item{display:flex;align-items:center;gap:.6rem;padding:.5rem .7rem;border:1px solid var(--border);border-radius:6px;background:var(--card);cursor:grab;font-size:.88rem}
+.order-item .num{width:22px;height:22px;border-radius:50%;background:var(--code-bg);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:var(--muted);flex-shrink:0}
+.order-item.dragging{opacity:.5}
+.order-item.drag-over{border-color:var(--accent);border-style:dashed}
+.submit-bar{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);padding:.75rem;display:flex;justify-content:center;gap:1rem;align-items:center;z-index:50;box-shadow:0 -2px 10px rgba(0,0,0,.05)}
+.btn{padding:.6rem 1.5rem;border-radius:8px;font-size:.9rem;font-weight:600;cursor:pointer;border:none;transition:all .15s}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{opacity:.9}
+.btn-secondary{background:var(--code-bg);color:var(--text);border:1px solid var(--border)}
+.btn-secondary:hover{border-color:var(--accent)}
+.score-display{font-size:.9rem;font-weight:600}
+.score-good{color:var(--correct)}
+.score-bad{color:var(--wrong)}
+.explanation{margin-top:.75rem;padding:.75rem;background:var(--code-bg);border-radius:6px;font-size:.85rem;color:var(--muted);border-left:3px solid var(--accent)}
+.hidden{display:none}
+@media(max-width:600px){.container{padding:1rem 1rem 5rem}.match-col{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="topbar">
+<h1>☁️ Practical Mock Exam</h1>
+<div class="topbar-actions">
+<button class="btn-sm" onclick="toggleTheme()" id="themeBtn">🌙</button>
+<a href="mock-exam.html" class="btn-sm">Theory →</a>
+</div>
+</div>
+<div class="scenario-nav" id="scenarioNav"></div>
+<div id="scenarioContent"></div>
+</div>
+<div class="submit-bar">
+<button class="btn btn-secondary" onclick="resetScenario()">Reset</button>
+<div class="score-display" id="scoreDisplay"></div>
+<button class="btn btn-primary" onclick="submitScenario()">Check Answers</button>
+</div>
+
+<script>
+const scenarios=[
+{id:'bytebooks',title:'S1: ByteBooks',desc:'ByteBooks Online — AWS Web Deployment',long:'A small online bookshop deploying their website to AWS. You are the junior cloud engineer setting up the infrastructure: IAM policies, VPC networking, security groups, EC2 launch, and user data bootstrap.',questions:[
+{type:'ordering',text:'Order the steps to deploy the ByteBooks web server on AWS:',items:['Create the VPC with CIDR block 10.0.0.0/16','Create the public and private subnets','Create and attach an Internet Gateway, then configure the public route table','Create the security group sg-bytebooks with HTTP and SSH rules','Launch the EC2 instance with the aws ec2 run-instances command','Test the website by browsing to the instance\'s public IP address'],correct:[0,1,2,3,4,5],explanation:'VPC first, then subnets, then IGW+routes, then SG, then EC2, then test. Network foundation before compute.'},
+{type:'matching',text:'Match each EC2 launch command parameter to its purpose:',left:['--image-id ami-0abcdef1234567890','--instance-type t3.micro','--key-name bytebooks-key','--user-data file://install.sh'],right:['A. SSH key pair for remote access','B. Bootstrap script at first boot','C. AMI template for the instance','D. vCPU and memory resources'],correct:{0:2,1:3,2:0,3:1},explanation:'--image-id→AMI, --instance-type→resources, --key-name→SSH key, --user-data→bootstrap script.'},
+{type:'fillblank',text:'Complete the SSH command to connect to the ByteBooks web server:<br><code>ssh -i <input class="fill-blank" id="q3" placeholder="???">.pem ec2-user@52.56.78.90</code>',correct:'bytebooks-key',explanation:'The key name specified in the --key-name parameter (bytebooks-key).'},
+{type:'multiple',text:'Based on the sg-bytebooks security group rules, which inbound traffic is permitted?',options:['HTTP traffic from any IP on port 80','HTTPS traffic from any IP on port 443','SSH traffic from within the VPC (10.0.0.0/16) on port 22','SSH traffic from any IP on the internet on port 22'],correct:[0,2],explanation:'Security group allows HTTP from 0.0.0.0/0 (A) and SSH from 10.0.0.0/16 only (C). No HTTPS rule exists.'},
+{type:'tf',text:'The User Data script (install.sh) will re-execute automatically every time the EC2 instance is rebooted.',options:['True','False'],correct:1,explanation:'User Data runs only on first boot by default, not on every reboot.'},
+{type:'single',text:'A web developer runs <code>aws s3 rb s3://bytebooks-website --force</code>. What happens?',options:['The bucket is deleted successfully','The bucket contents are deleted but the bucket remains','The request is denied due to the explicit Deny on s3:DeleteBucket','The request is queued for admin approval'],correct:2,explanation:'Explicit Deny in the IAM policy overrides any Allow. The s3:DeleteBucket action is denied.'},
+{type:'ordering',text:'The website is not loading. Order the troubleshooting steps from first to last:',items:['Verify the security group allows inbound HTTP on port 80','Check the route table has a route to the Internet Gateway','Confirm the instance has a public IP address','SSH in and run systemctl status httpd','Examine /var/log/cloud-init-output.log for User Data errors'],correct:[0,1,2,3,4],explanation:'Check network layer first (SG, routes, public IP), then application layer (httpd status), then logs.'},
+{type:'fillblank',text:'The instance private IP is 10.0.1.42. Based on the VPC design, this instance is in the <input class="fill-blank" id="q8" placeholder="???"> subnet.',correct:'public',explanation:'10.0.1.0/24 is the public subnet. 10.0.2.0/24 is the private subnet.'},
+{type:'fillblank2',text:'Complete the CLI command to check instance details:<br><code>aws <input class="fill-blank" id="q9a" placeholder="???"> <input class="fill-blank" id="q9b" placeholder="???"> --instance-ids i-0bb1234567example</code>',correct:['ec2','describe-instances'],explanation:'aws ec2 describe-instances is the CLI command to describe EC2 instances.'},
+{type:'matching',text:'Match each characteristic to Security Group or Network ACL:',left:['Stateful — return traffic auto-allowed','Operates at the subnet level','Operates at the instance level','Stateless — return traffic must be explicit'],right:['Security Group','Network ACL'],correct:{0:0,1:1,2:0,3:1},explanation:'Security Groups are stateful at instance level. NACLs are stateless at subnet level.'},
+]},
+{id:'datasecure',title:'S2: DataSecure',desc:'DataSecure Corp — IAM & Security Hardening',long:'A fintech company needs to harden their AWS security posture. You are reviewing their IAM setup, encryption policies, and audit logging configuration.',questions:[
+{type:'single',text:'Which AWS service provides a record of API calls for auditing "who did what, where, and when"?',options:['AWS Config','AWS CloudTrail','Amazon CloudWatch','AWS Trusted Advisor'],correct:1,explanation:'CloudTrail logs all API calls for auditing. CloudWatch is for metrics/alarms, Config for resource compliance.'},
+{type:'single',text:'Under the Shared Responsibility Model, who is responsible for OS patching on EC2 instances?',options:['AWS always handles it','The customer','It depends on the AMI','Shared equally between AWS and customer'],correct:1,explanation:'For IaaS (EC2), the customer manages OS patching. AWS handles the hypervisor and physical infrastructure.'},
+{type:'multiple',text:'Which are components of the CIA Triad in cloud security? (Select ALL)',options:['Confidentiality','Authentication','Integrity','Availability','Authorisation'],correct:[0,2,3],explanation:'CIA = Confidentiality, Integrity, Availability. Authentication and Authorisation are separate concepts (AAA).'},
+{type:'single',text:'What is the principle of least privilege?',options:['Give users admin access by default','Grant only the minimum permissions needed to perform a task','Deny all access and require manual approval','Use the same policy for all users'],correct:1,explanation:'Least privilege = grant only permissions necessary to complete a task. Start with zero, add as needed.'},
+{type:'single',text:'An IAM Role differs from an IAM User because:',options:['Roles have more permissions than users','Roles use temporary credentials, users have long-term credentials','Roles can only be used by AWS services, never by people','Roles are deprecated in favour of users'],correct:1,explanation:'IAM Roles provide temporary credentials. IAM Users have long-term credentials (access keys, passwords).'},
+{type:'tf',text:'Service Control Policies (SCPs) in AWS Organizations can grant new permissions to accounts.',options:['True','False'],correct:1,explanation:'SCPs set boundaries (maximum permissions). They restrict, never grant. They work as guardrails.'},
+{type:'single',text:'Which AWS service is used to create and control encryption keys for data at rest?',options:['AWS Shield','AWS WAF','AWS KMS','Amazon GuardDuty'],correct:2,explanation:'KMS (Key Management Service) manages encryption keys. Shield is DDoS, WAF is web firewall, GuardDuty is threat detection.'},
+{type:'single',text:'What is the difference between encryption at rest and encryption in transit?',options:['At rest = on disk, in transit = across the network','At rest = in the cloud, in transit = on premises','They are the same thing with different names','At rest uses KMS, in transit uses S3'],correct:0,explanation:'At rest = stored data (EBS, S3). In transit = data moving across network (TLS/SSL).'},
+{type:'multiple',text:'Which security measures protect against DDoS attacks on AWS? (Select ALL)',options:['AWS Shield Standard','AWS CloudTrail','AWS Shield Advanced','Security Groups'],correct:[0,2],explanation:'Shield Standard (free, automatic) and Shield Advanced (paid, enhanced) protect against DDoS. CloudTrail is for auditing.'},
+{type:'single',text:'In the Shared Responsibility Model, as you move from IaaS to SaaS:',options:['Customer responsibility increases','AWS responsibility decreases','Customer responsibility decreases','Responsibility stays the same'],correct:2,explanation:'Moving IaaS→PaaS→SaaS, AWS takes on more responsibility. Customer responsibility decreases.'},
+]},
+{id:'scaleup',title:'S3: ScaleUp',desc:'ScaleUp E-commerce — High Availability & Scaling',long:'An e-commerce startup needs to design for high availability, fault tolerance, and auto-scaling. You are configuring ELB, Auto Scaling, CloudFront, and Route 53 for their growing platform.',questions:[
+{type:'single',text:'Which service automatically distributes incoming traffic across multiple EC2 instances?',options:['Amazon Route 53','Amazon CloudFront','Elastic Load Balancing (ELB)','AWS Auto Scaling'],correct:2,explanation:'ELB distributes traffic across targets. Route 53 is DNS, CloudFront is CDN, Auto Scaling manages instance count.'},
+{type:'single',text:'An Auto Scaling group has min=2, max=8, desired=4. After one instance fails health check, what happens?',options:['Nothing — admin must fix manually','ASG launches a replacement to maintain desired=4','ASG launches 2 replacements as safety margin','ASG terminates all instances and relaunches'],correct:1,explanation:'Auto Scaling replaces unhealthy instances to maintain the desired capacity (4 in this case).'},
+{type:'single',text:'CloudFront is best described as:',options:['A DNS routing service','A Content Delivery Network (CDN) that caches content at edge locations','A load balancer for EC2 instances','A database replication service'],correct:1,explanation:'CloudFront is a CDN that caches content at edge locations (PoPs) worldwide for low-latency delivery.'},
+{type:'ordering',text:'Order these from global to local scope:',items:['AWS Region','Edge Location (CloudFront PoP)','Availability Zone','VPC'],correct:[1,0,2,3],explanation:'Edge Locations are global, Regions contain AZs, AZs contain VPCs. Most global → most local.'},
+{type:'single',text:'Route 53 health checks can:',options:['Only monitor EC2 instance CPU','Route traffic away from unhealthy endpoints','Restart failed RDS instances','Scale Auto Scaling groups directly'],correct:1,explanation:'Route 53 health checks detect endpoint health and can route DNS traffic away from failed endpoints.'},
+{type:'multiple',text:'Which are types of Elastic Load Balancers? (Select ALL)',options:['Application Load Balancer (ALB)','Network Load Balancer (NLB)','Database Load Balancer (DLB)','Gateway Load Balancer (GWLB)'],correct:[0,1,3],explanation:'ALB (L7), NLB (L4), and GWLB exist. There is no "Database Load Balancer" type.'},
+{type:'tf',text:'An Auto Scaling group spanning multiple Availability Zones provides fault tolerance.',options:['True','False'],correct:0,explanation:'Multi-AZ deployment ensures if one AZ fails, instances in other AZs continue serving traffic.'},
+{type:'single',text:'Which pillar of the AWS Well-Architected Framework focuses on matching supply of resources to demand?',options:['Operational Excellence','Security','Cost Optimization','Performance Efficiency'],correct:2,explanation:'Cost Optimization includes right-sizing and matching supply to demand. Performance Efficiency is about using resources efficiently.'},
+{type:'fillblank',text:'The AWS service that caches content at edge locations to reduce latency is called Amazon <input class="fill-blank" id="q9" placeholder="???">.',correct:'CloudFront',explanation:'CloudFront is the CDN service that caches at edge locations (Points of Presence).'},
+{type:'single',text:'Loose coupling in AWS architectures is best achieved using:',options:['Auto Scaling','Elastic Load Balancing and Amazon SQS','Route 53','CloudFront'],correct:1,explanation:'ELB distributes traffic and SQS decouples components via message queues — both enable loose coupling.'},
+]},
+{id:'devops',title:'S4: DevOps',desc:'TechFlow — Infrastructure as Code & Automation',long:'A DevOps team is adopting Infrastructure as Code and automation practices. You are reviewing CloudFormation templates, deployment strategies, and the Well-Architected Framework pillars.',questions:[
+{type:'single',text:'What is Infrastructure as Code (IaC)?',options:['Writing application code in the cloud','Managing infrastructure through machine-readable definition files','Using the AWS Console to create resources','Automating software testing'],correct:1,explanation:'IaC = defining infrastructure in code files (JSON/YAML) that can be versioned, reviewed, and automated.'},
+{type:'single',text:'Which AWS service lets you define infrastructure using YAML or JSON templates?',options:['AWS CodeDeploy','AWS CloudFormation','AWS CodePipeline','Amazon EC2'],correct:1,explanation:'CloudFormation uses templates (JSON/YAML) to provision and manage AWS resources declaratively.'},
+{type:'tf',text:'CloudFormation templates are idempotent — applying the same template twice produces the same result.',options:['True','False'],correct:0,explanation:'CloudFormation is declarative and idempotent. Running the same template again converges to the same state.'},
+{type:'matching',text:'Match the Well-Architected pillar to its focus:',left:['Operational Excellence','Security','Reliability','Cost Optimization'],right:['Run and monitor systems for business value','Protect data, systems, and assets','Withstand and recover from failures','Avoid unnecessary costs'],correct:{0:0,1:1,2:2,3:3},explanation:'Each pillar has a distinct focus: Ops=run/monitor, Security=protect, Reliability=recover, Cost=save.'},
+{type:'single',text:'Which deployment strategy gradually shifts traffic from old to new version?',options:['All-at-once (rolling)','Blue/Green','Canary','Big Bang'],correct:2,explanation:'Canary deployment sends a small % of traffic to the new version first, then gradually increases.'},
+{type:'multiple',text:'Which are benefits of IaC? (Select ALL)',options:['Version control for infrastructure','Eliminates need for testing','Repeatable deployments','Reduced manual errors'],correct:[0,2,3],explanation:'IaC enables versioning, repeatability, and error reduction. It does NOT eliminate testing.'},
+{type:'single',text:'The Operational Excellence pillar recommends viewing your workload as:',options:['A fixed set of servers','Code — automatable and version-controlled','A manual runbook','A cost center'],correct:1,explanation:'Operational Excellence = view entire workload (infra, policies, operations) as code.'},
+{type:'single',text:'What is the purpose of a CloudFormation stack?',options:['A group of related AWS resources managed as a single unit','A collection of IAM users','A set of S3 buckets','A network of EC2 instances'],correct:0,explanation:'A stack is a collection of AWS resources that you can manage as a single unit.'},
+{type:'fillblank',text:'The Well-Architected pillar that focuses on the ability to run systems and continuously improve processes is called <input class="fill-blank" id="q9" placeholder="???"> Excellence.',correct:'Operational',explanation:'Operational Excellence = run, monitor, and continuously improve.'},
+{type:'single',text:'AWS recommends which approach for infrastructure changes?',options:['Make changes directly in the AWS Console','Update the IaC template and deploy through automation','Use SSH to modify running instances','Never change infrastructure once deployed'],correct:1,explanation:'Update templates and deploy via automation. Manual console changes cause drift from IaC definitions.'},
+]}
+];
+
+let currentScenario=0,answered={};
+
+function init(){
+const nav=document.getElementById('scenarioNav');
+scenarios.forEach((s,i)=>{
+const btn=document.createElement('button');
+btn.className='scenario-tab'+(i===0?' active':'');
+btn.textContent=s.title;
+btn.onclick=()=>switchScenario(i);
+nav.appendChild(btn);
+});
+loadScenario(0);
+if(localStorage.getItem('theme')==='dark'){document.documentElement.setAttribute('data-theme','dark');document.getElementById('themeBtn').textContent='☀️'}
+}
+
+function switchScenario(i){
+currentScenario=i;
+document.querySelectorAll('.scenario-tab').forEach((b,j)=>b.classList.toggle('active',j===i));
+loadScenario(i);
+}
+
+function loadScenario(idx){
+answered={};
+document.getElementById('scoreDisplay').textContent='';
+const s=scenarios[idx];
+let html=`<div class="scenario-desc"><h2>${s.desc}</h2><p>${s.long}</p></div>`;
+s.questions.forEach((q,qi)=>{
+html+=`<div class="question" id="q${qi}"><div class="question-header"><span class="question-num">Question ${qi+1}</span><span class="question-type">${typeLabel(q.type)}</span></div><div class="question-text">${q.text}</div>`;
+if(q.type==='single'||q.type==='tf'){
+html+=`<div class="options">`;
+q.options.forEach((o,oi)=>{html+=`<label class="option" onclick="selectSingle(${qi},${oi},this)"><input type="radio" name="q${qi}" value="${oi}"><span>${o}</span><span class="check"></span></label>`});
+html+=`</div>`;
+}else if(q.type==='multiple'){
+html+=`<div class="options">`;
+q.options.forEach((o,oi)=>{html+=`<label class="option" onclick="selectMulti(${qi},${oi},this)"><input type="checkbox" name="q${qi}" value="${oi}"><span>${o}</span><span class="check"></span></label>`});
+html+=`</div>`;
+}else if(q.type==='fillblank'){
+html+=q.text;
+}else if(q.type==='fillblank2'){
+html+=q.text;
+}else if(q.type==='ordering'){
+html+=`<div class="order-container" id="order${qi}">`;
+const shuffled=[...Array(q.items.length).keys()].sort(()=>Math.random()-.5);
+shuffled.forEach((orig,i)=>{
+html+=`<div class="order-item" draggable="true" data-orig="${orig}" ondragstart="dragStart(event)" ondragover="dragOver(event)" ondrop="drop(event)" ondragend="dragEnd(event)"><span class="num">${i+1}</span><span>${q.items[orig]}</span></div>`;
+});
+html+=`</div>`;
+}else if(q.type==='matching'){
+html+=`<div class="match-col"><div>`;
+q.left.forEach((l,li)=>{html+=`<div class="match-item"><strong>${String.fromCharCode(65+li)}.</strong> ${l}<br><select class="match-select" id="match${qi}_${li}" onchange="updateMatch(${qi})"><option value="">— select —</option>${q.right.map((r,ri)=>`<option value="${ri}">${r}</option>`).join('')}</select></div>`});
+html+=`</div></div>`;
+}
+html+=`<div class="explanation hidden" id="exp${qi}">${q.explanation}</div></div>`;
+});
+document.getElementById('scenarioContent').innerHTML=html;
+initDragDrop();
+}
+
+function typeLabel(t){return{single:'Multiple Choice',multiple:'Multiple Answer',tf:'True / False',fillblank:'Fill in the Blank',fillblank2:'Fill in the Blanks',ordering:'Ordering',matching:'Matching'}[t]}
+
+function selectSingle(qi,oi,el){
+document.querySelectorAll(`#q${qi} .option`).forEach(o=>{o.classList.remove('selected');o.querySelector('input').checked=false});
+el.classList.add('selected');el.querySelector('input').checked=true;
+answered[qi]={selected:oi};
+}
+
+function selectMulti(qi,oi,el){
+if(!answered[qi])answered[qi]={selected:[]};
+const inp=el.querySelector('input');
+inp.checked=!inp.checked;
+el.classList.toggle('selected',inp.checked);
+if(inp.checked){answered[qi].selected.push(oi)}else{answered[qi].selected=answered[qi].selected.filter(x=>x!==oi)}
+}
+
+function updateMatch(qi){
+const q=scenarios[currentScenario].questions[qi];
+const sel={};
+q.left.forEach((_,li)=>{const v=document.getElementById(`match${qi}_${li}`).value;if(v!=='')sel[li]=parseInt(v)});
+answered[qi]=sel;
+}
+
+function initDragDrop(){
+document.querySelectorAll('.order-container').forEach(c=>{
+c.addEventListener('dragover',e=>e.preventDefault());
+});
+}
+function dragStart(e){e.dataTransfer.setData('text',e.target.closest('.order-item').dataset.orig);e.target.closest('.order-item').classList.add('dragging')}
+function dragOver(e){e.preventDefault();const item=e.target.closest('.order-item');if(item)item.classList.add('drag-over')}
+function dragEnd(e){document.querySelectorAll('.order-item').forEach(i=>{i.classList.remove('dragging','drag-over')})}
+function drop(e){
+e.preventDefault();
+const container=e.target.closest('.order-container');
+const items=[...container.querySelectorAll('.order-item')];
+const dragged=e.dataTransfer.getData('text');
+const dropTarget=e.target.closest('.order-item');
+if(!dropTarget||dropTarget.dataset.orig===dragged)return;
+const draggedEl=items.find(i=>i.dataset.orig===dragged);
+const dropIdx=items.indexOf(dropTarget);
+const dragIdx=items.indexOf(draggedEl);
+if(dragIdx<dropIdx){container.insertBefore(draggedEl,dropTarget.nextSibling)}
+else{container.insertBefore(draggedEl,dropTarget)}
+reNumber(container);
+document.querySelectorAll('.order-item').forEach(i=>i.classList.remove('dragging','drag-over'));
+}
+function reNumber(container){container.querySelectorAll('.order-item').forEach((item,i)=>{item.querySelector('.num').textContent=i+1})}
+
+function submitScenario(){
+const s=scenarios[currentScenario];
+let correct=0,total=s.questions.length;
+s.questions.forEach((q,qi)=>{
+const expEl=document.getElementById(`exp${qi}`);
+expEl.classList.remove('hidden');
+if(q.type==='single'||q.type==='tf'){
+const opts=document.querySelectorAll(`#q${qi} .option`);
+const sel=answered[qi]?.selected;
+opts.forEach((o,i)=>{
+o.classList.remove('correct','wrong');
+if(i===q.correct)o.classList.add('correct');
+if(i===sel&&sel!==q.correct)o.classList.add('wrong');
+o.querySelector('.check').textContent=i===q.correct?'✓':(i===sel?'✗':'');
+});
+if(sel===q.correct)correct++;
+}else if(q.type==='multiple'){
+const opts=document.querySelectorAll(`#q${qi} .option`);
+const sel=answered[qi]?.selected||[];
+const sortedSel=[...sel].sort();const sortedCor=[...q.correct].sort();
+opts.forEach((o,i)=>{
+o.classList.remove('correct','wrong');
+const inSel=sel.includes(i);const isCor=q.correct.includes(i);
+if(isCor)o.classList.add('correct');
+if(inSel&&!isCor)o.classList.add('wrong');
+o.querySelector('.check').textContent=isCor?'✓':(inSel?'✗':'');
+});
+if(JSON.stringify(sortedSel)===JSON.stringify(sortedCor))correct++;
+}else if(q.type==='fillblank'){
+const inp=document.getElementById(`q${qi+3}`)||document.querySelector(`#q${qi} input`);
+if(inp){
+const val=inp.value.trim().toLowerCase();
+const cor=q.correct.toLowerCase();
+inp.style.borderColor=val===cor?'var(--correct)':'var(--wrong)';
+if(val===cor)correct++;
+}
+}else if(q.type==='fillblank2'){
+const inps=document.querySelectorAll(`#q${qi} input`);
+let allCorrect=true;
+inps.forEach((inp,i)=>{
+const val=inp.value.trim().toLowerCase();
+const cor=q.correct[i].toLowerCase();
+inp.style.borderColor=val===cor?'var(--correct)':'var(--wrong)';
+if(val!==cor)allCorrect=false;
+});
+if(allCorrect)correct++;
+}else if(q.type==='ordering'){
+const container=document.getElementById(`order${qi}`);
+const items=container.querySelectorAll('.order-item');
+const order=[...items].map(i=>parseInt(i.dataset.orig));
+const isCorrect=order.every((v,i)=>v===q.correct[i]);
+items.forEach((item,i)=>{
+const orig=parseInt(item.dataset.orig);
+item.style.borderColor=orig===q.correct[i]?'var(--correct)':'var(--wrong)';
+});
+if(isCorrect)correct++;
+}else if(q.type==='matching'){
+const sel=answered[qi]||{};
+let allCorrect=true;
+q.left.forEach((_,li)=>{
+const selEl=document.getElementById(`match${qi}_${li}`);
+const val=selEl.value;
+const isCor=val!==''&&parseInt(val)===q.correct[li];
+selEl.style.borderColor=isCor?'var(--correct)':(val!==''?'var(--wrong)':'var(--border)');
+if(!isCor)allCorrect=false;
+});
+if(allCorrect&&Object.keys(sel).length===q.left.length)correct++;
+}
+});
+const pct=Math.round(correct/total*100);
+const scoreEl=document.getElementById('scoreDisplay');
+scoreEl.textContent=`${correct}/${total} (${pct}%)`;
+scoreEl.className='score-display '+(pct>=70?'score-good':'score-bad');
+}
+
+function resetScenario(){loadScenario(currentScenario)}
+
+function toggleTheme(){
+const d=document.documentElement;
+const b=document.getElementById('themeBtn');
+if(d.getAttribute('data-theme')==='dark'){d.removeAttribute('data-theme');b.textContent='🌙';localStorage.setItem('theme','light')}
+else{d.setAttribute('data-theme','dark');b.textContent='☀️';localStorage.setItem('theme','dark')}
+}
+
+init();
+</script>
+</body>
+</html>
