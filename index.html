@@ -3,37 +3,81 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MOD006125 — Cloud Computing Study</title>
+<title>MOD006125 — Cloud Computing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:#fafafa;color:#111;display:flex;align-items:center;justify-content:center;min-height:100vh}
-.shell{text-align:center;padding:2rem}
-h1{font-size:1.8rem;font-weight:700;letter-spacing:-.03em;margin-bottom:.5rem}
-p{color:#666;margin-bottom:2rem;font-size:.95rem}
-.cards{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-.card{background:#fff;border:1px solid #e0e0e0;border-radius:12px;padding:1.5rem 2rem;width:240px;text-decoration:none;color:#111;transition:all .2s;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-.card:hover{border-color:#0070f3;transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
-.card h2{font-size:1rem;font-weight:600;margin-bottom:.35rem}
-.card span{font-size:.8rem;color:#888}
-.emoji{font-size:2rem;margin-bottom:.75rem;display:block}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#fafafa;--sf:#fff;--sf2:#f4f4f5;--bd:rgba(0,0,0,.06);--bdh:rgba(0,0,0,.1);--t:#18181b;--t2:#52525b;--t3:#71717a;--t4:#a1a1aa;--ok:#059669;--r:8px;--sp:8px}
+[data-theme="dark"]{--bg:#08090a;--sf:#0f1011;--sf2:#161718;--bd:rgba(255,255,255,.06);--bdh:rgba(255,255,255,.1);--t:#e4e4e7;--t2:#a1a1aa;--t3:#71717a;--t4:#52525b;--ok:#10b981}
+html,body{height:100%}
+body{font-family:'Outfit',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--t);-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;display:flex;flex-direction:column}
+
+.top{display:flex;justify-content:flex-end;padding:calc(var(--sp)*2) calc(var(--sp)*3)}
+.tbtn{width:36px;height:36px;border-radius:50%;background:var(--sf);border:1px solid var(--bd);color:var(--t2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:border-color .2s,color .2s,transform .15s}
+.tbtn:hover{border-color:var(--bdh);color:var(--t)}.tbtn:active{transform:scale(.95)}
+
+.main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 calc(var(--sp)*3) calc(var(--sp)*8);max-width:640px;margin:0 auto;width:100%}
+
+.label{font-family:'JetBrains Mono',monospace;font-size:.65rem;font-weight:500;color:var(--t4);letter-spacing:.12em;text-transform:uppercase;margin-bottom:calc(var(--sp)*1.5)}
+h1{font-size:2rem;font-weight:700;letter-spacing:-.03em;line-height:1.15;margin-bottom:calc(var(--sp))}
+h1 span{color:var(--ok)}
+.desc{font-size:.88rem;color:var(--t3);line-height:1.6;margin-bottom:calc(var(--sp)*4);max-width:420px}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--sp)*1.5);width:100%}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:calc(var(--sp)*2.5);text-decoration:none;color:var(--t);transition:all .2s;display:flex;flex-direction:column;gap:calc(var(--sp))}
+.card:hover{border-color:var(--ok);transform:translateY(-2px);box-shadow:0 8px 24px -8px rgba(0,0,0,.08)}
+[data-theme="dark"] .card:hover{box-shadow:0 8px 24px -8px rgba(0,0,0,.4)}
+.card .icon{width:40px;height:40px;border-radius:var(--r);background:var(--sf2);display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+.card h2{font-size:.92rem;font-weight:600;letter-spacing:-.01em}
+.card .meta{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--t4);letter-spacing:.02em}
+
+.footer{padding:calc(var(--sp)*2) calc(var(--sp)*3);text-align:center}
+.footer span{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--t4);letter-spacing:.04em}
+
+@media(max-width:500px){
+  .grid{grid-template-columns:1fr}
+  h1{font-size:1.6rem}
+  .main{padding:0 calc(var(--sp)*2) calc(var(--sp)*6)}
+}
 </style>
 </head>
 <body>
-<div class="shell">
-<h1>☁️ MOD006125 Cloud Computing</h1>
-<p>Choose your study mode</p>
-<div class="cards">
-<a href="Cloud Computing/Study/mock-exam.html?v=1776539096" class="card">
-<span class="emoji">📝</span>
-<h2>Theory Mock Exam</h2>
-<span>150 questions · 12 weeks · all topics</span>
-</a>
-<a href="Cloud Computing/Study/practical.html?v=1776539096" class="card">
-<span class="emoji">⚙️</span>
-<h2>Practical Mock Exam</h2>
-<span>4 scenarios · 40 questions · AWS hands-on</span>
-</a>
+
+<div class="top">
+  <button class="tbtn" onclick="tog()" id="tb" title="Toggle theme">🌙</button>
 </div>
+
+<div class="main">
+  <div class="label">MOD006125</div>
+  <h1>Cloud Computing <span>Study</span></h1>
+  <p class="desc">Two exam modes. Theory covers 11 weeks of lectures. Practical tests AWS hands-on across 6 scenarios.</p>
+  <div class="grid">
+    <a href="Cloud Computing/Study/mock-exam.html" class="card">
+      <div class="icon">📝</div>
+      <h2>Theory</h2>
+      <div class="meta">176 questions · 11 weeks · every answer explained</div>
+    </a>
+    <a href="Cloud Computing/Study/practical.html" class="card">
+      <div class="icon">⚙️</div>
+      <h2>Practical</h2>
+      <div class="meta">60 questions · 6 scenarios · all 7 question types</div>
+    </a>
+  </div>
 </div>
+
+<div class="footer">
+  <span>built for passing, not for reading</span>
+</div>
+
+<script>
+if(localStorage.getItem('theme')==='dark'){document.documentElement.setAttribute('data-theme','dark');document.getElementById('tb').textContent='☀️'}
+function tog(){
+  const d=document.documentElement,b=document.getElementById('tb');
+  if(d.getAttribute('data-theme')==='dark'){d.removeAttribute('data-theme');b.textContent='🌙';localStorage.setItem('theme','light')}
+  else{d.setAttribute('data-theme','dark');b.textContent='☀️';localStorage.setItem('theme','dark')}
+}
+</script>
 </body>
 </html>
