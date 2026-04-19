@@ -4,70 +4,126 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>MOD006125 — Practical Mock Exam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#fafafa;--card:#fff;--text:#111;--muted:#666;--border:#e0e0e0;--accent:#0070f3;--ok:#059669;--er:#dc2626;--cbg:#f5f5f5;--sh:0 1px 3px rgba(0,0,0,.08)}
-[data-theme="dark"]{--bg:#0a0a0a;--card:#141414;--text:#eaeaea;--muted:#888;--border:#2a2a2a;--accent:#3b82f6;--ok:#34d399;--er:#f87171;--cbg:#1a1a1a;--sh:0 1px 3px rgba(0,0,0,.4)}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;transition:background .3s,color .3s}
-.wrap{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 5rem}
-.top{display:flex;justify-content:space-between;align-items:center;padding:.75rem 0;border-bottom:1px solid var(--border);margin-bottom:1.5rem}
-.top h1{font-size:1rem;font-weight:600}
-.top-r{display:flex;gap:.5rem;align-items:center}
-.btn-s{background:var(--card);border:1px solid var(--border);color:var(--text);padding:.35rem .7rem;border-radius:6px;font-size:.8rem;cursor:pointer;text-decoration:none;transition:all .15s}
-.btn-s:hover{border-color:var(--accent);color:var(--accent)}
-.stabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.25rem}
-.stab{padding:.45rem .9rem;border-radius:8px;font-size:.82rem;font-weight:500;cursor:pointer;background:var(--card);border:1px solid var(--border);color:var(--text);transition:all .15s}
-.stab:hover{border-color:var(--accent)}
-.stab.on{background:var(--accent);color:#fff;border-color:var(--accent)}
-.sdesc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem;margin-bottom:1.25rem;box-shadow:var(--sh)}
-.sdesc h2{font-size:1.05rem;margin-bottom:.3rem}
-.sdesc p{font-size:.85rem;color:var(--muted)}
-pre{background:var(--cbg);border:1px solid var(--border);border-radius:8px;padding:.85rem;font-size:.82rem;overflow-x:auto;margin:.6rem 0;font-family:'SF Mono',Consolas,monospace;line-height:1.5}
-table{width:100%;border-collapse:collapse;font-size:.82rem;margin:.6rem 0}
-th,td{padding:.45rem .6rem;border:1px solid var(--border);text-align:left}
-th{background:var(--cbg);font-weight:600}
-.q{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem;margin-bottom:.85rem;box-shadow:var(--sh)}
-.qh{display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem}
-.qn{font-size:.72rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.05em}
-.qt{font-size:.68rem;padding:.15rem .45rem;border-radius:4px;background:var(--cbg);color:var(--muted);border:1px solid var(--border)}
-.qtxt{font-size:.92rem;font-weight:500;margin-bottom:.85rem;line-height:1.55}
-.opts{display:flex;flex-direction:column;gap:.35rem}
-.opt{display:flex;align-items:flex-start;gap:.55rem;padding:.55rem .75rem;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .12s;font-size:.85rem;user-select:none}
-.opt:hover{border-color:var(--accent);background:var(--cbg)}
-.opt input{margin-top:.2rem;accent-color:var(--accent);pointer-events:none}
-.opt.pk{border-color:var(--accent);background:rgba(0,112,243,.04)}
-[data-theme="dark"] .opt.pk{background:rgba(59,130,246,.08)}
-.opt.ok{border-color:var(--ok);background:rgba(5,150,105,.06);color:var(--ok)}
-.opt.no{border-color:var(--er);background:rgba(220,38,38,.06);color:var(--er)}
-.opt .ck{margin-left:auto;font-size:.85rem;font-weight:700;min-width:1rem;text-align:center}
-.oi{background:var(--cbg);border:1px solid var(--border);border-radius:6px;padding:.35rem .55rem;font-family:'SF Mono',Consolas,monospace;font-size:.85rem;color:var(--text);width:180px;max-width:100%;outline:none}
-.oi:focus{border-color:var(--accent)}
-.mc{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;font-size:.82rem}
-.mi{padding:.45rem .55rem;border:1px solid var(--border);border-radius:6px;background:var(--cbg)}
-.ms{width:100%;padding:.35rem;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);font-size:.82rem;margin-top:.25rem}
-.olist{display:flex;flex-direction:column;gap:.35rem}
-.oi2{display:flex;align-items:center;gap:.55rem;padding:.45rem .65rem;border:1px solid var(--border);border-radius:6px;background:var(--card);font-size:.85rem;cursor:grab}
-.oi2 .nm{width:20px;height:20px;border-radius:50%;background:var(--cbg);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:var(--muted);flex-shrink:0}
-.oi2.dg{opacity:.5}
-.oi2.dv{border-color:var(--accent);border-style:dashed}
-.exp{margin-top:.65rem;padding:.65rem;background:var(--cbg);border-radius:6px;font-size:.82rem;color:var(--muted);border-left:3px solid var(--accent);display:none}
-.exp.show{display:block}
-.bar{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);padding:.65rem;display:flex;justify-content:center;gap:1rem;align-items:center;z-index:50;box-shadow:0 -2px 10px rgba(0,0,0,.05)}
-.btn{padding:.55rem 1.4rem;border-radius:8px;font-size:.88rem;font-weight:600;cursor:pointer;border:none;transition:all .15s}
-.btn1{background:var(--accent);color:#fff}.btn1:hover{opacity:.9}
-.btn2{background:var(--cbg);color:var(--text);border:1px solid var(--border)}.btn2:hover{border-color:var(--accent)}
-.scr{font-size:.88rem;font-weight:600}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#fafafa;--sf:#fff;--sf2:#f4f4f5;--sf3:#e4e4e7;
+  --bd:rgba(0,0,0,.06);--bdh:rgba(0,0,0,.1);
+  --t:#18181b;--t2:#52525b;--t3:#71717a;--t4:#a1a1aa;
+  --ok:#059669;--okb:rgba(5,150,105,.06);--okbd:rgba(5,150,105,.2);
+  --er:#dc2626;--erb:rgba(220,38,38,.06);--erbd:rgba(220,38,38,.15);
+  --fr:rgba(5,150,105,.5);
+  --font-sans:'Outfit',system-ui,-apple-system,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --r:8px;--sp:8px;
+}
+[data-theme="dark"]{
+  --bg:#08090a;--sf:#0f1011;--sf2:#161718;--sf3:#1c1d1f;
+  --bd:rgba(255,255,255,.06);--bdh:rgba(255,255,255,.1);
+  --t:#e4e4e7;--t2:#a1a1aa;--t3:#71717a;--t4:#52525b;
+  --ok:#10b981;--okb:rgba(16,185,129,.08);--okbd:rgba(16,185,129,.2);
+  --er:#ef4444;--erb:rgba(239,68,68,.08);--erbd:rgba(239,68,68,.2);
+  --fr:rgba(16,185,129,.5);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-sans);background:var(--bg);color:var(--t);
+  line-height:1.6;font-size:15px;font-weight:400;letter-spacing:.01em;
+  -webkit-font-smoothing:antialiased;
+  padding:calc(var(--sp)*3) calc(var(--sp)*2) calc(var(--sp)*10);
+  transition:background .3s,color .3s;
+}
+@media(prefers-reduced-motion:reduce){*{transition-duration:0s!important}}
+
+.shell{max-width:720px;margin:0 auto}
+.hdr{display:flex;justify-content:space-between;align-items:flex-start;gap:calc(var(--sp)*2);margin-bottom:calc(var(--sp)*2)}
+.hdr-left{flex:1}
+.hdr h1{font-size:1.4rem;font-weight:600;letter-spacing:-.02em;line-height:1.2;color:var(--t)}
+.hdr .sub{font-size:.78rem;color:var(--t3);margin-top:4px}
+.tbtn{width:36px;height:36px;border-radius:50%;background:var(--sf);border:1px solid var(--bd);color:var(--t2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;transition:border-color .2s,color .2s,transform .15s;text-decoration:none}
+.tbtn:hover{border-color:var(--bdh);color:var(--t)}.tbtn:active{transform:scale(.95)}
+
+/* Scenario tabs */
+.stabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:calc(var(--sp)*2)}
+.stab{font-family:var(--font-sans);font-size:.75rem;font-weight:500;padding:6px 14px;border-radius:calc(var(--sp)*.5);background:transparent;border:1px solid var(--bd);color:var(--t3);cursor:pointer;transition:all .15s}
+.stab:hover{border-color:var(--bdh);color:var(--t2)}
+.stab.on{background:var(--ok);color:#fff;border-color:var(--ok)}
+
+/* Scenario desc */
+.sdesc{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:calc(var(--sp)*2);margin-bottom:calc(var(--sp)*2)}
+.sdesc h2{font-size:.95rem;font-weight:600;letter-spacing:-.01em;margin-bottom:4px}
+.sdesc p{font-size:.82rem;color:var(--t3);line-height:1.5}
+
+/* Code / pre */
+pre{background:var(--sf2);border:1px solid var(--bd);border-radius:var(--r);padding:calc(var(--sp)*1.25);font-family:var(--font-mono);font-size:.78rem;overflow-x:auto;margin:12px 0;line-height:1.5;color:var(--t2)}
+code{font-family:var(--font-mono);font-size:.78rem}
+table{width:100%;border-collapse:collapse;font-size:.8rem;margin:12px 0}
+th,td{padding:6px 10px;border:1px solid var(--bd);text-align:left}
+th{background:var(--sf2);font-weight:600}
+
+/* Question card */
+.q{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:calc(var(--sp)*2);margin-bottom:calc(var(--sp)*1);transition:border-color .25s}
+.q.ok{border-color:var(--okbd)}.q.no{border-color:var(--erbd)}
+.qh{display:flex;justify-content:space-between;align-items:center;margin-bottom:calc(var(--sp))}
+.qn{font-family:var(--font-mono);font-size:.65rem;font-weight:600;color:var(--t4);letter-spacing:.08em;text-transform:uppercase}
+.qt{font-family:var(--font-mono);font-size:.62rem;font-weight:500;color:var(--t4);padding:2px 8px;border-radius:4px;background:var(--sf2);border:1px solid var(--bd)}
+.qtx{font-size:.88rem;color:var(--t);line-height:1.55;margin-bottom:calc(var(--sp)*1.5)}
+
+/* Options */
+.os{display:flex;flex-direction:column;gap:6px}
+.op{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:var(--sf2);border:1px solid var(--bd);border-radius:6px;cursor:pointer;font-size:.84rem;line-height:1.5;color:var(--t2);transition:all .12s;user-select:none}
+.op:hover{border-color:var(--bdh);background:var(--sf3)}
+.op.pk{border-color:var(--okbd);background:var(--okb)}
+.op input{margin-top:3px;accent-color:var(--ok);pointer-events:none;flex-shrink:0}
+.op .ck{margin-left:auto;font-size:.82rem;font-weight:700;min-width:1.2rem;text-align:center;flex-shrink:0}
+.op.rt{border-color:var(--okbd);background:var(--okb);color:var(--ok)}
+.op.wr{border-color:var(--erbd);background:var(--erb);color:var(--er)}
+
+/* Fill blank */
+.fi{background:var(--sf2);border:1px solid var(--bd);border-radius:6px;padding:6px 10px;font-family:var(--font-mono);font-size:.84rem;color:var(--t);width:180px;max-width:100%;outline:none;transition:border-color .15s;display:inline-block}
+.fi:focus{border-color:var(--ok)}
+
+/* Matching */
+.mc{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.82rem}
+.mi{padding:8px 10px;border:1px solid var(--bd);border-radius:6px;background:var(--sf2)}
+.mi strong{font-size:.72rem;font-weight:600;color:var(--t4)}
+.ms{width:100%;padding:6px;border:1px solid var(--bd);border-radius:6px;background:var(--sf);color:var(--t);font-size:.82rem;margin-top:4px;font-family:var(--font-sans)}
+
+/* Ordering */
+.ol{display:flex;flex-direction:column;gap:5px}
+.oi{display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--bd);border-radius:6px;background:var(--sf);font-size:.84rem;cursor:grab}
+.oi .nm{width:22px;height:22px;border-radius:50%;background:var(--sf2);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:var(--t4);flex-shrink:0}
+.oi.dg{opacity:.4}
+.oi.dv{border-color:var(--ok);border-style:dashed}
+
+/* Explanation */
+.ex{margin-top:10px;padding:10px 12px;background:var(--sf2);border-radius:6px;font-size:.82rem;color:var(--t3);border-left:3px solid var(--ok);display:none;line-height:1.5}
+.ex.show{display:block}
+
+/* Bottom bar */
+.bar{position:fixed;bottom:0;left:0;right:0;background:var(--sf);border-top:1px solid var(--bd);padding:10px;display:flex;justify-content:center;gap:12px;align-items:center;z-index:50}
+.btn{font-family:var(--font-sans);padding:8px 20px;border-radius:var(--r);font-size:.86rem;font-weight:600;cursor:pointer;border:none;transition:all .15s}
+.btn1{background:var(--ok);color:#fff}.btn1:hover{opacity:.9}
+.btn2{background:var(--sf2);color:var(--t);border:1px solid var(--bd)}.btn2:hover{border-color:var(--ok)}
+.scr{font-size:.86rem;font-weight:600}
 .sg{color:var(--ok)}.sb{color:var(--er)}
-@media(max-width:600px){.wrap{padding:1rem 1rem 5rem}.mc{grid-template-columns:1fr}}
+.hid{display:none}
+@media(max-width:600px){body{padding:16px 16px 80px}.mc{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="wrap">
-<div class="top">
-<h1>☁️ Practical Mock Exam</h1>
-<div class="top-r">
-<button class="btn-s" onclick="tog()" id="tb">🌙</button>
-<a href="mock-exam.html" class="btn-s">Theory →</a>
+<div class="shell">
+<div class="hdr">
+<div class="hdr-left">
+<h1>Practical Mock Exam</h1>
+<div class="sub">MOD006125 Cloud Computing — 6 scenarios × 10 questions</div>
+</div>
+<div style="display:flex;gap:6px;align-items:center">
+<button class="tbtn" onclick="tog()" id="tb" title="Toggle theme">🌙</button>
+<a href="mock-exam.html" class="tbtn" title="Theory exam">📝</a>
 </div>
 </div>
 <div class="stabs" id="sn"></div>
@@ -81,190 +137,256 @@ th{background:var(--cbg);font-weight:600}
 
 <script>
 const S=[
-{id:'b',t:'S1: ByteBooks',d:'AWS Web Deployment',l:'A small online bookshop deploying their website on AWS. You are the junior cloud engineer setting up IAM policies, VPC networking, security groups, EC2 instances, and user data.',q:[
-{tp:'ord',tx:'Order the deployment steps from first to last:',it:['Create VPC with CIDR 10.0.0.0/16','Create public and private subnets','Attach Internet Gateway and configure route table','Create security group sg-bytebooks','Launch EC2 instance','Test website via public IP'],c:[0,1,2,3,4,5],ex:'VPC → subnets → IGW+routes → SG → EC2 → test. Network foundation before compute.'},
-{tp:'mat',tx:'Match each EC2 parameter to its purpose:',lf:['--image-id ami-0abc1234','--instance-type t3.micro','--key-name bytebooks-key','--user-data file://install.sh'],rt:['A. SSH key pair for remote access','B. Bootstrap script at first boot','C. AMI template for the instance','D. vCPU and memory resources'],c:{0:2,1:3,2:0,3:1},ex:'--image-id→AMI, --instance-type→resources, --key-name→SSH key, --user-data→bootstrap.'},
-{tp:'fb',tx:'Complete the SSH command: <code>ssh -i <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>.pem ec2-user@52.56.78.90</code>',c:['bytebooks-key'],ex:'The key name from --key-name parameter.'},
-{tp:'mul',tx:'Which inbound traffic is permitted by sg-bytebooks? (Select ALL)',op:['HTTP from any IP on port 80','HTTPS from any IP on port 443','SSH from VPC (10.0.0.0/16) on port 22','SSH from any IP on port 22'],c:[0,2],ex:'HTTP from 0.0.0.0/0 ✓, SSH from 10.0.0.0/16 only ✓. No HTTPS rule.'},
-{tp:'tf',tx:'User Data script re-executes on every EC2 reboot.',op:['True','False'],c:1,ex:'User Data runs only on first boot by default.'},
-{tp:'sng',tx:'A dev runs <code>aws s3 rb s3://bytebooks --force</code>. The IAM policy has an explicit Deny on s3:DeleteBucket. What happens?',op:['Bucket is deleted','Contents deleted but bucket remains','Request denied by explicit Deny','Queued for admin approval'],c:2,ex:'Explicit Deny overrides any Allow.'},
-{tp:'ord',tx:'Website not loading — order troubleshooting from first to last:',it:['Check security group allows port 80 inbound','Check route table has IGW route','Confirm instance has public IP','SSH in: systemctl status httpd','Check /var/log/cloud-init-output.log'],c:[0,1,2,3,4],ex:'Network layer first (SG, routes, IP), then app layer (httpd), then logs.'},
-{tp:'fb',tx:'Instance IP is 10.0.1.42. It is in the <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> subnet.',c:['public'],ex:'10.0.1.0/24 = public subnet.'},
-{tp:'fb2',tx:'Complete: <code>aws <u>&nbsp;&nbsp;&nbsp;</u> <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> --instance-ids i-0abc123</code>',c:['ec2','describe-instances'],ex:'aws ec2 describe-instances'},
-{tp:'mat',tx:'Match to Security Group or Network ACL:',lf:['Stateful — return auto-allowed','Operates at subnet level','Operates at instance level','Stateless — return must be explicit'],rt:['Security Group','Network ACL'],c:{0:0,1:1,2:0,3:1},ex:'SG = stateful + instance. NACL = stateless + subnet.'}
+{id:'b',t:'S1: ByteBooks',d:'AWS Web Deployment (IAM, VPC, EC2, SGs)',l:'A small online bookshop deploying their website to AWS. As junior cloud engineer, you set up IAM policies, VPC networking, security groups, EC2 instances, and a user data bootstrap script.',q:[
+{tp:'ord',tx:'Order the deployment steps from first to last:',it:['Create VPC with CIDR 10.0.0.0/16','Create public subnet (10.0.1.0/24) and private subnet (10.0.2.0/24)','Attach Internet Gateway and configure public route table','Create security group sg-bytebooks (HTTP:80 + SSH:22)','Launch EC2 instance with user data script','Test website by browsing to public IP'],c:[0,1,2,3,4,5],ex:'VPC first, then subnets within AZs, then IGW + route table for internet access, then security group rules, then EC2 launch, finally test.'},
+{tp:'mat',tx:'Match each EC2 launch parameter to its purpose:',lf:['--image-id ami-0abcdef1234567890','--instance-type t3.micro','--key-name bytebooks-key','--user-data file://install.sh'],rt:['SSH key pair for remote access','Bootstrap script executed at first launch','AMI template defining the OS and software','vCPU and memory resources'],c:{0:2,1:3,2:0,3:1},ex:'--image-id selects the AMI template, --instance-type defines resources, --key-name sets SSH credentials, --user-data provides the bootstrap script.'},
+{tp:'fb',tx:'Complete the SSH command:<br><code>ssh -i <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>.pem ec2-user@52.56.78.90</code>',c:['bytebooks-key'],ex:'The key pair name from the --key-name parameter: bytebooks-key.'},
+{tp:'mul',tx:'Based on the sg-bytebooks security group rules, which inbound traffic is permitted? (Select ALL that apply)',op:['HTTP traffic from any IP address on port 80','HTTPS traffic from any IP address on port 443','SSH traffic from within the VPC (10.0.0.0/16) on port 22','SSH traffic from any IP address on port 22'],c:[0,2],ex:'SG allows HTTP from 0.0.0.0/0 (A) and SSH from 10.0.0.0/16 only (C). No HTTPS rule exists, and SSH is restricted to VPC only.'},
+{tp:'tf',tx:'The User Data script (install.sh) will re-execute automatically every time the EC2 instance is rebooted.',op:['True','False'],c:1,ex:'User Data scripts run only on the first boot of an EC2 instance by default, not on every reboot.'},
+{tp:'sng',tx:'A developer with the IAM policy runs: <code>aws s3 rb s3://bytebooks-website --force</code>. What is the outcome?',op:['The bucket is deleted successfully','The bucket contents are deleted but the bucket remains','The request is denied due to the explicit Deny on s3:DeleteBucket','The request is queued for admin approval'],c:2,ex:'Explicit Deny always overrides any Allow. The policy has an explicit Deny on s3:DeleteBucket, so the request is denied.'},
+{tp:'ord',tx:'The website is not loading. Order the troubleshooting steps:',it:['Verify security group allows inbound HTTP on port 80','Check route table has a route to the Internet Gateway','Confirm the instance has a public IP address','SSH into instance: systemctl status httpd','Examine /var/log/cloud-init-output.log for errors'],c:[0,1,2,3,4],ex:'Network layer first (SG, routes, public IP), then application layer (httpd status), then logs for User Data errors.'},
+{tp:'fb',tx:'The instance has private IP 10.0.1.42. Based on the VPC design, it is in the <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> subnet.',c:['public'],ex:'10.0.1.0/24 is the public subnet. 10.0.2.0/24 is private.'},
+{tp:'fb2',tx:'Complete the AWS CLI command:<br><code>aws <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> --instance-ids i-0bb1234567example</code>',c:['ec2','describe-instances'],ex:'aws ec2 describe-instances describes EC2 instance details.'},
+{tp:'mat',tx:'Match each characteristic to Security Group or Network ACL:',lf:['Stateful — return traffic automatically allowed','Operates at the subnet level','Operates at the instance level','Stateless — return traffic must be explicitly allowed'],rt:['Security Group','Network ACL'],c:{0:0,1:1,2:0,3:1},ex:'Security Groups: stateful, instance-level. Network ACLs: stateless, subnet-level.'}
 ]},
-{id:'ds',t:'S2: DataSecure',d:'IAM & Security',l:'A fintech company hardening their AWS security. Review IAM setup, encryption policies, audit logging, and the Shared Responsibility Model.',q:[
-{tp:'sng',tx:'Which service logs API calls for auditing "who did what, when, and where"?',op:['AWS Config','AWS CloudTrail','Amazon CloudWatch','AWS Trusted Advisor'],c:1,ex:'CloudTrail = API audit logging.'},
-{tp:'sng',tx:'Who is responsible for OS patching on EC2 instances?',op:['AWS always','The customer','Depends on AMI','Shared equally'],c:1,ex:'IaaS = customer manages OS patching.'},
-{tp:'mul',tx:'Which are components of the CIA Triad? (Select ALL)',op:['Confidentiality','Authentication','Integrity','Availability','Authorisation'],c:[0,2,3],ex:'CIA = Confidentiality, Integrity, Availability. Auth is separate.'},
-{tp:'sng',tx:'What is the principle of least privilege?',op:['Give admin access by default','Grant only minimum permissions needed','Deny all, require manual approval','Same policy for all users'],c:1,ex:'Start with zero permissions, add only what is needed.'},
-{tp:'sng',tx:'Key difference between IAM Role and IAM User:',op:['Roles have more permissions','Roles use temporary credentials','Roles are only for services','Roles are deprecated'],c:1,ex:'Roles = temporary creds. Users = long-term creds.'},
-{tp:'tf',tx:'SCPs in AWS Organizations can grant new permissions.',op:['True','False'],c:1,ex:'SCPs only restrict (set boundaries), never grant.'},
-{tp:'sng',tx:'Which service creates and controls encryption keys?',op:['AWS Shield','AWS WAF','AWS KMS','Amazon GuardDuty'],c:2,ex:'KMS = Key Management Service.'},
-{tp:'sng',tx:'Encryption at rest vs in transit:',op:['At rest = on disk, in transit = across network','At rest = cloud, in transit = on-prem','Same thing, different names','At rest uses KMS, in transit uses S3'],c:0,ex:'At rest = stored data. In transit = network traffic (TLS/SSL).'},
-{tp:'mul',tx:'Which protect against DDoS? (Select ALL)',op:['AWS Shield Standard','AWS CloudTrail','AWS Shield Advanced','Security Groups'],c:[0,2],ex:'Shield Standard + Advanced = DDoS protection.'},
-{tp:'sng',tx:'As you move IaaS → PaaS → SaaS:',op:['Customer responsibility increases','AWS responsibility decreases','Customer responsibility decreases','Stays the same'],c:2,ex:'More managed = less customer responsibility.'}
+
+{id:'sec',t:'S2: Security',d:'IAM, Shared Responsibility, Encryption, Compliance',l:'A fintech company hardening their AWS security posture. Based on Module 4: AWS Cloud Security — IAM, shared responsibility, encryption, compliance, and account hardening.',q:[
+{tp:'sng',tx:'In the Shared Responsibility Model, who is responsible for patching the guest OS on an EC2 instance?',op:['AWS','The customer','Both equally','Neither'],c:1,ex:'For EC2 (IaaS), the customer manages the guest OS. AWS manages the hypervisor and physical infrastructure.'},
+{tp:'sng',tx:'What is the effect of an IAM policy if there is no explicit Allow?',op:['Allow by default','Implicit Deny','Error','Read-only access'],c:1,ex:'IAM follows default Deny. If not explicitly allowed, it is implicitly denied. Explicit Deny always wins.'},
+{tp:'mul',tx:'Which are components of the CIA Triad? (Select ALL that apply)',op:['Confidentiality','Authentication','Integrity','Availability','Authorisation'],c:[0,2,3],ex:'CIA = Confidentiality, Integrity, Availability. Authentication and Authorisation are separate concepts.'},
+{tp:'sng',tx:'Which IAM entity provides temporary credentials for an EC2 instance to access S3?',op:['IAM User','IAM Group','IAM Role','IAM Policy'],c:2,ex:'IAM Roles provide temporary security credentials via instance profiles — no long-term keys stored on the instance.'},
+{tp:'sng',tx:'What is the FIRST step to secure a new AWS account?',op:['Launch an EC2 instance','Enable MFA on the root account','Create a VPC','Set up billing alerts'],c:1,ex:'MFA on root is the most critical first step to prevent unauthorised account access.'},
+{tp:'tf',tx:'Service Control Policies (SCPs) in AWS Organizations can grant new permissions to member accounts.',op:['True','False'],c:1,ex:'SCPs only set permission boundaries (restrict), they never grant permissions.'},
+{tp:'sng',tx:'Which service provides managed DDoS protection?',op:['AWS WAF','AWS Shield','Amazon GuardDuty','AWS Config'],c:1,ex:'AWS Shield provides DDoS protection. Standard is free, Advanced has enhanced protection + 24/7 DRT.'},
+{tp:'mul',tx:'Which services protect data at rest? (Select ALL that apply)',op:['Amazon S3 server-side encryption','Amazon EBS encryption','TLS/SSL certificates','Amazon RDS encryption with KMS'],c:[0,1,3],ex:'S3 SSE, EBS encryption, and RDS encryption protect data at rest. TLS/SSL protects data in transit.'},
+{tp:'sng',tx:'As you move from IaaS to SaaS in the Shared Responsibility Model:',op:['Customer responsibility increases','AWS responsibility decreases','Customer responsibility decreases','Responsibility stays the same'],c:2,ex:'More managed services = AWS takes on more responsibility. Customer responsibility decreases.'},
+{tp:'fb',tx:'The AWS service that records all API calls for auditing "who did what, when, and where" is AWS <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>.',c:['cloudtrail'],ex:'CloudTrail records API calls across your AWS account for security analysis and compliance auditing.'}
 ]},
-{id:'su',t:'S3: ScaleUp',d:'High Availability & Scaling',l:'E-commerce startup designing for HA, fault tolerance, and auto-scaling. Configuring ELB, Auto Scaling, CloudFront, and Route 53.',q:[
-{tp:'sng',tx:'Which service distributes traffic across EC2 instances?',op:['Route 53','CloudFront','Elastic Load Balancing','Auto Scaling'],c:2,ex:'ELB distributes traffic. Route 53 = DNS. CloudFront = CDN.'},
-{tp:'sng',tx:'ASG has min=2, max=8, desired=4. One instance fails health check.',op:['Nothing — admin must fix','ASG launches replacement to keep desired=4','Launches 2 as safety','Terminates all and relaunches'],c:1,ex:'ASG replaces unhealthy to maintain desired capacity.'},
-{tp:'sng',tx:'CloudFront is best described as:',op:['DNS routing service','CDN caching at edge locations','Load balancer','Database replication'],c:1,ex:'CloudFront = CDN with edge locations worldwide.'},
-{tp:'ord',tx:'Order from global to local scope:',it:['AWS Region','Edge Location (PoP)','Availability Zone','VPC'],c:[1,0,2,3],ex:'Edge locations (global) → Regions → AZs → VPCs.'},
-{tp:'sng',tx:'Route 53 health checks can:',op:['Monitor EC2 CPU only','Route away from unhealthy endpoints','Restart RDS','Scale ASG directly'],c:1,ex:'Route 53 health checks reroute DNS traffic from failed endpoints.'},
-{tp:'mul',tx:'Which are ELB types? (Select ALL)',op:['Application Load Balancer','Network Load Balancer','Database Load Balancer','Gateway Load Balancer'],c:[0,1,3],ex:'ALB (L7), NLB (L4), GWLB. No "Database Load Balancer".'},
-{tp:'tf',tx:'Multi-AZ Auto Scaling provides fault tolerance.',op:['True','False'],c:0,ex:'Multi-AZ = if one AZ fails, others continue.'},
-{tp:'sng',tx:'Which WAF pillar matches supply to demand?',op:['Operational Excellence','Security','Cost Optimization','Performance Efficiency'],c:2,ex:'Cost Optimization = right-sizing, matching supply to demand.'},
-{tp:'fb',tx:'The CDN that caches at edge locations is Amazon <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>.',c:['CloudFront'],ex:'CloudFront = CDN.'},
-{tp:'sng',tx:'Loose coupling is best achieved with:',op:['Auto Scaling','ELB and SQS','Route 53','CloudFront'],c:1,ex:'ELB + SQS = distribute traffic and decouple components.'}
+
+{id:'net',t:'S3: Networking',d:'VPC, Security Groups, NACLs, Route 53, CloudFront',l:'Configuring VPC networking, subnets, security groups vs NACLs, DNS with Route 53, and CDN with CloudFront. Based on Module 5.',q:[
+{tp:'sng',tx:'What is the key difference between Security Groups and Network ACLs?',op:['Security Groups are stateless; NACLs are stateful','Security Groups are stateful; NACLs are stateless','Both are stateful','Both are stateless'],c:1,ex:'Security Groups are stateful (return auto-allowed). NACLs are stateless (return must be explicit). SG = instance level, NACL = subnet level.'},
+{tp:'fb',tx:'CIDR notation 10.0.0.0/24 provides <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> IP addresses.',c:['256'],ex:'/24 = 24 bits fixed, 8 bits for hosts = 2^8 = 256 addresses (254 usable after AWS reserves 5).'},
+{tp:'sng',tx:'Which VPC component allows instances in a private subnet to access the internet for updates?',op:['Internet Gateway','NAT Gateway','Security Group','Route 53'],c:1,ex:'NAT Gateway enables outbound internet access for private subnet instances while blocking inbound.'},
+{tp:'sng',tx:'Which Route 53 routing policy sends traffic to the Region with the lowest network latency?',op:['Simple','Weighted','Latency-based','Failover'],c:2,ex:'Latency-based routing directs users to the AWS Region providing the lowest latency.'},
+{tp:'mul',tx:'Which are features of Amazon CloudFront? (Select ALL that apply)',op:['Content caching at edge locations','Reduces latency for end users','Manages DNS records','Integrates with S3 and EC2 origins'],c:[0,1,3],ex:'CloudFront caches content at edge locations for low latency. DNS is Route 53, not CloudFront.'},
+{tp:'tf',tx:'A Security Group can have both Allow and Deny rules.',op:['True','False'],c:1,ex:'Security Groups only support Allow rules (default deny all inbound). NACLs support both Allow and Deny.'},
+{tp:'sng',tx:'An Elastic IP is best described as:',op:['A private DNS name','A static public IPv4 address that can be remapped','A load balancer endpoint','A VPN tunnel address'],c:1,ex:'Elastic IP is a static public IPv4 you can remap between instances, useful for failover.'},
+{tp:'ord',tx:'Order the VPC components from most broad to most specific:',it:['VPC (CIDR block)','Availability Zone','Subnet (within AZ)','EC2 Instance'],c:[0,1,2,3],ex:'VPC spans all AZs in a Region. AZs contain subnets. Subnets contain instances.'},
+{tp:'sng',tx:'Which VPC feature enables a private connection between two VPCs?',op:['NAT Gateway','Internet Gateway','VPC Peering','Direct Connect'],c:2,ex:'VPC Peering connects two VPCs privately. Traffic stays on the AWS network, no transitive peering.'},
+{tp:'fb2',tx:'Security Groups operate at the <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> level, while NACLs operate at the <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> level.',c:['instance','subnet'],ex:'SGs = instance level. NACLs = subnet level.'}
 ]},
-{id:'do',t:'S4: DevOps',d:'Infrastructure as Code',l:'DevOps team adopting IaC and automation. Reviewing CloudFormation, deployment strategies, and Well-Architected Framework.',q:[
-{tp:'sng',tx:'What is Infrastructure as Code?',op:['Writing app code in the cloud','Managing infra via definition files','Using AWS Console','Automating testing'],c:1,ex:'IaC = define infra in code files (JSON/YAML).'},
-{tp:'sng',tx:'Which service uses YAML/JSON templates?',op:['CodeDeploy','CloudFormation','CodePipeline','EC2'],c:1,ex:'CloudFormation = declarative IaC via templates.'},
-{tp:'tf',tx:'CloudFormation templates are idempotent.',op:['True','False'],c:0,ex:'Same template applied twice = same result.'},
-{tp:'mat',tx:'Match WAF pillar to focus:',lf:['Operational Excellence','Security','Reliability','Cost Optimization'],rt:['Run and monitor for business value','Protect data and assets','Withstand and recover from failures','Avoid unnecessary costs'],c:{0:0,1:1,2:2,3:3},ex:'Ops=run, Security=protect, Reliability=recover, Cost=save.'},
-{tp:'sng',tx:'Which deployment gradually shifts traffic to new version?',op:['All-at-once rolling','Blue/Green','Canary','Big Bang'],c:2,ex:'Canary = small % first, then gradually increase.'},
-{tp:'mul',tx:'Benefits of IaC? (Select ALL)',op:['Version control for infra','Eliminates testing','Repeatable deployments','Reduced manual errors'],c:[0,2,3],ex:'IaC enables versioning, repeatability, error reduction. Does NOT eliminate testing.'},
-{tp:'sng',tx:'Operational Excellence recommends viewing workload as:',op:['Fixed servers','Code — automatable and versioned','Manual runbook','Cost center'],c:1,ex:'View entire workload as code.'},
-{tp:'sng',tx:'Purpose of a CloudFormation stack:',op:['Group of resources managed as single unit','Collection of IAM users','Set of S3 buckets','Network of EC2s'],c:0,ex:'Stack = related resources managed together.'},
-{tp:'fb',tx:'The pillar focused on running systems and improving processes is <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> Excellence.',c:['Operational'],ex:'Operational Excellence = run, monitor, improve.'},
-{tp:'sng',tx:'AWS recommends which approach for infra changes?',op:['Change in Console','Update IaC template and deploy via automation','SSH into instances','Never change once deployed'],c:1,ex:'Update templates, deploy via automation. Manual = drift.'}
+
+{id:'cmp',t:'S4: Compute',d:'EC2, Lambda, Containers, Elastic Beanstalk',l:'EC2 instance types and pricing, Lambda serverless, containers (ECS/EKS/Fargate), and Elastic Beanstalk PaaS. Based on Module 6 + Labs 3 + Activities.',q:[
+{tp:'sng',tx:'Which EC2 instance family is best for a memory-intensive in-memory database?',op:['General Purpose (T3)','Compute Optimised (C5)','Memory Optimised (R5)','Storage Optimised (I3)'],c:2,ex:'Memory Optimised (R5, X1) for in-memory databases, real-time analytics, large caches.'},
+{tp:'sng',tx:'What is the maximum execution time for an AWS Lambda function?',op:['60 seconds','5 minutes','15 minutes','1 hour'],c:2,ex:'Lambda max timeout = 15 minutes (900 seconds). For longer workloads, use Step Functions or EC2.'},
+{tp:'mul',tx:'Which are valid EC2 pricing models? (Select ALL that apply)',op:['On-Demand','Reserved Instances','Spot Instances','Monthly Subscription'],c:[0,1,2],ex:'On-Demand, Reserved (1/3-yr, up to 75% off), Spot (up to 90% off, interruptible), Dedicated Hosts. No subscription model.'},
+{tp:'sng',tx:'Which service runs containers without managing any EC2 instances?',op:['Amazon ECS','Amazon EKS','AWS Fargate','Amazon ECR'],c:2,ex:'Fargate is serverless compute for containers — no EC2 management needed. ECS/EKS need underlying compute.'},
+{tp:'sng',tx:'Elastic Beanstalk handles which tasks automatically? (Best answer)',op:['Only load balancing','Only auto scaling','Capacity provisioning, load balancing, auto scaling, and health monitoring','Only application deployment'],c:2,ex:'Beanstalk handles the full stack: provisioning, ELB, ASG, health monitoring. You just upload code.'},
+{tp:'tf',tx:'EC2 Spot Instances can be interrupted by AWS with a 2-minute warning.',op:['True','False'],c:0,ex:'Spot Instances use spare capacity and can be reclaimed with 2-min notice when AWS needs capacity.'},
+{tp:'fb',tx:'The maximum single PUT upload size for Amazon S3 is <u>&nbsp;&nbsp;&nbsp;&nbsp;</u> GB (use multipart for larger).',c:['5'],ex:'Max single PUT = 5 GB. Use multipart upload for objects larger than 5 GB (up to 5 TB).'},
+{tp:'sng',tx:'An AMI (Amazon Machine Image) includes:',op:['Only the OS template','Only launch permissions','Only block device mappings','OS template, launch permissions, and block device mappings'],c:3,ex:'An AMI includes all three: root volume template, launch permissions, and block device mappings.'},
+{tp:'sng',tx:'EC2 User Data scripts are used to:',op:['Create IAM users','Run a bootstrap script at instance launch','Encrypt storage volumes','Configure billing alerts'],c:1,ex:'User Data runs at first launch to automate software installation, configuration, and service startup.'},
+{tp:'mat',tx:'Match each compute service to its best use case:',lf:['Amazon EC2','AWS Lambda','AWS Fargate','Elastic Beanstalk'],rt:['Event-driven serverless functions','Full control over VM configuration','Serverless containers','Quick PaaS deployment'],c:{0:1,1:0,2:3,3:2},ex:'Lambda = serverless events, EC2 = full VM control, Beanstalk = PaaS quick deploy, Fargate = serverless containers.'}
 ]},
-{id:'st',t:'S5: Storage & Compute',d:'EC2, EBS, S3, Lambda, Beanstalk',l:'Hands-on with compute and storage services. Based on Labs 3-4 and Activities for Lambda and Elastic Beanstalk.',q:[
-{tp:'sng',tx:'EBS volumes are:',op:['Object storage','Block storage attached to EC2','File storage','Archive storage'],c:1,ex:'EBS = block storage volumes for EC2 instances.'},
-{tp:'sng',tx:'Which EBS type is best for boot volumes with moderate IOPS?',op:['io2 (Provisioned IOPS)','gp3 (General Purpose SSD)','st1 (Throughput Optimized HDD)','sc1 (Cold HDD)'],c:1,ex:'gp3 = general purpose, good for boot volumes.'},
-{tp:'sng',tx:'An EC2 instance with EBS root volume — terminating the instance:',op:['Keeps the EBS volume','Deletes the EBS volume by default','Converts to S3','Backs up to Glacier'],c:1,ex:'Root EBS volumes are deleted on termination by default (DeleteOnTermination=true).'},
-{tp:'mul',tx:'Which are valid EC2 pricing models? (Select ALL)',op:['On-Demand','Spot','Reserved','Subscription'],c:[0,1,2],ex:'On-Demand, Reserved, Spot, Savings Plans. No "Subscription" model.'},
-{tp:'sng',tx:'Lambda functions are best described as:',op:['Virtual servers you manage','Serverless — run code without managing servers','Container orchestration','Managed databases'],c:1,ex:'Lambda = serverless compute. No server management.'},
-{tp:'sng',tx:'Lambda execution time limit:',op:['30 seconds','5 minutes','15 minutes','Unlimited'],c:2,ex:'Max Lambda execution = 15 minutes.'},
-{tp:'sng',tx:'Elastic Beanstalk abstracts away:',op:['Only networking','Only storage','Infrastructure management (EC2, ELB, ASG)','Only databases'],c:2,ex:'Beanstalk = PaaS. Handles EC2, ELB, ASG, health monitoring.'},
-{tp:'sng',tx:'S3 is:',op:['Block storage','File storage','Object storage','Archive only'],c:2,ex:'S3 = object storage service.'},
-{tp:'sng',tx:'S3 Standard-IA is designed for:',op:['Frequently accessed data','Infrequently accessed but rapid retrieval needed','Archive data','Temporary scratch data'],c:1,ex:'Standard-IA = infrequent access, millisecond retrieval, lower cost.'},
-{tp:'fb',tx:'The AWS CLI command to list S3 buckets is: aws <u>&nbsp;&nbsp;&nbsp;</u> <u>&nbsp;&nbsp;&nbsp;</u>',c:['s3','ls'],ex:'aws s3 ls lists all S3 buckets.'}
+
+{id:'sto',t:'S5: Storage',d:'EBS, S3, EFS, Glacier',l:'Block (EBS), object (S3), file (EFS), and archival (Glacier) storage. Storage classes, durability, and lifecycle policies. Based on Module 7 + Lab 4.',q:[
+{tp:'sng',tx:'How many nines of durability does Amazon S3 provide?',op:['99.9%','99.99%','99.999999999% (11 nines)','100%'],c:2,ex:'S3 = 11 nines durability. Store 10M objects → expect to lose one every 10,000 years.'},
+{tp:'sng',tx:'Which storage service can be shared by multiple EC2 instances simultaneously?',op:['Amazon EBS','Amazon S3','Amazon EFS','Instance Store'],c:2,ex:'EFS is a shared POSIX file system mountable by hundreds of EC2 instances concurrently. EBS = single instance.'},
+{tp:'mul',tx:'Which are valid S3 storage classes? (Select ALL that apply)',op:['S3 Standard','S3 Intelligent-Tiering','S3 One Zone-IA','S3 Flash Drive'],c:[0,1,2],ex:'Standard, Intelligent-Tiering, Standard-IA, One Zone-IA, Glacier Instant/Flexible/Deep Archive. No "Flash Drive".'},
+{tp:'sng',tx:'Which EBS volume type provides the highest IOPS performance?',op:['gp3 (General Purpose SSD)','io2 (Provisioned IOPS SSD)','st1 (Throughput HDD)','sc1 (Cold HDD)'],c:1,ex:'io2 provides up to 64,000 IOPS for I/O-intensive workloads like databases.'},
+{tp:'sng',tx:'What is the cheapest S3 Glacier retrieval option?',op:['Expedited (1–5 min)','Standard (3–5 hours)','Bulk (5–12 hours)','Deep Archive (12–48 hours)'],c:2,ex:'Bulk retrieval = cheapest (5–12 hours). Expedited = fastest but most expensive.'},
+{tp:'tf',tx:'EBS volumes are deleted automatically when the associated EC2 instance is terminated.',op:['True','False'],c:0,ex:'Root EBS volumes have DeleteOnTermination=true by default, so they are deleted when the instance terminates.'},
+{tp:'fb',tx:'Amazon S3 stores objects in containers called <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>.',c:['buckets'],ex:'S3 objects are stored in buckets. Bucket names must be globally unique.'},
+{tp:'sng',tx:'What does S3 versioning protect against?',op:['DDoS attacks','Accidental deletion and overwrites','Network latency','High storage costs'],c:1,ex:'Versioning keeps all versions of an object, protecting against accidental deletion or overwrites.'},
+{tp:'sng',tx:'Which service is designed for long-term data archiving at the lowest cost?',op:['S3 Standard','S3 Standard-IA','S3 Glacier Deep Archive','Amazon EFS'],c:2,ex:'Glacier Deep Archive = lowest cost storage for long-term retention with 12–48 hour retrieval.'},
+{tp:'fb2',tx:'Complete the lifecycle: objects transition from S3 Standard → S3 IA → <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> via <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> policies.',c:['glacier','lifecycle'],ex:'Lifecycle policies automate transitions between storage classes (Standard → IA → Glacier) based on age.'}
 ]},
-{id:'db',t:'S6: Databases & Architecture',d:'RDS, DynamoDB, Aurora, Well-Architected',l:'Database services and cloud architecture. Based on Lab 5 and Module 9 (Cloud Architecture).',q:[
-{tp:'sng',tx:'Amazon RDS supports which engines? (Best answer)',op:['MySQL and PostgreSQL only','MySQL, PostgreSQL, MariaDB, Oracle, SQL Server, Aurora','Only Aurora','Only DynamoDB'],c:1,ex:'RDS supports 6 engines: MySQL, PostgreSQL, MariaDB, Oracle, SQL Server, Aurora.'},
-{tp:'sng',tx:'RDS Multi-AZ deployment provides:',op:['Read replicas across regions','Automatic failover to standby in different AZ','Load balancing across instances','Automatic scaling'],c:1,ex:'Multi-AZ = synchronous standby for automatic failover.'},
-{tp:'sng',tx:'DynamoDB is:',op:['Relational database','Key-value and document NoSQL database','Graph database','In-memory cache'],c:1,ex:'DynamoDB = fully managed NoSQL (key-value + document).'},
-{tp:'sng',tx:'Amazon Aurora differs from standard RDS because:',op:['It is cheaper always','It is a cloud-native engine, 5x faster MySQL, 3x faster PostgreSQL','It only supports NoSQL','It has no failover'],c:1,ex:'Aurora = AWS-built cloud-native relational engine.'},
-{tp:'mul',tx:'Which are benefits of managed databases (RDS)? (Select ALL)',op:['Automatic backups','Manual patching','Automatic software patching','Easy scaling'],c:[0,2,3],ex:'RDS handles backups, patching, and scaling automatically.'},
-{tp:'sng',tx:'Which Well-Architected pillar focuses on protecting data?',op:['Operational Excellence','Security','Reliability','Cost Optimization'],c:1,ex:'Security pillar = protect data, systems, assets.'},
-{tp:'sng',tx:'A highly available architecture should:',op:['Use single AZ for cost savings','Span multiple AZs with automatic failover','Only use reserved instances','Avoid load balancers'],c:1,ex:'Multi-AZ + failover = high availability.'},
-{tp:'sng',tx:'Read replicas in RDS are used for:',op:['Write scaling only','Offloading read traffic to improve performance','Automatic failover','Data encryption'],c:1,ex:'Read replicas = scale read-heavy workloads.'},
-{tp:'tf',tx:'Amazon Redshift is an OLTP relational database.',op:['True','False'],c:1,ex:'Redshift = OLAP (data warehouse), not OLTP.'},
-{tp:'fb',tx:'The AWS service for fully managed relational databases is Amazon <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>.',c:['rds'],ex:'RDS = Relational Database Service.'}
+
+{id:'arc',t:'S6: Databases & Architecture',d:'RDS, DynamoDB, Aurora, Well-Architected Framework, ELB, Auto Scaling',l:'Database services, the Well-Architected Framework, load balancing, and auto scaling. Based on Modules 8, 9, 10 + Labs 5-6.',q:[
+{tp:'sng',tx:'What does RDS Multi-AZ deployment provide?',op:['Better read performance','High availability with automatic failover','Lower cost','Cross-Region replication'],c:1,ex:'Multi-AZ = synchronous standby in another AZ with automatic failover if primary fails.'},
+{tp:'sng',tx:'Which database is a fully managed NoSQL service with single-digit millisecond latency?',op:['Amazon RDS','Amazon Redshift','Amazon DynamoDB','Amazon Aurora'],c:2,ex:'DynamoDB = serverless NoSQL, single-digit ms latency at any scale.'},
+{tp:'mul',tx:'Which are benefits of Amazon Aurora over standard RDS? (Select ALL that apply)',op:['5x faster than MySQL, 3x faster than PostgreSQL','6 copies of data across 3 AZs','Supports only NoSQL workloads','Up to 15 low-latency read replicas'],c:[0,1,3],ex:'Aurora is relational (MySQL/PG compatible), not NoSQL. It is faster, more durable (6 copies), and supports up to 15 read replicas.'},
+{tp:'sng',tx:'How many pillars does the AWS Well-Architected Framework have?',op:['4','5','6','7'],c:2,ex:'Six pillars: Operational Excellence, Security, Reliability, Performance Efficiency, Cost Optimisation, Sustainability.'},
+{tp:'sng',tx:'Which load balancer type operates at Layer 7 (HTTP/HTTPS) and supports path-based routing?',op:['Network Load Balancer','Classic Load Balancer','Application Load Balancer','Gateway Load Balancer'],c:2,ex:'ALB = Layer 7, supports path-based (/api, /images) and host-based routing.'},
+{tp:'mul',tx:'Which are Auto Scaling scaling policies? (Select ALL that apply)',op:['Target Tracking','Step Scaling','Load Balancing','Scheduled Scaling'],c:[0,1,3],ex:'Target Tracking (maintain metric target), Step Scaling (alarm thresholds), Scheduled Scaling (specific times). Load Balancing is ELB, not a scaling policy.'},
+{tp:'tf',tx:'An Auto Scaling Group spanning multiple Availability Zones provides fault tolerance.',op:['True','False'],c:0,ex:'Multi-AZ ASG means if one AZ fails, instances in other AZs continue serving traffic.'},
+{tp:'sng',tx:'Which Well-Architected pillar recommends Infrastructure as Code?',op:['Security','Reliability','Cost Optimisation','Operational Excellence'],c:3,ex:'Operational Excellence recommends IaC (CloudFormation/Terraform) for consistent, version-controlled deployments.'},
+{tp:'sng',tx:'What is the default cooldown period for Auto Scaling between scaling activities?',op:['60 seconds','120 seconds','300 seconds','600 seconds'],c:2,ex:'Default cooldown = 300 seconds (5 minutes), preventing rapid oscillation.'},
+{tp:'fb',tx:'The AWS service that provides a managed data warehouse for OLAP workloads is Amazon <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>.',c:['redshift'],ex:'Redshift = columnar data warehouse for analytical (OLAP) queries. DynamoDB = NoSQL OLTP.'}
 ]}
 ];
+
 
 let ci=0,ans={};
 
 function init(){
 const n=document.getElementById('sn');
-S.forEach((s,i)=>{const b=document.createElement('button');b.className='stab'+(i===0?' on':'');b.textContent=s.t;b.onclick=()=>sw(i);n.appendChild(b)});
+S.forEach((s,i)=>{
+const b=document.createElement('button');
+b.className='stab'+(i===0?' on':'');
+b.textContent=s.t;
+b.onclick=()=>sw(i);
+n.appendChild(b);
+});
 ld(0);
-if(localStorage.getItem('theme')==='dark'){document.documentElement.setAttribute('data-theme','dark');document.getElementById('tb').textContent='☀️'}
+if(localStorage.getItem('theme')==='dark'){
+document.documentElement.setAttribute('data-theme','dark');
+document.getElementById('tb').textContent='☀️';
+}
 }
 
-function sw(i){ci=i;document.querySelectorAll('.stab').forEach((b,j)=>b.classList.toggle('on',j===i));ld(i)}
+function sw(i){
+ci=i;
+document.querySelectorAll('.stab').forEach((b,j)=>b.classList.toggle('on',j===i));
+ld(i);
+}
 
 function ld(idx){
-ans={};document.getElementById('sd').textContent='';
-const s=S[idx];let h=`<div class="sdesc"><h2>${s.d}</h2><p>${s.l}</p></div>`;
+ans={};
+document.getElementById('sd').textContent='';
+const s=S[idx];
+let h='<div class="sdesc"><h2>'+s.d+'</h2><p>'+s.l+'</p></div>';
 s.q.forEach((q,i)=>{h+=rq(q,i)});
 document.getElementById('sc').innerHTML=h;
 idr();
 }
 
 function rq(q,i){
-let h=`<div class="q" id="q${i}"><div class="qh"><span class="qn">Q${i+1}</span><span class="qt">${tl(q.tp)}</span></div><div class="qtxt">${q.tx}</div>`;
+let h='<div class="q" id="q'+i+'"><div class="qh"><span class="qn">Q'+(i+1)+'</span><span class="qt">'+tl(q.tp)+'</span></div><div class="qtx">'+q.tx+'</div>';
 if(q.tp==='sng'||q.tp==='tf'){
-h+='<div class="opts">';
-q.op.forEach((o,j)=>{h+=`<label class="opt" data-qi="${i}" data-oi="${j}" onclick="ps(${i},${j},this)"><input type="radio" name="q${i}"><span>${o}</span><span class="ck"></span></label>`});
+h+='<div class="os">';
+q.op.forEach((o,j)=>{
+h+='<label class="op" data-qi="'+i+'" data-oi="'+j+'" onclick="ps('+i+','+j+',this)"><input type="radio" name="q'+i+'"><span>'+o+'</span><span class="ck"></span></label>';
+});
 h+='</div>';
 }else if(q.tp==='mul'){
-h+='<div class="opts">';
-q.op.forEach((o,j)=>{h+=`<label class="opt" data-qi="${i}" data-oi="${j}" onclick="pm(${i},${j},this)"><input type="checkbox"><span>${o}</span><span class="ck"></span></label>`});
+h+='<div class="os">';
+q.op.forEach((o,j)=>{
+h+='<label class="op" data-qi="'+i+'" data-oi="'+j+'" onclick="pm('+i+','+j+',this)"><input type="checkbox"><span>'+o+'</span><span class="ck"></span></label>';
+});
 h+='</div>';
 }else if(q.tp==='fb'){
-h+=`<div style="margin-top:.5rem"><input class="oi" id="fb${i}" placeholder="type answer..."></div>`;
+h+='<div style="margin-top:8px"><input class="fi" id="fb'+i+'" placeholder="type answer..."></div>';
 }else if(q.tp==='fb2'){
-let blanks='';q.c.forEach((_,j)=>{blanks+=`<input class="oi" id="fb${i}_${j}" placeholder="blank ${j+1}..." style="width:150px;margin-right:.5rem">`});
-h+=`<div style="margin-top:.5rem">${blanks}</div>`;
+h+='<div style="margin-top:8px">';
+q.c.forEach((_,j)=>{
+h+='<input class="fi" id="fb'+i+'_'+j+'" placeholder="blank '+(j+1)+'..." style="width:150px;margin-right:8px">';
+});
+h+='</div>';
 }else if(q.tp==='ord'){
 const sh=[...Array(q.it.length).keys()].sort(()=>Math.random()-.5);
-h+=`<div class="olist" id="ol${i}">`;
-sh.forEach((orig,j)=>{h+=`<div class="oi2" draggable="true" data-o="${orig}" data-p="${i}"><span class="nm">${j+1}</span><span>${q.it[orig]}</span></div>`});
+h+='<div class="ol" id="ol'+i+'">';
+sh.forEach((orig,j)=>{
+h+='<div class="oi" draggable="true" data-o="'+orig+'" data-p="'+i+'"><span class="nm">'+(j+1)+'</span><span>'+q.it[orig]+'</span></div>';
+});
 h+='</div>';
 }else if(q.tp==='mat'){
-h+=`<div class="mc">`;
-q.lf.forEach((l,j)=>{h+=`<div class="mi"><strong>${String.fromCharCode(65+j)}.</strong> ${l}<select class="ms" id="mt${i}_${j}"><option value="">— select —</option>${q.rt.map((r,k)=>`<option value="${k}">${r}</option>`).join('')}</select></div>`});
+h+='<div class="mc">';
+q.lf.forEach((l,j)=>{
+h+='<div class="mi"><strong>'+String.fromCharCode(65+j)+'.</strong> '+l+'<select class="ms" id="mt'+i+'_'+j+'"><option value="">select...</option>';
+q.rt.forEach((r,k)=>{h+='<option value="'+k+'">'+r+'</option>'});
+h+='</select></div>';
+});
 h+='</div>';
 }
-h+=`<div class="exp" id="ex${i}">${q.ex}</div></div>`;
+h+='<div class="ex" id="ex'+i+'">'+q.ex+'</div></div>';
 return h;
 }
 
-function tl(t){return{sng:'Multiple Choice',mul:'Multiple Answer',tf:'True / False',fb:'Fill in Blank',fb2:'Fill in Blanks',ord:'Ordering',mat:'Matching'}[t]}
+function tl(t){
+return{sng:'Multiple Choice',mul:'Multiple Answer',tf:'True / False',fb:'Fill in Blank',fb2:'Fill in Blanks',ord:'Ordering',mat:'Matching'}[t];
+}
 
 function ps(qi,oi,el){
-document.querySelectorAll(`[data-qi="${qi}"]`).forEach(o=>{o.classList.remove('pk');o.querySelector('input').checked=false});
-el.classList.add('pk');el.querySelector('input').checked=true;ans[qi]={s:oi};
+document.querySelectorAll('[data-qi="'+qi+'"]').forEach(o=>{
+o.classList.remove('pk');
+o.querySelector('input').checked=false;
+});
+el.classList.add('pk');
+el.querySelector('input').checked=true;
+ans[qi]={s:oi};
 }
 
 function pm(qi,oi,el){
 if(!ans[qi])ans[qi]={s:[]};
-const inp=el.querySelector('input');inp.checked=!inp.checked;el.classList.toggle('pk',inp.checked);
-if(inp.checked){ans[qi].s.push(oi)}else{ans[qi].s=ans[qi].s.filter(x=>x!==oi)}
+const inp=el.querySelector('input');
+inp.checked=!inp.checked;
+el.classList.toggle('pk',inp.checked);
+if(inp.checked){ans[qi].s.push(oi)}
+else{ans[qi].s=ans[qi].s.filter(x=>x!==oi)}
 }
 
 function idr(){
-document.querySelectorAll('.olist').forEach(c=>{
-c.addEventListener('dragstart',e=>{const d=e.target.closest('.oi2');if(d){d.classList.add('dg');e.dataTransfer.setData('text/plain',d.dataset.o)}});
-c.addEventListener('dragend',e=>{const d=e.target.closest('.oi2');if(d)d.classList.remove('dg');c.querySelectorAll('.oi2').forEach(x=>x.classList.remove('dv'))});
-c.addEventListener('dragover',e=>{e.preventDefault();const d=e.target.closest('.oi2');if(d)d.classList.add('dv')});
-c.addEventListener('dragleave',e=>{const d=e.target.closest('.oi2');if(d)d.classList.remove('dv')});
+document.querySelectorAll('.ol').forEach(c=>{
+c.addEventListener('dragstart',e=>{
+const d=e.target.closest('.oi');
+if(d){d.classList.add('dg');e.dataTransfer.setData('text/plain',d.dataset.o)}
+});
+c.addEventListener('dragend',e=>{
+const d=e.target.closest('.oi');
+if(d)d.classList.remove('dg');
+c.querySelectorAll('.oi').forEach(x=>x.classList.remove('dv'));
+});
+c.addEventListener('dragover',e=>{
+e.preventDefault();
+const d=e.target.closest('.oi');
+if(d)d.classList.add('dv');
+});
+c.addEventListener('dragleave',e=>{
+const d=e.target.closest('.oi');
+if(d)d.classList.remove('dv');
+});
 c.addEventListener('drop',e=>{
 e.preventDefault();
-const tgt=e.target.closest('.oi2');if(!tgt)return;
-const dragged=c.querySelector(`.oi2[data-o="${e.dataTransfer.getData('text/plain')}"]`);
+const tgt=e.target.closest('.oi');
+if(!tgt)return;
+const orig=e.dataTransfer.getData('text/plain');
+const dragged=c.querySelector('.oi[data-o="'+orig+'"]');
 if(!dragged||dragged===tgt)return;
-const items=[...c.children];const di=items.indexOf(dragged);const ti=items.indexOf(tgt);
-if(di<ti)c.insertBefore(dragged,tgt.nextSibling);else c.insertBefore(dragged,tgt);
-rn(c);c.querySelectorAll('.oi2').forEach(x=>x.classList.remove('dv'));
+const items=[...c.children];
+const di=items.indexOf(dragged);
+const ti=items.indexOf(tgt);
+if(di<ti)c.insertBefore(dragged,tgt.nextSibling);
+else c.insertBefore(dragged,tgt);
+rn(c);
+c.querySelectorAll('.oi').forEach(x=>x.classList.remove('dv'));
 });
 });
 }
 
-function rn(c){c.querySelectorAll('.oi2').forEach((x,i)=>x.querySelector('.nm').textContent=i+1)}
+function rn(c){c.querySelectorAll('.oi').forEach((x,i)=>{x.querySelector('.nm').textContent=i+1})}
 
 function chk(){
-const s=S[ci];let correct=0,total=s.q.length;
+const s=S[ci];
+let correct=0,total=s.q.length;
 s.q.forEach((q,i)=>{
-const ex=document.getElementById(`ex${i}`);ex.classList.add('show');
+const ex=document.getElementById('ex'+i);
+ex.classList.add('show');
 if(q.tp==='sng'||q.tp==='tf'){
-const opts=document.querySelectorAll(`[data-qi="${i}"]`);
-const sel=ans[i]?.s;
+const opts=document.querySelectorAll('[data-qi="'+i+'"]');
+const sel=ans[i]?ans[i].s:undefined;
 opts.forEach((o,j)=>{
-o.classList.remove('pk','ok','no');
+o.classList.remove('pk');
 const ck=o.querySelector('.ck');
-if(j===q.c){o.classList.add('ok');ck.textContent='✓'}
-else if(j===sel){o.classList.add('no');ck.textContent='✗'}
+if(j===q.c){o.classList.add('rt');ck.textContent='\u2713'}
+else if(j===sel){o.classList.add('wr');ck.textContent='\u2717'}
 else{ck.textContent=''}
 });
 if(sel===q.c)correct++;
 }else if(q.tp==='mul'){
-const opts=document.querySelectorAll(`[data-qi="${i}"]`);
-const sel=ans[i]?.s||[];
+const opts=document.querySelectorAll('[data-qi="'+i+'"]');
+const sel=ans[i]?ans[i].s:[];
 const ss=[...sel].sort(),sc=[...q.c].sort();
 opts.forEach((o,j)=>{
-o.classList.remove('pk','ok','no');
+o.classList.remove('pk');
 const ck=o.querySelector('.ck');
-if(q.c.includes(j)){o.classList.add('ok');ck.textContent='✓'}
-else if(sel.includes(j)){o.classList.add('no');ck.textContent='✗'}
+if(q.c.includes(j)){o.classList.add('rt');ck.textContent='\u2713'}
+else if(sel.includes(j)){o.classList.add('wr');ck.textContent='\u2717'}
 else{ck.textContent=''}
 });
 if(JSON.stringify(ss)===JSON.stringify(sc))correct++;
 }else if(q.tp==='fb'){
-const inp=document.getElementById(`fb${i}`);
+const inp=document.getElementById('fb'+i);
 const val=inp.value.trim().toLowerCase();
 const cor=q.c[0].toLowerCase();
 inp.style.borderColor=val===cor?'var(--ok)':'var(--er)';
@@ -272,46 +394,56 @@ if(val===cor)correct++;
 }else if(q.tp==='fb2'){
 let all=true;
 q.c.forEach((cor,j)=>{
-const inp=document.getElementById(`fb${i}_${j}`);
+const inp=document.getElementById('fb'+i+'_'+j);
 const val=inp.value.trim().toLowerCase();
 inp.style.borderColor=val===cor.toLowerCase()?'var(--ok)':'var(--er)';
 if(val!==cor.toLowerCase())all=false;
 });
 if(all)correct++;
 }else if(q.tp==='ord'){
-const c=document.getElementById(`ol${i}`);
-const items=[...c.querySelectorAll('.oi2')];
+const c=document.getElementById('ol'+i);
+const items=[...c.querySelectorAll('.oi')];
 const order=items.map(x=>parseInt(x.dataset.o));
 const ok=order.every((v,j)=>v===q.c[j]);
 items.forEach((x,j)=>{
 const orig=parseInt(x.dataset.o);
-x.style.borderColor=orig===q.c[j]?'var(--ok)':'var(--er)';
+x.style.borderColor=orig===q.c[j]?'var(--okbd)':'var(--erbd)';
 });
 if(ok)correct++;
 }else if(q.tp==='mat'){
-let all=true;
+let allCorrect=true;
+let allSelected=true;
 q.lf.forEach((_,j)=>{
-const sel=document.getElementById(`mt${i}_${j}`);
+const sel=document.getElementById('mt'+i+'_'+j);
 const val=sel.value;
+if(val==='')allSelected=false;
 const isOk=val!==''&&parseInt(val)===q.c[j];
-sel.style.borderColor=isOk?'var(--ok)':(val!==''?'var(--er)':'var(--border)');
-if(!isOk)all=false;
+sel.style.borderColor=isOk?'var(--ok)':(val!==''?'var(--er)':'var(--bd)');
+if(!isOk)allCorrect=false;
 });
-if(all)correct++;
+if(allCorrect&&allSelected)correct++;
 }
 });
 const pct=Math.round(correct/total*100);
 const sd=document.getElementById('sd');
-sd.textContent=`${correct}/${total} (${pct}%)`;
+sd.textContent=correct+'/'+total+' ('+pct+'%)';
 sd.className='scr '+(pct>=70?'sg':'sb');
 }
 
 function rst(){ld(ci)}
 
 function tog(){
-const d=document.documentElement;const b=document.getElementById('tb');
-if(d.getAttribute('data-theme')==='dark'){d.removeAttribute('data-theme');b.textContent='🌙';localStorage.setItem('theme','light')}
-else{d.setAttribute('data-theme','dark');b.textContent='☀️';localStorage.setItem('theme','dark')}
+const d=document.documentElement;
+const b=document.getElementById('tb');
+if(d.getAttribute('data-theme')==='dark'){
+d.removeAttribute('data-theme');
+b.textContent='\u{1F319}';
+localStorage.setItem('theme','light');
+}else{
+d.setAttribute('data-theme','dark');
+b.textContent='\u2600\uFE0F';
+localStorage.setItem('theme','dark');
+}
 }
 
 init();
