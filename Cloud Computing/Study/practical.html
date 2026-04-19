@@ -372,7 +372,7 @@ if(j===q.c){o.classList.add('rt');ck.textContent='\u2713'}
 else if(j===sel){o.classList.add('wr');ck.textContent='\u2717'}
 else{ck.textContent=''}
 });
-if(sel===q.c)correct++;
+if(sel!==undefined&&sel===q.c)correct++;
 }else if(q.tp==='mul'){
 const opts=document.querySelectorAll('[data-qi="'+i+'"]');
 const sel=ans[i]?ans[i].s:[];
