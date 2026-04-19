@@ -53,9 +53,10 @@ body{
 .stab.on{background:var(--ok);color:#fff;border-color:var(--ok)}
 
 /* Scenario desc */
-.sdesc{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:calc(var(--sp)*2);margin-bottom:calc(var(--sp)*2)}
-.sdesc h2{font-size:.95rem;font-weight:600;letter-spacing:-.01em;margin-bottom:4px}
-.sdesc p{font-size:.82rem;color:var(--t3);line-height:1.5}
+.sc{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:calc(var(--sp)*2);margin-bottom:calc(var(--sp)*2)}
+.sc h2{font-size:.92rem;font-weight:600;letter-spacing:-.01em;margin-bottom:4px}
+.sc .co{font-size:.78rem;color:var(--t3);margin-bottom:12px;line-height:1.5}
+.sc pre{background:var(--sf2);border:1px solid var(--bd);border-radius:6px;padding:10px 12px;font-family:var(--font-mono);font-size:.74rem;overflow-x:auto;line-height:1.5;color:var(--t2);margin:8px 0}
 
 /* Code / pre */
 pre{background:var(--sf2);border:1px solid var(--bd);border-radius:var(--r);padding:calc(var(--sp)*1.25);font-family:var(--font-mono);font-size:.78rem;overflow-x:auto;margin:12px 0;line-height:1.5;color:var(--t2)}
@@ -119,7 +120,7 @@ th{background:var(--sf2);font-weight:600}
 <div class="hdr">
 <div class="hdr-left">
 <h1>Practical Mock Exam</h1>
-<div class="sub">MOD006125 Cloud Computing — 6 scenarios × 10 questions</div>
+<div class="sub">MOD006125 Cloud Computing — 8 scenarios × 10 questions</div>
 </div>
 <div style="display:flex;gap:6px;align-items:center">
 <button class="tbtn" onclick="tog()" id="tb" title="Toggle theme">🌙</button>
@@ -137,7 +138,7 @@ th{background:var(--sf2);font-weight:600}
 
 <script>
 const S=[
-{id:'b',t:'S1: ByteBooks',d:'AWS Web Deployment (IAM, VPC, EC2, SGs)',l:'A small online bookshop deploying their website to AWS. As junior cloud engineer, you set up IAM policies, VPC networking, security groups, EC2 instances, and a user data bootstrap script.',q:[
+{id:'b',t:'S1: ByteBooks',d:'AWS Web Deployment (IAM, VPC, EC2, SGs)',co:'ByteBooks is a small online bookshop deploying their website to AWS. As junior cloud engineer, you set up IAM, VPC, security groups, EC2, and user data.',code:'IAM: Allow s3:Get/Put/ListBucket on bytebooks-website | Deny s3:DeleteBucket\nVPC: 10.0.0.0/16 | Public: 10.0.1.0/24 | Private: 10.0.2.0/24\nSG: HTTP:80 from 0.0.0.0/0 | SSH:22 from 10.0.0.0/16\nEC2: ami-0abcdef, t3.micro, key: bytebooks-key, user-data: install.sh\nUser Data: yum install httpd, aws s3 sync → /var/www/html',q:[
 {tp:'ord',tx:'Order the deployment steps from first to last:',it:['Create VPC with CIDR 10.0.0.0/16','Create public subnet (10.0.1.0/24) and private subnet (10.0.2.0/24)','Attach Internet Gateway and configure public route table','Create security group sg-bytebooks (HTTP:80 + SSH:22)','Launch EC2 instance with user data script','Test website by browsing to public IP'],c:[0,1,2,3,4,5],ex:'VPC first, then subnets within AZs, then IGW + route table for internet access, then security group rules, then EC2 launch, finally test.'},
 {tp:'mat',tx:'Match each EC2 launch parameter to its purpose:',lf:['--image-id ami-0abcdef1234567890','--instance-type t3.micro','--key-name bytebooks-key','--user-data file://install.sh'],rt:['SSH key pair for remote access','Bootstrap script executed at first launch','AMI template defining the OS and software','vCPU and memory resources'],c:{0:2,1:3,2:0,3:1},ex:'--image-id selects the AMI template, --instance-type defines resources, --key-name sets SSH credentials, --user-data provides the bootstrap script.'},
 {tp:'fb',tx:'Complete the SSH command:<br><code>ssh -i <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>.pem ec2-user@52.56.78.90</code>',c:['bytebooks-key'],ex:'The key pair name from the --key-name parameter: bytebooks-key.'},
@@ -150,7 +151,7 @@ const S=[
 {tp:'mat',tx:'Match each characteristic to Security Group or Network ACL:',lf:['Stateful — return traffic automatically allowed','Operates at the subnet level','Operates at the instance level','Stateless — return traffic must be explicitly allowed'],rt:['Security Group','Network ACL'],c:{0:0,1:1,2:0,3:1},ex:'Security Groups: stateful, instance-level. Network ACLs: stateless, subnet-level.'}
 ]},
 
-{id:'sec',t:'S2: Security',d:'IAM, Shared Responsibility, Encryption, Compliance',l:'A fintech company hardening their AWS security posture. Based on Module 4: AWS Cloud Security — IAM, shared responsibility, encryption, compliance, and account hardening.',q:[
+{id:'sec',t:'S2: Security',d:'AWS Cloud Security — IAM, Encryption, Compliance',co:'A fintech company hardening their AWS security posture. Based on Module 4.',code:'Shared Responsibility\nAWS (OF cloud): physical infra, hardware, hypervisor\nCustomer (IN cloud): data, IAM, OS patching (EC2), firewall, encryption\n\nIAM: default Deny, Least Privilege, Roles = temporary creds\nMFA on root = first step\nShield = DDoS, KMS = keys, CloudTrail = audit',q:[
 {tp:'sng',tx:'In the Shared Responsibility Model, who is responsible for patching the guest OS on an EC2 instance?',op:['AWS','The customer','Both equally','Neither'],c:1,ex:'For EC2 (IaaS), the customer manages the guest OS. AWS manages the hypervisor and physical infrastructure.'},
 {tp:'sng',tx:'What is the effect of an IAM policy if there is no explicit Allow?',op:['Allow by default','Implicit Deny','Error','Read-only access'],c:1,ex:'IAM follows default Deny. If not explicitly allowed, it is implicitly denied. Explicit Deny always wins.'},
 {tp:'mul',tx:'Which are components of the CIA Triad? (Select ALL that apply)',op:['Confidentiality','Authentication','Integrity','Availability','Authorisation'],c:[0,2,3],ex:'CIA = Confidentiality, Integrity, Availability. Authentication and Authorisation are separate concepts.'},
@@ -163,7 +164,7 @@ const S=[
 {tp:'fb',tx:'The AWS service that records all API calls for auditing "who did what, when, and where" is AWS <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>.',c:['cloudtrail'],ex:'CloudTrail records API calls across your AWS account for security analysis and compliance auditing.'}
 ]},
 
-{id:'net',t:'S3: Networking',d:'VPC, Security Groups, NACLs, Route 53, CloudFront',l:'Configuring VPC networking, subnets, security groups vs NACLs, DNS with Route 53, and CDN with CloudFront. Based on Module 5.',q:[
+{id:'net',t:'S3: Networking',d:'VPC, Security Groups, NACLs, Route 53, CloudFront',co:'Configuring VPC networking, subnets, security groups vs NACLs, DNS, and CDN. Based on Module 5.',code:'VPC: logically isolated network (CIDR, e.g. 10.0.0.0/16)\nSubnets: public (route to IGW) or private (no IGW)\nIGW: internet access | NAT GW: outbound for private subnets\nSG: stateful, instance-level, allow-only\nNACL: stateless, subnet-level, allow + deny\nRoute 53: DNS + health checks + routing policies\nCloudFront: CDN caching at 400+ edge locations',q:[
 {tp:'sng',tx:'What is the key difference between Security Groups and Network ACLs?',op:['Security Groups are stateless; NACLs are stateful','Security Groups are stateful; NACLs are stateless','Both are stateful','Both are stateless'],c:1,ex:'Security Groups are stateful (return auto-allowed). NACLs are stateless (return must be explicit). SG = instance level, NACL = subnet level.'},
 {tp:'fb',tx:'CIDR notation 10.0.0.0/24 provides <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> IP addresses.',c:['256'],ex:'/24 = 24 bits fixed, 8 bits for hosts = 2^8 = 256 addresses (254 usable after AWS reserves 5).'},
 {tp:'sng',tx:'Which VPC component allows instances in a private subnet to access the internet for updates?',op:['Internet Gateway','NAT Gateway','Security Group','Route 53'],c:1,ex:'NAT Gateway enables outbound internet access for private subnet instances while blocking inbound.'},
@@ -176,7 +177,7 @@ const S=[
 {tp:'fb2',tx:'Security Groups operate at the <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> level, while NACLs operate at the <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> level.',c:['instance','subnet'],ex:'SGs = instance level. NACLs = subnet level.'}
 ]},
 
-{id:'cmp',t:'S4: Compute',d:'EC2, Lambda, Containers, Elastic Beanstalk',l:'EC2 instance types and pricing, Lambda serverless, containers (ECS/EKS/Fargate), and Elastic Beanstalk PaaS. Based on Module 6 + Labs 3 + Activities.',q:[
+{id:'cmp',t:'S4: Compute',d:'EC2, Lambda, Containers, Elastic Beanstalk',co:'EC2 instance types/pricing, Lambda serverless, containers, and Elastic Beanstalk. Based on Module 6.',code:'EC2 Families: General (T3/M5), Compute (C5), Memory (R5/X1), Storage (I3), GPU (P3)\nPricing: On-Demand, Reserved (75% off), Spot (90% off, interruptible), Dedicated\nLambda: max 15min, pay per request + 100ms compute\nContainers: ECS (Docker), EKS (K8s), Fargate (serverless), ECR (registry)\nBeanstalk: PaaS — upload code, handles provisioning/LB/ASG/health',q:[
 {tp:'sng',tx:'Which EC2 instance family is best for a memory-intensive in-memory database?',op:['General Purpose (T3)','Compute Optimised (C5)','Memory Optimised (R5)','Storage Optimised (I3)'],c:2,ex:'Memory Optimised (R5, X1) for in-memory databases, real-time analytics, large caches.'},
 {tp:'sng',tx:'What is the maximum execution time for an AWS Lambda function?',op:['60 seconds','5 minutes','15 minutes','1 hour'],c:2,ex:'Lambda max timeout = 15 minutes (900 seconds). For longer workloads, use Step Functions or EC2.'},
 {tp:'mul',tx:'Which are valid EC2 pricing models? (Select ALL that apply)',op:['On-Demand','Reserved Instances','Spot Instances','Monthly Subscription'],c:[0,1,2],ex:'On-Demand, Reserved (1/3-yr, up to 75% off), Spot (up to 90% off, interruptible), Dedicated Hosts. No subscription model.'},
@@ -189,7 +190,7 @@ const S=[
 {tp:'mat',tx:'Match each compute service to its best use case:',lf:['Amazon EC2','AWS Lambda','AWS Fargate','Elastic Beanstalk'],rt:['Event-driven serverless functions','Full control over VM configuration','Serverless containers','Quick PaaS deployment'],c:{0:1,1:0,2:3,3:2},ex:'Lambda = serverless events, EC2 = full VM control, Beanstalk = PaaS quick deploy, Fargate = serverless containers.'}
 ]},
 
-{id:'sto',t:'S5: Storage',d:'EBS, S3, EFS, Glacier',l:'Block (EBS), object (S3), file (EFS), and archival (Glacier) storage. Storage classes, durability, and lifecycle policies. Based on Module 7 + Lab 4.',q:[
+{id:'sto',t:'S5: Storage',d:'EBS, S3, EFS, Glacier',co:'Block (EBS), object (S3), file (EFS), and archival (Glacier) storage. Based on Module 7.',code:'EBS: block storage, single EC2, gp3/io2/st1/sc1 types\nS3: object storage, buckets, 11 nines durability, versioning, lifecycle\nEFS: shared POSIX file system, multiple EC2 instances\nGlacier: archival — Expedited(1-5min), Standard(3-5hr), Bulk(5-12hr), Deep(12-48hr)\nLifecycle: Standard → IA → Glacier (automated transitions)',q:[
 {tp:'sng',tx:'How many nines of durability does Amazon S3 provide?',op:['99.9%','99.99%','99.999999999% (11 nines)','100%'],c:2,ex:'S3 = 11 nines durability. Store 10M objects → expect to lose one every 10,000 years.'},
 {tp:'sng',tx:'Which storage service can be shared by multiple EC2 instances simultaneously?',op:['Amazon EBS','Amazon S3','Amazon EFS','Instance Store'],c:2,ex:'EFS is a shared POSIX file system mountable by hundreds of EC2 instances concurrently. EBS = single instance.'},
 {tp:'mul',tx:'Which are valid S3 storage classes? (Select ALL that apply)',op:['S3 Standard','S3 Intelligent-Tiering','S3 One Zone-IA','S3 Flash Drive'],c:[0,1,2],ex:'Standard, Intelligent-Tiering, Standard-IA, One Zone-IA, Glacier Instant/Flexible/Deep Archive. No "Flash Drive".'},
@@ -202,7 +203,7 @@ const S=[
 {tp:'fb2',tx:'Complete the lifecycle: objects transition from S3 Standard → S3 IA → <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> via <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> policies.',c:['glacier','lifecycle'],ex:'Lifecycle policies automate transitions between storage classes (Standard → IA → Glacier) based on age.'}
 ]},
 
-{id:'arc',t:'S6: Databases & Architecture',d:'RDS, DynamoDB, Aurora, Well-Architected Framework, ELB, Auto Scaling',l:'Database services, the Well-Architected Framework, load balancing, and auto scaling. Based on Modules 8, 9, 10 + Labs 5-6.',q:[
+{id:'arc',t:'S6: Databases & Arch',d:'RDS, DynamoDB, Aurora, WAF, ELB, Auto Scaling',co:'Database services, Well-Architected Framework, load balancing, and auto scaling. Based on Modules 8-10.',code:'RDS: managed relational (MySQL, PG, Aurora). Multi-AZ=HA failover, Read Replicas=read scaling\nDynamoDB: NoSQL, serverless, ms latency, On-Demand/Provisioned\nRedshift: OLAP data warehouse, columnar\nAurora: 5x MySQL, 6 copies across 3 AZs, up to 15 read replicas\nWAF: 6 pillars — Ops, Security, Reliability, Performance, Cost, Sustainability\nELB: ALB(L7), NLB(L4), GWLB\nASG: Target/Step/Scheduled scaling, 300s cooldown',q:[
 {tp:'sng',tx:'What does RDS Multi-AZ deployment provide?',op:['Better read performance','High availability with automatic failover','Lower cost','Cross-Region replication'],c:1,ex:'Multi-AZ = synchronous standby in another AZ with automatic failover if primary fails.'},
 {tp:'sng',tx:'Which database is a fully managed NoSQL service with single-digit millisecond latency?',op:['Amazon RDS','Amazon Redshift','Amazon DynamoDB','Amazon Aurora'],c:2,ex:'DynamoDB = serverless NoSQL, single-digit ms latency at any scale.'},
 {tp:'mul',tx:'Which are benefits of Amazon Aurora over standard RDS? (Select ALL that apply)',op:['5x faster than MySQL, 3x faster than PostgreSQL','6 copies of data across 3 AZs','Supports only NoSQL workloads','Up to 15 low-latency read replicas'],c:[0,1,3],ex:'Aurora is relational (MySQL/PG compatible), not NoSQL. It is faster, more durable (6 copies), and supports up to 15 read replicas.'},
@@ -213,6 +214,30 @@ const S=[
 {tp:'sng',tx:'Which Well-Architected pillar recommends Infrastructure as Code?',op:['Security','Reliability','Cost Optimisation','Operational Excellence'],c:3,ex:'Operational Excellence recommends IaC (CloudFormation/Terraform) for consistent, version-controlled deployments.'},
 {tp:'sng',tx:'What is the default cooldown period for Auto Scaling between scaling activities?',op:['60 seconds','120 seconds','300 seconds','600 seconds'],c:2,ex:'Default cooldown = 300 seconds (5 minutes), preventing rapid oscillation.'},
 {tp:'fb',tx:'The AWS service that provides a managed data warehouse for OLAP workloads is Amazon <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>.',c:['redshift'],ex:'Redshift = columnar data warehouse for analytical (OLAP) queries. DynamoDB = NoSQL OLTP.'}
+]},
+{id:'cf',t:'S7: CloudFit',d:'Serverless API — Lambda + API Gateway + DynamoDB',co:'CloudFit is a fitness-tracking startup building a serverless API on AWS. You configure the infrastructure.',code:'IAM Role (cloudfit-lambda-role)\nAllow: dynamodb:PutItem, GetItem, Query, UpdateItem on table cloudfit-workouts\nAllow: logs:* on all log groups\nDeny: dynamodb:DeleteTable on cloudfit-workouts\n\nDynamoDB: cloudfit-workouts\nPK: userId (String) | SK: workoutDate (String)\nCapacity: On-Demand | PITR: Enabled | Encryption: aws/dynamodb\n\nAPI Gateway (REST, stage: prod)\nPOST /workouts → Lambda cloudfit-log-workout (API Key required)\nGET /workouts/{userId} → Lambda (API Key required)\nGET /health → Mock 200 OK\nThrottle: 1000 req/s, burst 500\n\nLambda: cloudfit-log-workout (python3.12, 256MB, 30s timeout)\nTABLE_NAME=cloudfit-workouts | REGION=eu-west-2',q:[
+{tp:'ord',tx:'Order the deployment steps for CloudFit:',it:['Create DynamoDB table cloudfit-workouts','Create IAM role cloudfit-lambda-role','Deploy Lambda function','Create API Gateway REST API','Connect methods to Lambda (integration)','Deploy to prod stage, test /health'],c:[0,1,2,3,4,5],ex:'Dependencies first: DynamoDB → IAM → Lambda → API Gateway → deploy. Each resource depends on the previous.'},
+{tp:'mat',tx:'Match DynamoDB concept to definition:',lf:['Partition Key (userId)','Sort Key (workoutDate)','On-Demand Capacity','Point-in-Time Recovery'],rt:['Identifies the partition for storage','Enables ordering and range queries','Auto-scales with per-request billing','Restore to any second in last 35 days'],c:{0:0,1:1,2:2,3:3},ex:'PK = partition ID. SK = ordering. On-Demand = auto-scale. PITR = 35-day continuous backup.'},
+{tp:'fb',tx:'<code>aws lambda <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> --function-name cloudfit-log-workout --payload \'{"body":"..."}\' out.json</code>',c:['invoke'],ex:'aws lambda invoke executes the function.'},
+{tp:'mul',tx:'Permitted DynamoDB actions? (Select ALL)',op:['GetItem (read single item)','DeleteTable','PutItem (write item)','Scan (full table)','Query by partition key'],c:[0,2,4],ex:'Allowed: GetItem, PutItem, Query, UpdateItem. DeleteTable explicitly denied. Scan implicitly denied.'},
+{tp:'tf',tx:'Lambda timeout during PutItem → item is partially saved.','op':['True','False'],c:1,ex:'PutItem is atomic. If Lambda times out before completion, no item is saved.'},
+{tp:'sng',tx:'Lambda calls dynamodb:Scan instead of Query. Result?',op:['Scan succeeds','AccessDeniedException','API Gateway blocks it','Slower but works'],c:1,ex:'Scan not in IAM policy → implicit Deny → AccessDeniedException.'},
+{tp:'ord',tx:'502 Bad Gateway on POST /workouts. Order troubleshooting:',it:['Check API Gateway stage deployment','Verify integration links to Lambda','Check Lambda CloudWatch Logs','Test Lambda via aws lambda invoke','Verify IAM DynamoDB write perms'],c:[0,1,2,3,4],ex:'Outside-in: API layer → Lambda execution → permissions.'},
+{tp:'fb',tx:'TABLE_NAME env var = <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>.',c:['cloudfit-workouts'],ex:'From Lambda config.'},
+{tp:'fb2',tx:'<code>aws <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> --table-name cloudfit-workouts --key-condition-expression "userId = :uid"</code>',c:['dynamodb','query'],ex:'aws dynamodb query'},
+{tp:'mat',tx:'Match API Gateway features:',lf:['Mock Integration (/health)','API Key auth','Throttling','Stage (prod)'],rt:['Fixed response, no backend','Restrict to authorised clients','Rate limiting protection','Versioned deployment URL'],c:{0:0,1:1,2:2,3:3},ex:'Mock = no backend. Key = auth. Throttle = rate limit. Stage = deployment.'}
+]},
+{id:'es',t:'S8: EduStream',d:'Scalable Video Platform — VPC, ALB, ASG, RDS, CloudFront',co:'EduStream is an e-learning platform hosting video courses. You scale infrastructure for growing traffic.',code:'VPC: 172.16.0.0/16 (eu-west-1)\nPublic: 172.16.1.0/24 (1a: ALB, NAT GW) | 172.16.2.0/24 (1b: ALB)\nPrivate: 172.16.10.0/24 (1a: EC2) | 172.16.11.0/24 (1b: EC2)\n         172.16.20.0/24 (1a: RDS Primary) | 172.16.21.0/24 (1b: RDS Standby)\n\nALB: internet-facing, HTTPS:443→TG:8080, HTTP:80→redirect HTTPS\nHealth: /api/health, 30s interval, healthy=3, unhealthy=2\n\nASG: min 2, max 8, desired 2, c5.large\nTarget Tracking: CPU 60%, cooldown 300s, ELB health, grace 120s\n\nRDS: MySQL 8.0, db.r5.large, 100GB gp3 (auto 500GB)\nMulti-AZ (standby 1b), Read Replica (1a), backup 7 days, KMS\n\nCloudFront: /api/* → ALB (no cache), /videos/* → S3 (24hr cache)\nPrice Class 100 (US/CA/EU), ACM SSL\n\nAlarm: CPU > 80%, 2x5min periods → SNS',q:[
+{tp:'ord',tx:'Order request path: browser → server:',it:['User types https://edustream.io','Route 53 resolves to CloudFront','Edge Location receives request','CloudFront forwards to ALB','ALB routes to EC2 instance','EC2 returns response'],c:[0,1,2,3,4,5],ex:'DNS → CDN → LB → Compute.'},
+{tp:'mat',tx:'Match to availability benefit:',lf:['Multi-AZ RDS','ASG min: 2','ALB across 2 AZs','Read Replica'],rt:['Auto failover to standby','2 instances always running','Traffic distribution across AZs','Offload read queries'],c:{0:0,1:1,2:2,3:3},ex:'Multi-AZ=failover. ASG=capacity. ALB=distribution. Replica=read scaling.'},
+{tp:'fb',tx:'CPU at 75%, target 60%. ASG will <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> instances.',c:['launch'],ex:'Above target → scale out.'},
+{tp:'mul',tx:'CloudFront truths? (Select ALL)',op:['S3 videos cached 24hr','/api/* cached 1hr','Videos GET/HEAD only','ACM SSL cert','All global edge locations'],c:[0,2,3],ex:'A✓ B✗(no cache) C✓ D✓ E✗(Price 100=US/CA/EU).'},
+{tp:'tf',tx:'Read replica auto-promotes if primary RDS fails.','op':['True','False'],c:1,ex:'Multi-AZ standby promotes automatically. Read Replica = manual promotion.'},
+{tp:'sng',tx:'Alarm: CPU>80%, Period=300s, Eval=2. Time to fire?','op':['5 min','10 min','15 min','2 min'],c:1,ex:'2 × 5min = 10 minutes.'},
+{tp:'ord',tx:'Slow site. Order investigation:',it:['Check ALB target health','Check CloudWatch CPU/memory','Review ASG scaling log','RDS Performance Insights','CloudFront cache hit ratio'],c:[0,1,2,3,4],ex:'Health → compute → scaling → DB → CDN.'},
+{tp:'fb',tx:'Grace period = 120s. ASG waits <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>s before health checks.',c:['120'],ex:'Prevents premature termination during boot.'},
+{tp:'fb2',tx:'<code>aws <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> describe-auto-scaling-groups --auto-scaling-group-names <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></code>',c:['autoscaling','edustream-asg'],ex:'aws autoscaling describe-auto-scaling-groups.'},
+{tp:'mat',tx:'Subnet CIDRs:',lf:['172.16.1.0/24','172.16.10.0/24','172.16.20.0/24','172.16.2.0/24'],rt:['Public: ALB+NAT (1a)','Private: EC2 (1a)','Private: RDS Primary (1a)','Public: ALB (1b)'],c:{0:0,1:1,2:2,3:3},ex:'Public=internet-facing. 10.x=compute. 20.x=database.'}
 ]}
 ];
 
@@ -245,7 +270,7 @@ function ld(idx){
 ans={};
 document.getElementById('sd').textContent='';
 const s=S[idx];
-let h='<div class="sdesc"><h2>'+s.d+'</h2><p>'+s.l+'</p></div>';
+let h='<div class="sc"><h2>'+s.d+'</h2><div class="co">'+s.co+'</div>'+(s.code?'<pre>'+s.code+'</pre>':'')+'</div>';
 s.q.forEach((q,i)=>{h+=rq(q,i)});
 document.getElementById('sc').innerHTML=h;
 idr();
