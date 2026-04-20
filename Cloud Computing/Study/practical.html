@@ -161,7 +161,7 @@ const S=[
 {tp:'sng',tx:'Which service provides managed DDoS protection?',op:['AWS WAF','AWS Shield','Amazon GuardDuty','AWS Config'],c:1,ex:'AWS Shield provides DDoS protection. Standard is free, Advanced has enhanced protection + 24/7 DRT.'},
 {tp:'mul',tx:'Which services protect data at rest? (Select ALL that apply)',op:['Amazon S3 server-side encryption','Amazon EBS encryption','TLS/SSL certificates','Amazon RDS encryption with KMS'],c:[0,1,3],ex:'S3 SSE, EBS encryption, and RDS encryption protect data at rest. TLS/SSL protects data in transit.'},
 {tp:'sng',tx:'As you move from IaaS to SaaS in the Shared Responsibility Model:',op:['Customer responsibility increases','AWS responsibility decreases','Customer responsibility decreases','Responsibility stays the same'],c:2,ex:'More managed services = AWS takes on more responsibility. Customer responsibility decreases.'},
-{tp:'fb',tx:'The AWS service that records all API calls for auditing "who did what, when, and where" is AWS <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>.',c:['cloudtrail'],ex:'CloudTrail records API calls across your AWS account for security analysis and compliance auditing.'}
+{tp:'fb',tx:'The AWS service that records all API calls for auditing "who did what, when, and where" is AWS <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>.',c:['cloudtrail'],alt:['cloud trail'],ex:'CloudTrail records API calls across your AWS account for security analysis and compliance auditing.'}
 ]},
 
 {id:'net',t:'S3: Networking',d:'VPC, Security Groups, NACLs, Route 53, CloudFront',co:'Configuring VPC networking, subnets, security groups vs NACLs, DNS, and CDN. Based on Module 5.',code:'VPC: logically isolated network (CIDR, e.g. 10.0.0.0/16)\nSubnets: public (route to IGW) or private (no IGW)\nIGW: internet access | NAT GW: outbound for private subnets\nSG: stateful, instance-level, allow-only\nNACL: stateless, subnet-level, allow + deny\nRoute 53: DNS + health checks + routing policies\nCloudFront: CDN caching at 400+ edge locations',q:[
@@ -187,7 +187,7 @@ const S=[
 {tp:'fb',tx:'The maximum single PUT upload size for Amazon S3 is <u>&nbsp;&nbsp;&nbsp;&nbsp;</u> GB (use multipart for larger).',c:['5'],ex:'Max single PUT = 5 GB. Use multipart upload for objects larger than 5 GB (up to 5 TB).'},
 {tp:'sng',tx:'An AMI (Amazon Machine Image) includes:',op:['Only the OS template','Only launch permissions','Only block device mappings','OS template, launch permissions, and block device mappings'],c:3,ex:'An AMI includes all three: root volume template, launch permissions, and block device mappings.'},
 {tp:'sng',tx:'EC2 User Data scripts are used to:',op:['Create IAM users','Run a bootstrap script at instance launch','Encrypt storage volumes','Configure billing alerts'],c:1,ex:'User Data runs at first launch to automate software installation, configuration, and service startup.'},
-{tp:'mat',tx:'Match each compute service to its best use case:',lf:['Amazon EC2','AWS Lambda','AWS Fargate','Elastic Beanstalk'],rt:['Event-driven serverless functions','Full control over VM configuration','Serverless containers','Quick PaaS deployment'],c:{0:1,1:0,2:3,3:2},ex:'Lambda = serverless events, EC2 = full VM control, Beanstalk = PaaS quick deploy, Fargate = serverless containers.'}
+{tp:'mat',tx:'Match each compute service to its best use case:',lf:['Amazon EC2','AWS Lambda','AWS Fargate','Elastic Beanstalk'],rt:['Event-driven serverless functions','Full control over VM configuration','Serverless containers','Quick PaaS deployment'],c:{0:1,1:0,2:2,3:3},ex:'EC2 = full VM control. Lambda = event-driven serverless. Fargate = serverless containers. Beanstalk = PaaS quick deploy.'}
 ]},
 
 {id:'sto',t:'S5: Storage',d:'EBS, S3, EFS, Glacier',co:'Block (EBS), object (S3), file (EFS), and archival (Glacier) storage. Based on Module 7.',code:'EBS: block storage, single EC2, gp3/io2/st1/sc1 types\nS3: object storage, buckets, 11 nines durability, versioning, lifecycle\nEFS: shared POSIX file system, multiple EC2 instances\nGlacier: archival — Expedited(1-5min), Standard(3-5hr), Bulk(5-12hr), Deep(12-48hr)\nLifecycle: Standard → IA → Glacier (automated transitions)',q:[
@@ -197,7 +197,7 @@ const S=[
 {tp:'sng',tx:'Which EBS volume type provides the highest IOPS performance?',op:['gp3 (General Purpose SSD)','io2 (Provisioned IOPS SSD)','st1 (Throughput HDD)','sc1 (Cold HDD)'],c:1,ex:'io2 provides up to 64,000 IOPS for I/O-intensive workloads like databases.'},
 {tp:'sng',tx:'What is the cheapest S3 Glacier retrieval option?',op:['Expedited (1–5 min)','Standard (3–5 hours)','Bulk (5–12 hours)','Deep Archive (12–48 hours)'],c:2,ex:'Bulk retrieval = cheapest (5–12 hours). Expedited = fastest but most expensive.'},
 {tp:'tf',tx:'EBS volumes are deleted automatically when the associated EC2 instance is terminated.',op:['True','False'],c:0,ex:'Root EBS volumes have DeleteOnTermination=true by default, so they are deleted when the instance terminates.'},
-{tp:'fb',tx:'Amazon S3 stores objects in containers called <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>.',c:['buckets'],ex:'S3 objects are stored in buckets. Bucket names must be globally unique.'},
+{tp:'fb',tx:'S3 stores objects in <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>.',c:['buckets'],alt:['bucket'],ex:'S3 objects are stored in buckets (globally unique names).'},
 {tp:'sng',tx:'What does S3 versioning protect against?',op:['DDoS attacks','Accidental deletion and overwrites','Network latency','High storage costs'],c:1,ex:'Versioning keeps all versions of an object, protecting against accidental deletion or overwrites.'},
 {tp:'sng',tx:'Which service is designed for long-term data archiving at the lowest cost?',op:['S3 Standard','S3 Standard-IA','S3 Glacier Deep Archive','Amazon EFS'],c:2,ex:'Glacier Deep Archive = lowest cost storage for long-term retention with 12–48 hour retrieval.'},
 {tp:'fb2',tx:'Complete the lifecycle: objects transition from S3 Standard → S3 IA → <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> via <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> policies.',c:['glacier','lifecycle'],ex:'Lifecycle policies automate transitions between storage classes (Standard → IA → Glacier) based on age.'}
@@ -230,7 +230,7 @@ const S=[
 {id:'es',t:'S8: EduStream',d:'Scalable Video Platform — VPC, ALB, ASG, RDS, CloudFront',co:'EduStream is an e-learning platform hosting video courses. You scale infrastructure for growing traffic.',code:'VPC: 172.16.0.0/16 (eu-west-1)\nPublic: 172.16.1.0/24 (1a: ALB, NAT GW) | 172.16.2.0/24 (1b: ALB)\nPrivate: 172.16.10.0/24 (1a: EC2) | 172.16.11.0/24 (1b: EC2)\n         172.16.20.0/24 (1a: RDS Primary) | 172.16.21.0/24 (1b: RDS Standby)\n\nALB: internet-facing, HTTPS:443→TG:8080, HTTP:80→redirect HTTPS\nHealth: /api/health, 30s interval, healthy=3, unhealthy=2\n\nASG: min 2, max 8, desired 2, c5.large\nTarget Tracking: CPU 60%, cooldown 300s, ELB health, grace 120s\n\nRDS: MySQL 8.0, db.r5.large, 100GB gp3 (auto 500GB)\nMulti-AZ (standby 1b), Read Replica (1a), backup 7 days, KMS\n\nCloudFront: /api/* → ALB (no cache), /videos/* → S3 (24hr cache)\nPrice Class 100 (US/CA/EU), ACM SSL\n\nAlarm: CPU > 80%, 2x5min periods → SNS',q:[
 {tp:'ord',tx:'Order request path: browser → server:',it:['User types https://edustream.io','Route 53 resolves to CloudFront','Edge Location receives request','CloudFront forwards to ALB','ALB routes to EC2 instance','EC2 returns response'],c:[0,1,2,3,4,5],ex:'DNS → CDN → LB → Compute.'},
 {tp:'mat',tx:'Match to availability benefit:',lf:['Multi-AZ RDS','ASG min: 2','ALB across 2 AZs','Read Replica'],rt:['Auto failover to standby','2 instances always running','Traffic distribution across AZs','Offload read queries'],c:{0:0,1:1,2:2,3:3},ex:'Multi-AZ=failover. ASG=capacity. ALB=distribution. Replica=read scaling.'},
-{tp:'fb',tx:'CPU at 75%, target 60%. ASG will <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> instances.',c:['launch'],ex:'Above target → scale out.'},
+{tp:'fb',tx:'CPU at 75%, target 60%. ASG will <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> instances. <span style="font-size:.72rem;color:var(--t4)">(accept: launch, add, scale out)</span>',c:['launch'],ex:'Above target → scale out (launch/add instances) to distribute load.',alt:['add','scale out','launch new','add new','scale up']},
 {tp:'mul',tx:'CloudFront truths? (Select ALL)',op:['S3 videos cached 24hr','/api/* cached 1hr','Videos GET/HEAD only','ACM SSL cert','All global edge locations'],c:[0,2,3],ex:'A✓ B✗(no cache) C✓ D✓ E✗(Price 100=US/CA/EU).'},
 {tp:'tf',tx:'Read replica auto-promotes if primary RDS fails.','op':['True','False'],c:1,ex:'Multi-AZ standby promotes automatically. Read Replica = manual promotion.'},
 {tp:'sng',tx:'Alarm: CPU>80%, Period=300s, Eval=2. Time to fire?','op':['5 min','10 min','15 min','2 min'],c:1,ex:'2 × 5min = 10 minutes.'},
@@ -409,13 +409,15 @@ if(q.c.includes(j)){o.classList.add('rt');ck.textContent='\u2713'}
 else if(sel.includes(j)){o.classList.add('wr');ck.textContent='\u2717'}
 else{ck.textContent=''}
 });
-if(JSON.stringify(ss)===JSON.stringify(sc))correct++;
+if(JSON.stringify(ss)===JSON.stringify(sc)&&sel.length>0)correct++;
 }else if(q.tp==='fb'){
 const inp=document.getElementById('fb'+i);
 const val=inp.value.trim().toLowerCase();
 const cor=q.c[0].toLowerCase();
-inp.style.borderColor=val===cor?'var(--ok)':'var(--er)';
-if(val===cor)correct++;
+const alts=(q.alt||[]).map(a=>a.toLowerCase());
+const isOk=val===cor||alts.includes(val);
+inp.style.borderColor=isOk?'var(--ok)':'var(--er)';
+if(isOk)correct++;
 }else if(q.tp==='fb2'){
 let all=true;
 q.c.forEach((cor,j)=>{
